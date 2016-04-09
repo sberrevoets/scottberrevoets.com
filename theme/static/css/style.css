@@ -101,7 +101,7 @@ h2.article-title {
     margin-bottom: 0;
 }
 
-div.article-content {
+div.article-content, div.page-content {
     line-height: 1.5em;
     font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue";
     padding: 10px;
@@ -129,4 +129,19 @@ div.pagination ul li.prev {
 
 div.pagination ul li.next {
     margin-left: 20px;
+}
+
+
+/*** About ***/
+
+img#me {
+    float: left;
+    display: inline-block;
+    margin-right: 1.2em;
+    border-radius: 18px;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    border: 0;
+    margin-bottom: 2em
 }
