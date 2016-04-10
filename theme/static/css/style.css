@@ -11,7 +11,7 @@ body {
     line-height: 1.5em;
 }
 
-header {
+body > header {
     margin: 0;
     border-top: 5px solid rgb(203, 18, 22);
 }
@@ -168,4 +168,12 @@ dl#archive dd a {
     text-decoration: none;
     margin-left: 30px;
     line-height: 1.8em;
+}
+
+/*** Article ***/
+
+header time.published {
+    padding: 0 10px;
+    font-family: Helvetica;
+    color: #aaa;
 }

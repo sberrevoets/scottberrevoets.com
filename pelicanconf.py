@@ -12,6 +12,7 @@ PATH = 'content'
 THEME = './theme'
 
 TIMEZONE = 'America/Los_Angeles'
+DATE_FORMATS = { 'en': '%d %B %Y' }
 
 DEFAULT_LANG = u'en'
 
