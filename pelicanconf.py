@@ -2,6 +2,8 @@
 # -*- coding: utf-8 -*- #
 from __future__ import unicode_literals
 
+ARCHIVES_SAVE_AS='archive.html'
+
 AUTHOR = u'Scott Berrevoets'
 SITENAME = u'Scott Berrevoets'
 SITEURL = ''

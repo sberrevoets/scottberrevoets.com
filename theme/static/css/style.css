@@ -131,7 +131,6 @@ div.pagination ul li.next {
     margin-left: 20px;
 }
 
-
 /*** About ***/
 
 img#me {
@@ -144,4 +143,29 @@ img#me {
     box-sizing: border-box;
     border: 0;
     margin-bottom: 2em
+}
+
+/*** Archive ***/
+
+dl#archive {
+    display: table;
+}
+
+dl#archive dt {
+    font-size: 1.5em;
+    color: #aaa;
+    display: table-cell;
+}
+
+dl#archive dd time {
+    text-transform: uppercase;
+    color: #aaa;
+    font-size: 0.9em;
+}
+
+dl#archive dd a {
+    font-size: 1.8em;
+    text-decoration: none;
+    margin-left: 30px;
+    line-height: 1.8em;
 }
