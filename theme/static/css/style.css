@@ -188,3 +188,11 @@ header time.published {
     font-family: Helvetica;
     color: #aaa;
 }
+
+blockquote {
+    width: 85%;
+    margin: 30px auto;
+    padding-left: 1.5em;
+    border-left: 4px solid rgb(221, 221, 221);
+    color: #777;
+}
