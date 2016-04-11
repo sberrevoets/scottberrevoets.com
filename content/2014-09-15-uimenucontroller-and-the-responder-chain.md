@@ -10,13 +10,14 @@ But today it completely threw me off. The goal was very simple and has been done
 I did as the article said. I created my `UILabel` subclass (only accepting `copy:` as an action it can perform), added my gesture recognizer, and configured and showed the `UIMenuController`. It worked, but instead of only showing the Copy menu item, it also showed the Select All item.
 
 Well, that's weird. I implemented `canPerformAction:withSender:` like this:
+{: .nolinenos }
 
-``` objective-c
+```objective-c
 - (BOOL)canPerformAction:(SEL)action withSender:(id)sender {
 	return action == @selector(copy:);
 }
 ```
-	
+
 I made sure that this method really only returned `YES` for the Copy item, proceeded to explicitly return `NO` for `selectAll:` and, when that failed as well, even changed the implementation of this method to just return `NO` for **any** item. But Select All doesn't take `NO` for an answer, and it stubbornly showed up anyway! I was baffled and could not get rid of this Select All item.
 
 I did some research, and learned that `UIMenuController` uses the responder chain to figure out what items to show. Furthermore, the documentation for `canPerformAction:withSender:` read:

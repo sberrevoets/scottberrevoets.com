@@ -15,6 +15,10 @@ pre, code {
     margin: 0;
 }
 
+.nolinenos ~ .highlighttable td.linenos {
+    display: none;
+}
+
 .highlighttable .linenos {
    background-color: #C1C2C3;
    padding: 0 5px;
