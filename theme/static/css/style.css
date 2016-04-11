@@ -152,22 +152,33 @@ dl#archive {
 }
 
 dl#archive dt {
-    font-size: 1.5em;
+    font-size: 1.3em;
     color: #aaa;
-    display: table-cell;
+}
+
+dl#archive dd {
+    margin: 20px 0 20px 40px;
+}
+
+dl#archive dt + dd {
+    margin-top: 0;
 }
 
 dl#archive dd time {
     text-transform: uppercase;
     color: #aaa;
+    font-weight: 600;
     font-size: 0.9em;
+    vertical-align: text-top;
+    display: table-cell;
+    width: 100px;
 }
 
 dl#archive dd a {
     font-size: 1.8em;
     text-decoration: none;
-    margin-left: 30px;
-    line-height: 1.8em;
+    line-height: 1.3em;
+    display: table-cell;
 }
 
 /*** Article ***/
