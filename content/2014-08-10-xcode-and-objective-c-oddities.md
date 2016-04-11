@@ -96,11 +96,11 @@ If that's true, and it's fairly safe to assume that it is, I'd avoid using `-[CL
 ## Xcode at it again
 Lastly, the following is a screenshot I personally took at work that completely baffled me.
 
-{% img center /images/XcodeScreenshot.png 700 %}
+<img src="/images/XcodeScreenshot.png" style="width: 700px; margin: 0 auto; display: block;">
 
 This would not go away, even after cleaning the build folder and rebuilding. In the end I resolved the problem by running
 
-``` bash
+```bash
 $ git stash
 $ git reset --hard HEAD
 ```

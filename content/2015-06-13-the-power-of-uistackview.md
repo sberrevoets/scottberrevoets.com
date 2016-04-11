@@ -16,7 +16,7 @@ It would take a while to build this kind of UI in Auto Layout. You would have to
 
 With `UIStackView`, doing all of this takes about 30 seconds. After dragging out all the labels, you just need to embed every row in its own stack view. Set the distribution (in code that's `UIStackViewDistribution`) for these stack views to "fill equally" (`.FillEqually`), then embed all four stack views in their own stack view.
 
-{%img center /images/UIStackView.png %}
+![UIStackView example](/images/UIStackView.png)
 
 The top-level, vertical stack view should get top/leading/trailing/bottom space to its superview (or the layout guides), the 4 horizontal stack views an "equal width" constraint to their superview. Finally, center the text of the individual labels (you can select all labels at once and do this with 1 action). Done - that's it.
 
