@@ -21,6 +21,13 @@ ARTICLE_SAVE_AS = '{date:%Y}/{date:%m}/{date:%d}/{slug}/index.html'
 PAGE_URL = '{slug}.html'
 PAGE_SAVE_AS = '{slug}.html'
 
+# Pagination
+DEFAULT_PAGINATION = 5
+PAGINATION_PATTERNS = (
+    (1, '{base_name}/', '{base_name}/index.html'),
+    (2, '{base_name}/page/{number}/', '{base_name}/page/{number}/index.html'),
+)
+
 # Create and link to index and archive
 DIRECT_TEMPLATES = ('index', 'archive')
 MENUITEMS = [('Blog', '/'), ('Archive', '/archive.html')]
@@ -48,6 +55,5 @@ TRANSLATION_FEED_ATOM = None
 AUTHOR_FEED_ATOM = None
 AUTHOR_FEED_RSS = None
 
-DEFAULT_PAGINATION = 5
 
 # Uncomment following line if you want document-relative URLs when developing
