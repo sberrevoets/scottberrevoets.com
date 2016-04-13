@@ -6,13 +6,12 @@ from __future__ import unicode_literals
 AUTHOR = 'Scott Berrevoets'
 SITENAME = 'Scott Berrevoets'
 SITEURL = 'http://scottberrevoets.com'
-DISQUS_SITENAME = 'sberrevoets'
 
 # Show line numbers in code snippets
 MD_EXTENSIONS = ['codehilite(css_class=highlight, linenums = True)', 'extra']
 
 # Path specifications
-RELATIVE_URLS = False
+RELATIVE_URLS = True
 PATH = 'content'
 THEME = './theme'
 
@@ -49,13 +48,13 @@ SOCIALMEDIAITEMS = [('twitter.svg', 'https://twitter.com/ScottBerrevoets'),
                     ('stackoverflow.svg', 'http://stackoverflow.com/users/751268/scott-berrevoets'),
                     ('youtube.svg', 'https://www.youtube.com/watch?v=dQw4w9WgXcQ')]
 
-# Feed generation
+# No feeds in development mode
 FEED_DOMAIN = SITEURL
-FEED_ATOM = 'feeds/atom.xml'
-FEED_RSS = 'feeds/rss.xml'
-FEED_ALL_ATOM = 'feeds/all.atom.xml'
-FEED_ALL_RSS = 'feeds/all.rss.xml'
 
+FEED_ATOM = None
+FEED_RSS = None
+FEED_ALL_ATOM = None
+FEED_ALL_RSS = None
 CATEGORY_FEED_ATOM = None
 TRANSLATION_FEED_ATOM = None
 AUTHOR_FEED_ATOM = None
