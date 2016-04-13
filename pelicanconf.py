@@ -6,6 +6,7 @@ from __future__ import unicode_literals
 AUTHOR = 'Scott Berrevoets'
 SITENAME = 'Scott Berrevoets'
 SITEURL = 'http://scottberrevoets.com'
+DISQUS_SITENAME = 'sberrevoets'
 
 # Show line numbers in code snippets
 MD_EXTENSIONS = ['codehilite(css_class=highlight, linenums = True)', 'extra']

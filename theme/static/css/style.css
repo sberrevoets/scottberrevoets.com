@@ -203,3 +203,7 @@ blockquote {
     border-left: 4px solid rgb(221, 221, 221);
     color: #777;
 }
+
+div#disqus_thread {
+    margin-top: 50px;
+}
