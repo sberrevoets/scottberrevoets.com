@@ -49,12 +49,15 @@ SOCIALMEDIAITEMS = [('twitter.svg', 'https://twitter.com/ScottBerrevoets'),
                     ('stackoverflow.svg', 'http://stackoverflow.com/users/751268/scott-berrevoets'),
                     ('youtube.svg', 'https://www.youtube.com/watch?v=dQw4w9WgXcQ')]
 
-# Feed generation is usually not desired when developing
-FEED_ALL_ATOM = None
+# Feed generation
+FEED_DOMAIN = SITEURL
+FEED_ATOM = 'feeds/atom.xml'
+FEED_RSS = 'feeds/rss.xml'
+FEED_ALL_ATOM = 'feeds/all.atom.xml'
+FEED_ALL_RSS = 'feeds/all.rss.xml'
+
 CATEGORY_FEED_ATOM = None
 TRANSLATION_FEED_ATOM = None
 AUTHOR_FEED_ATOM = None
 AUTHOR_FEED_RSS = None
 
-
-# Uncomment following line if you want document-relative URLs when developing
