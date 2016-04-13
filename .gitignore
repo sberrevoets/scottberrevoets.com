@@ -27,5 +27,9 @@ Network Trash Folder
 Temporary Items
 .apdisk
 
-# pelican
+# Pelican
 output
+pelican.pid
+pelicanconf.pyc
+srv.pid
+*.swp
