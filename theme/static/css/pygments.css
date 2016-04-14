@@ -10,28 +10,40 @@ pre, code {
     color: #555;
 }
 
-.highlight pre {
-    padding: 0 10px;
-    margin: 0;
-}
-
 .nolinenos ~ .highlighttable td.linenos {
     display: none;
 }
 
-.highlighttable .linenos {
-   background-color: #C1C2C3;
-   padding: 0 5px;
-}
-
 .highlighttable {
     border-radius: 5px;
-    background: #343642;
-    overflow-x: auto;
-    display: block;
     border-collapse: collapse;
     border-spacing: 0;
-    padding: 0;
+    width: 100%;
+}
+
+.highlighttable .linenos {
+    border-top-left-radius: 5px;
+    border-bottom-left-radius: 5px;
+    background-color: #C1C2C3;
+    padding: 0 5px;
+    width: 1%;
+    text-align: right;
+}
+
+.highlighttable .code {
+    border-top-right-radius: 5px;
+    border-bottom-right-radius: 5px;
+    background: #343642;
+    position: relative;
+}
+
+.highlighttable .highlight {
+    overflow-x: auto;
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
 }
 
 code {
@@ -43,6 +55,11 @@ code {
     display: inline-block;
     border: 1px solid #c1c2c3;
     background-color: #f8f8f8;
+}
+
+.highlighttable .highlight pre {
+    color: #C1C2C3;
+    padding-left: 10px;
 }
 
 .highlight .hll { background-color: #ffc; }
