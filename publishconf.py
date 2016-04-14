@@ -20,9 +20,8 @@ FEED_ALL_ATOM = 'feeds/all.atom.xml'
 FEED_ALL_RSS = 'feeds/all.rss.xml'
 
 # Following items are often useful when publishing
-
 DISQUS_SITENAME = 'sberrevoets'
-#GOOGLE_ANALYTICS = ""
+GOOGLE_ANALYTICS = "UA-53307558-1"
 
 # Clean up
 DELETE_OUTPUT_DIRECTORY = True
