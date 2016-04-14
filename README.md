@@ -1,6 +1,6 @@
 # ScottBerrevoets.com
 
-This repository contains the source for [ScottBerrevoets.com](http://scottberrevoets.com). It uses [Pelican](http://getpelican.com) to generate all content, including file and directory structures.
+This repository contains the source for [ScottBerrevoets.com](http://scottberrevoets.com). It uses [Pelican](http://getpelican.com) to generate all content, including file and directory structures. I'm using a custom Pelican theme. You may use this theme for your own Pelican installation, but I can't help you out with customizations.
 
 ## Installation
 
