@@ -10,10 +10,6 @@ pre, code {
     color: #555;
 }
 
-.nolinenos ~ .highlighttable td.linenos {
-    display: none;
-}
-
 .highlighttable {
     border-radius: 5px;
     border-collapse: collapse;

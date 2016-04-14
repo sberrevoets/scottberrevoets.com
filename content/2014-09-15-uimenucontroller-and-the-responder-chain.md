@@ -10,7 +10,6 @@ But today it completely threw me off. The goal was very simple and has been done
 I did as the article said. I created my `UILabel` subclass (only accepting `copy:` as an action it can perform), added my gesture recognizer, and configured and showed the `UIMenuController`. It worked, but instead of only showing the Copy menu item, it also showed the Select All item.
 
 Well, that's weird. I implemented `canPerformAction:withSender:` like this:
-{: .nolinenos }
 
 ```objective-c
 - (BOOL)canPerformAction:(SEL)action withSender:(id)sender {
