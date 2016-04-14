@@ -4,7 +4,7 @@
 {% if articles %}
 {% for article in (articles_page.object_list if articles_page else articles) %}
 <div class='article'>
-    <h2 class="article-title"><a href="{{ article.url }}">{{ article.title }}</a></h2>
+    <h2 class="article-title"><a href="{{ SITEURL }}/{{ article.url }}">{{ article.title }}</a></h2>
     <div class="article-content">{{ article.content }}</div>
 </div>	
 {% endfor %}
