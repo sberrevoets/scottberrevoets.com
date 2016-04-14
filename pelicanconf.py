@@ -42,6 +42,7 @@ DEFAULT_LANG = 'en'
 TIMEZONE = 'America/Los_Angeles'
 DATE_FORMATS = { 'en': '%d %B %Y' }
 
+# Social media
 DISPLAY_SOCIAL_MEDIA = True
 SOCIALMEDIAITEMS = [('twitter.svg', 'https://twitter.com/ScottBerrevoets'),
                     ('github.svg', 'https://github.com/sberrevoets'),

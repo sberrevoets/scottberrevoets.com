@@ -22,6 +22,6 @@ FEED_RSS = 'feeds/rss.xml'
 FEED_ALL_ATOM = 'feeds/all.atom.xml'
 FEED_ALL_RSS = 'feeds/all.rss.xml'
 
-# Following items are often useful when publishing
+# 3rd party integration
 DISQUS_SITENAME = 'sberrevoets'
 GOOGLE_ANALYTICS = "UA-53307558-1"
