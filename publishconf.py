@@ -10,6 +10,9 @@ import sys
 sys.path.append(os.curdir)
 from pelicanconf import *
 
+# Clean up first
+DELETE_OUTPUT_DIRECTORY = True
+
 # Enable relative URLs
 RELATIVE_URLS = False
 
@@ -22,6 +25,3 @@ FEED_ALL_RSS = 'feeds/all.rss.xml'
 # Following items are often useful when publishing
 DISQUS_SITENAME = 'sberrevoets'
 GOOGLE_ANALYTICS = "UA-53307558-1"
-
-# Clean up
-DELETE_OUTPUT_DIRECTORY = True
