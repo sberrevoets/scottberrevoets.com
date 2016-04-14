@@ -14,6 +14,10 @@ $ pelican content
 
 The full blog will be generated in `./output`.
 
+## Contributing
+
+Found a mistake, typo, or formatting error? Contributions are welcome! Keep in mind, however, that since the source here will be used to deploy to my actual blog, situations may arise where I can't accept your contribution.
+
 ## License
 
 - Code is published under the [MIT license](https://github.com/sberrevoets/scottberrevoets.com/blob/master/LICENSE)
