@@ -31,5 +31,6 @@ Temporary Items
 output
 pelican.pid
 pelicanconf.pyc
+publishconf.pyc
 srv.pid
 *.swp
