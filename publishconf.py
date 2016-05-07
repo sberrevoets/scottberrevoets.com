@@ -10,10 +10,10 @@ import sys
 sys.path.append(os.curdir)
 from pelicanconf import *
 
-# Clean up first
+# Clean up first before generating new files
 DELETE_OUTPUT_DIRECTORY = True
 
-# Enable relative URLs
+# Disable relative URLs
 RELATIVE_URLS = False
 
 # Generate feeds
