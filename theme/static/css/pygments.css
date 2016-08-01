@@ -5,7 +5,7 @@
 */
 
 pre, code {
-    font-family: Menlo, monospace;
+    font-family: 'SFMono-Regular', 'SF Mono', Menlo, monospace;
     font-size: 0.8em;
     color: #555;
 }
