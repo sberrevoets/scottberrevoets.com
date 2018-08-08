@@ -1,5 +1,4 @@
 @import url("pygments.css");
-@import url(https://fonts.googleapis.com/css?family=Vollkorn);
 
 body {
     color: rgb(50, 50, 50);
@@ -38,7 +37,7 @@ ul#social li {
 }
 
 h1, h2 {
-    font-family: Vollkorn;
+    font-family: -apple-system-headline, 'SFProDisplay-Bold', -apple-system, system-ui, BlinkMacSystemFont;
 }
 
 h1 {
@@ -49,7 +48,6 @@ h1 {
 h1 a {
    color: rgb(203, 18, 22);
    text-decoration: none;
-   font-weight: 300;
    font-size: 2em;
 }
 
@@ -60,7 +58,7 @@ h1 a {
 }
 
 nav#menu {
-    font-family: Vollkorn;
+    font-family: 'SFProText-Bold', -apple-system, system-ui, BlinkMacSystemFont;
     border-top: 1px solid #ccc;
     border-bottom: 1px solid #ccc;
     width: 70%;
@@ -103,7 +101,7 @@ h2.article-title {
 
 div.article-content, div.page-content {
     line-height: 1.5em;
-    font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue";
+    font-family: -apple-system-body, -apple-system, system-ui, BlinkMacSystemFont;
     padding: 10px;
 }
 
@@ -120,7 +118,7 @@ div.pagination ul {
 
 div.pagination ul li {
     display: inline;
-    font-family: Vollkorn;
+    font-family: -apple-system, system-ui, BlinkMacSystemFont;
 }
 
 div.pagination ul li.prev {
@@ -192,7 +190,7 @@ dl#archive dd a {
 
 header time.published {
     padding: 0 10px;
-    font-family: Helvetica;
+    font-family: -apple-system-subheadline, 'SFProDisplay-Bold', -apple-system, system-ui, BlinkMacSystemFont;
     color: #aaa;
 }
 
