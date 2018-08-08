@@ -8,7 +8,14 @@ SITENAME = 'Scott Berrevoets'
 SITEURL = 'http://scottberrevoets.com'
 
 # Show line numbers in code snippets
-MD_EXTENSIONS = ['codehilite(css_class=highlight, linenums = True)', 'extra']
+MARKDOWN = {
+  'extension_configs': {
+    'markdown.extensions.codehilite': {'css_class': 'highlight', 'linenums': True},
+    'markdown.extensions.extra': {},
+    'markdown.extensions.meta': {},
+  },
+  'output_format': 'html5',
+}
 
 # Path specifications
 RELATIVE_URLS = True
