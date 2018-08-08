@@ -28,6 +28,7 @@ Temporary Items
 .apdisk
 
 # Pelican
+__pycache__
 output
 pelican.pid
 pelicanconf.pyc
