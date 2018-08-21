@@ -3,10 +3,9 @@
 {% block content %}
 
 <div class="page-content">
-{% set last_date = None %}
 <dl id="archive">
 {% for article in dates %}
-    {% if last_date != article.date.year %}
+    {% if dates[loop.index0 - 1].date.year != article.date.year %}
     <dt>{{ article.date.year }}</dt>
     {% endif %}
     <dd>
@@ -16,7 +15,6 @@
         {{ article.title }}
       </a>
     </dd>
-    {% set last_date = article.date.year %}
 {% endfor %}
 </dl>
 </div>
