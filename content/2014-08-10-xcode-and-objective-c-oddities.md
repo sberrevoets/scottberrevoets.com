@@ -3,14 +3,14 @@ Date: 2014-08-10
 Description: Some fun things about working with Xcode and Objective-C
 
 
-Any developer that has worked with Xcode to write a little more than just "Hello, World" knows that Xcode and Objective-C have their quirks. Chances are you have heard of [@TextFromXcode](http://twitter.com/TextFromXcode), the Twitter handle that portrays Xcode as a high school bully in fake text conversations like this:
+Any developer that has worked with Xcode to write a little more than just "Hello, World" knows that Xcode and Objective-C have their quirks. Chances are you have heard of [@TextFromXcode](https://twitter.com/TextFromXcode), the Twitter handle that portrays Xcode as a high school bully in fake text conversations like this:
 
-![Xcode Bully](http://cl.ly/image/0I2P191S0Q2k/20140227.PNG)
+![Xcode Bully](https://cl.ly/image/0I2P191S0Q2k/20140227.PNG)
 
 But it's not always Xcode that makes Apple platform developers sometimes frown and sigh. Sometimes it's the developers themselves, sometimes it's the documentation, and sometimes a hidden gem from within Apple frameworks makes an appearance. I've compiled a short list of things I've encountered. Because it's Sunday and I didn't have anything better to do.
 
 ## `UIGobblerGestureRecognizer`
-Say what? A "[`gobbler`](https://github.com/nst/iOS-Runtime-Headers/blob/master/Frameworks/UIKit.framework/UIGobblerGestureRecognizer.h)" recognizer? Does it recognize when the user imitates a turkey? Well, maybe, but according to [BJ Homer](http://twitter.com/ortwingentz/status/225508227234791424), it is used to avoid recognition of a gesture while animations are in progress. Ah of course! Now the name "gobbler" makes perfect sense! 😶
+Say what? A "[`gobbler`](https://github.com/nst/iOS-Runtime-Headers/blob/master/Frameworks/UIKit.framework/UIGobblerGestureRecognizer.h)" recognizer? Does it recognize when the user imitates a turkey? Well, maybe, but according to [BJ Homer](https://twitter.com/ortwingentz/status/225508227234791424), it is used to avoid recognition of a gesture while animations are in progress. Ah of course! Now the name "gobbler" makes perfect sense! 😶
 
 ## `UITapAndAHalfRecognizer`
 Speaking of gesture recognizers, there's another remarkable one that lives in the private section of UIKit: `UITapAndAHalfRecognizer`. This is a private subclass of `UIGestureRecognizer` that records "a tap and a half".
@@ -25,7 +25,7 @@ Naming **is** hard, but Objective-C developers always say that verbosity is one 
 
 [`HMCharacteristicValueLockMechanismLastKnownActionUnsecuredUsingPhysicalMovementExterior`](https://developer.apple.com/library/prerelease/ios/releasenotes/General/iOS80APIDiffs/frameworks/HomeKit.html) is a brand new constant in iOS 8 and has got to be one of the longest constants that's available in iOS. Try saying it without taking a breath in the middle. 
 
-I found it in the iOS 8 API diffs, but it did make me wonder. What is the longest Objective-C method available in Cocoa Touch? Well, a quick Google search led to a blog post by [Stuart Sharpe](http://initwithstyle.net/2013/10/in-search-of-the-longest-method), who used the Objective-C runtime to generate a list of methods in the iOS 7 SDK.
+I found it in the iOS 8 API diffs, but it did make me wonder. What is the longest Objective-C method available in Cocoa Touch? Well, a quick Google search led to a blog post by [Stuart Sharpe](https://initwithstyle.net/2013/10/in-search-of-the-longest-method), who used the Objective-C runtime to generate a list of methods in the iOS 7 SDK.
 
 Turns out, the longest method in the iOS 7 SDK is
 
@@ -89,7 +89,7 @@ Either a grumpy Apple developer woke up at the wrong side of the bed or has a gr
 
 ## Defying the Uncertainty Principle in iOS
 > [I]n 1927, Werner Heisenberg stated that the more precisely the position of some particle is determined, the less precisely its momentum can be known, and vice versa.  
-> [Wikipedia](http://en.wikipedia.org/wiki/Uncertainty_principle)
+> [Wikipedia](https://en.wikipedia.org/wiki/Uncertainty_principle)
 
 If that's true, and it's fairly safe to assume that it is, I'd avoid using `-[CLLocation speed]` for apps like radar detectors. I wonder if we're ever going to get a `-[CLSpeed location]` method, which has a more accurate speed and a less accurate location.
 

@@ -168,7 +168,7 @@ In addition to these tools and project-level improvements, we have a number of
   all kinds of unrelated things in there. Most of our storyboards have fewer
   than 10 scenes.
 - [Our outlets are defined
-  carefully.](http://scottberrevoets.com/2016/03/21/outlets-strong-or-weak/)
+  carefully.](https://scottberrevoets.com/2016/03/21/outlets-strong-or-weak/)
 
 
 Of course, even with these improvements everything is not peaches and cream.

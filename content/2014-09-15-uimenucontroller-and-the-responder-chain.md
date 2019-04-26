@@ -5,7 +5,7 @@ Description: Explaining unexpected behavior when using the responder chain and U
 
 The responder chain is a very important paradigm in the world of iOS development, and not terribly hard to understand. Dozens of articles have been written about it, and with some examples, the concept of finding a responder to a certain event by traversing a chain of potential responders is fairly straight-forward.
 
-But today it completely threw me off. The goal was very simple and has been done many times before: showing a label whose text can be copied to the clipboard. Having never worked with `UIMenuController`, I fired up Google and of course found an excellent [NSHipster](http://nshipster.com/uimenucontroller/) article near the top.
+But today it completely threw me off. The goal was very simple and has been done many times before: showing a label whose text can be copied to the clipboard. Having never worked with `UIMenuController`, I fired up Google and of course found an excellent [NSHipster](https://nshipster.com/uimenucontroller/) article near the top.
 
 I did as the article said. I created my `UILabel` subclass (only accepting `copy:` as an action it can perform), added my gesture recognizer, and configured and showed the `UIMenuController`. It worked, but instead of only showing the Copy menu item, it also showed the Select All item.
 

@@ -5,7 +5,7 @@ from __future__ import unicode_literals
 # Site information
 AUTHOR = 'Scott Berrevoets'
 SITENAME = 'Scott Berrevoets'
-SITEURL = 'http://scottberrevoets.com'
+SITEURL = 'https://scottberrevoets.com'
 
 # Show line numbers in code snippets
 MARKDOWN = {
