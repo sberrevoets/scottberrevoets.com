@@ -6,8 +6,8 @@ This repository contains the source for [ScottBerrevoets.com](http://scottberrev
 
 ```bash
 # Install Pelican and markdown
-$ pip install pelican
-$ pip install markdown
+$ pip3 install pelican
+$ pip3 install markdown
 
 $ pelican content
 ```
