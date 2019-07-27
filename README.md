@@ -14,6 +14,14 @@ $ pelican content
 
 The full blog will be generated in `./output`.
 
+## Writing
+
+Because I always forget.
+
+- Edit content, then run `$ pelican content` from the root
+- To preview: `$ pelican --listen` (with `-r` for continuous regeneration)
+- To deploy: `make ftp_upload`, using .netrc for FTP credentials
+
 ## Contributing
 
 Found a mistake, typo, or formatting error? Contributions are welcome! Keep in mind, however, that since the source here will be used to deploy to my actual blog, situations may arise where I can't accept your contribution.
