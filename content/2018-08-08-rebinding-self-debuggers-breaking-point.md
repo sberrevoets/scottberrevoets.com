@@ -3,6 +3,9 @@ Date: 2018-08-08
 Summary: Explanation of how nice syntax for re-binding self breaks the debugger
 
 
+**Update 07-29-2019: The bug described below is fixed in Xcode 11 so this blog
+post has become irrelevant. I'm leaving it up for historical purposes.**
+
 For the Objective-C veterans in the audience, the strong-self-weak-self dance is
 a practice mastered early on and one that is used very frequently. There are a
 lot of different incantations, but the most basic one goes something like this:
