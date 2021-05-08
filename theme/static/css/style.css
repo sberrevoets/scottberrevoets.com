@@ -112,7 +112,7 @@ div.pagination {
 div.pagination ul {
     width: auto;
     display: inline-block;
-    list-style-type: none; 
+    list-style-type: none;
     -webkit-padding-start: 0;
 }
 
@@ -131,8 +131,17 @@ div.pagination ul li.next {
 
 /*** About ***/
 
-img#me {
+.left-column {
     float: left;
+    width: 25%;
+}
+
+.right-column {
+    float: left;
+    width: 75%;
+}
+
+img#me {
     display: inline-block;
     margin-right: 1.2em;
     border-radius: 18px;
@@ -140,7 +149,6 @@ img#me {
     -moz-box-sizing: border-box;
     box-sizing: border-box;
     border: 0;
-    margin-bottom: 2em
 }
 
 /*** Archive ***/
