@@ -133,7 +133,7 @@ div.pagination ul li.next {
 
 .left-column {
     float: left;
-    width: 25%;
+    min-width: 25%;
 }
 
 .right-column {
