@@ -43,14 +43,10 @@ pre, code {
 }
 
 code {
-    padding: 3px;
-    line-height: 1.2em;
     overflow: auto;
-    border-radius: 3px;
     max-width: 100%;
-    display: inline-block;
-    border: 1px solid #c1c2c3;
-    background-color: #f8f8f8;
+    display: inline;
+    font-size: 1em;
 }
 
 .highlighttable .highlight pre {
