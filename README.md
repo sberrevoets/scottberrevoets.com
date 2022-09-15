@@ -9,14 +9,8 @@ for your own Pelican installation, but I can't help you out with customizations.
 ## Installation
 
 ```bash
-# Install Pelican and markdown
-$ pip3 install pelican
-$ pip3 install markdown
-
-$ pelican content
+$ pip3 install
 ```
-
-The full blog will be generated in `./output`.
 
 ## Writing
 
@@ -24,7 +18,6 @@ Because I always forget.
 
 - Edit content, then run `$ pelican content` from the root
 - To preview: `$ pelican --listen` (with `-r` for continuous regeneration)
-- To deploy: `make ftp_upload`, using .netrc for FTP credentials
 
 ## Contributing
 
