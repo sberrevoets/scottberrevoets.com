@@ -71,7 +71,7 @@ properly, and any libraries are part of that responsibility.
 If the user grants location access to the Lyft app, any third-party library
 automatically gets access too. They could then upload that data to their own
 servers, competitors' servers, or who knows where else. This is even more
-problematic when a library needs a _new_ permissions we didn't already have.
+problematic when a library needs a _new_ permission we didn't already have.
 
 Similarly, a system is as secure as its weakest link but if you include
 unreviewed, unknown code you have no idea how secure it really is. Your
