@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+        <title>Scott Berrevoets</title>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <link rel="stylesheet" type="text/css" href="../../theme/css/style.css" />
+</head>
+
+<body id="index" class="home">
+        <header id="banner" class="body">
+            <h1><a href="../../">Scott Berrevoets</a></h1>
+
+            <ul id="social">
+                <li><a href="https://twitter.com/ScottBerrevoets"><img src="../../theme/images/twitter.svg"></a></li>
+                <li><a href="https://github.com/sberrevoets"><img src="../../theme/images/github.svg"></a></li>
+                <li><a href="http://stackoverflow.com/users/751268/scott-berrevoets"><img src="../../theme/images/stackoverflow.svg"></a></li>
+                <li><a href="https://www.youtube.com/watch?v=dQw4w9WgXcQ"><img src="../../theme/images/youtube.svg"></a></li>
+            </ul>
+        </header><!-- /#banner -->
+        <nav id="menu"><ul>
+            <li><a href="/">Blog</a></li>
+            <li><a href="/archive.html">Archive</a></li>
+            <li><a href="../../about.html">About</a></li>
+        </ul></nav><!-- /#menu -->
+
+<div class='article'>
+    <h2 class="article-title"><a href="../../2014/12/15/objc-creates-a-wrong-class-name-in-objective-c/">@objc creates a wrong class name in Objective-C</a></h2>
+    <div class="article-content"><p>A few months ago, I decided I'd get started porting <a href="https://github.com/sberrevoets/SDCAlertView">SDCAlertView</a> to Swift, but I was only a few minutes in until I ran into a problem I had no idea how to solve: I couldn't get my class names right in both Swift and Objective-C. Even though there are copious amounts of documentation covering the interoperability of Swift and Objective-C, somehow I couldn't get it to work and I brushed it off as me being stupid.</p>
+<p>Tonight I tried again, and after some more research it turned out that the behavior I saw was actually a bug in the compiler! I'm surprised that the latest Xcode version is 6.1.1 and that apparently not enough people have run into this problem for Apple to make it a priority.</p>
+<p>The bug can easily be reproduced by creating an Objective-C project in Xcode, and then adding the following Swift class:</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span class="normal">1</span>
+<span class="normal">2</span>
+<span class="normal">3</span>
+<span class="normal">4</span>
+<span class="normal">5</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="kd">import</span> <span class="nc">UIKit</span>
+
+<span class="kr">@objc</span><span class="p">(</span><span class="n">SDCMyLabel</span><span class="p">)</span>
+<span class="kd">class</span> <span class="nc">MyLabel</span><span class="p">:</span> <span class="bp">UILabel</span> <span class="p">{</span>
+<span class="p">}</span>
+</code></pre></div></td></tr></table></div>
+
+<p>You would expect that, once you import <code>MyProject-Swift.h</code> in your Objective-C class, you could instantiate a class named <code>SDCMyLabel</code>. However, instead, you can only instantiate a class named <code>MyLabel</code>.</p>
+<p>I found this very recent <a href="https://stackoverflow.com/questions/26132823/name-of-swift-class-when-exposed-to-objective-c-code-does-not-respect-the-objc">Stack Overflow</a> question which pretty much asks the same thing. "milos" gives a great answer by explaining the observed behavior in Xcode 6.0.1, and the expected behavior according to the WWDC session <a href="https://developer.apple.com/videos/wwdc/2014/">video</a>.</p>
+<p>After reading the answer and watching the relevant parts of the vide, I slightly changed my previously-drawn conclusion from "I'm stupid" to "Xcode's stupid" and filed <a href="rdar://19261044">rdar://19261044</a>. If you're running into the same problem, please duplicate and cross your fingers the engineers at the fruit company will fix it soon.</p></div>
+</div>	
+<div class='article'>
+    <h2 class="article-title"><a href="../../2014/10/20/dev-only-iphones/">Dev-only iPhones</a></h2>
+    <div class="article-content"><p>With today's release of iOS 8.1, most app developers are looking at 4 significantly different iOS versions they will be supporting: iOS 7.0., iOS 7.1, iOS 8.0, and iOS 8.1. Factoring in the number of devices (iPhone 4S, iPhone 5, iPhone 5s, iPhone 6, and iPhone 6 Plus) that run these OS versions, there is a grand total of <strong>16</strong> different configurations. That's without even counting the iPhone 5c, which is internally pretty much the same as the 5, or the <a href="https://www.macrumors.com/2014/09/29/ios-8-major-updates/">rumored</a> iOS 8.2 and iOS 8.3 updates.</p>
+<p>Assuming an average off-contract price of $400 for these models, that means you're looking at $6,400 for 1 set of iPhones used for development. Creating a universal app? Your total will now exceed $10,000.</p>
+<p>So now you have these 16 phones that will in most cases be used for testing maybe a handful of apps, that have chips and software functionality in them that will be used very little (if at all), and will most of the time just sit in some desk drawer with a dead battery. I could think of better ways to spend money.</p>
+<p>This problem could have a very simple solution: dev-only iPhones. Remove or disable the cellular chip (you can simulate cellular networks using the Network Link Conditioner), give it an 8GB storage chip, remove apps such as Weather, Stocks, Calculator, Clock, etc., disable the App Store for all but the developer's own apps, allow any supported iOS version to be installed using Xcode, and sell at-cost, but only to developers in the iOS Developer Program.</p>
+<p>By disabling cellular and dumbing the OS down to only include parts that developers can interact with, it becomes pretty useless for people who are just trying to look for a sweet deal on an iPhone/iPod touch. The win for developers is that they only need 1 of each device, but they're also <a href="https://www.macrumors.com/2014/09/23/iphone-6-parts-cost-samsung-a8/">cheaper</a>.</p>
+<p>You could even take it a step further and set memory, CPU and screen size limits (meaning only use 4" of the available 5.5"), allowing you to simulate an iPhone 5s on an iPhone 6 Plus. Now developers only need to buy the iPhone 6 Plus to be mostly covered, though I'd still recommend also getting an iPhone 5 or iPhone 5c for 32-bit devices.</p>
+<p>I may be way off course here due to technical implications or limitations that I'm not aware of. There are also still cases in which you'd need an actual device on the actual software as consumers use it. Developers don't always need to test against <strong>every</strong> iOS version on <strong>every</strong> supported iOS device. But for developers who do and don't want to spend the money on all these different devices, a dev-only iPhone may be exactly what they need.</p></div>
+</div>	
+<div class='article'>
+    <h2 class="article-title"><a href="../../2014/09/15/uimenucontroller-and-the-responder-chain/">UIMenuController and the responder chain</a></h2>
+    <div class="article-content"><p>The responder chain is a very important paradigm in the world of iOS development, and not terribly hard to understand. Dozens of articles have been written about it, and with some examples, the concept of finding a responder to a certain event by traversing a chain of potential responders is fairly straight-forward.</p>
+<p>But today it completely threw me off. The goal was very simple and has been done many times before: showing a label whose text can be copied to the clipboard. Having never worked with <code>UIMenuController</code>, I fired up Google and of course found an excellent <a href="https://nshipster.com/uimenucontroller/">NSHipster</a> article near the top.</p>
+<p>I did as the article said. I created my <code>UILabel</code> subclass (only accepting <code>copy:</code> as an action it can perform), added my gesture recognizer, and configured and showed the <code>UIMenuController</code>. It worked, but instead of only showing the Copy menu item, it also showed the Select All item.</p>
+<p>Well, that's weird. I implemented <code>canPerformAction:withSender:</code> like this:</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span class="normal">1</span>
+<span class="normal">2</span>
+<span class="normal">3</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="p">-</span> <span class="p">(</span><span class="kt">BOOL</span><span class="p">)</span><span class="nf">canPerformAction:</span><span class="p">(</span><span class="kt">SEL</span><span class="p">)</span><span class="nv">action</span><span class="w"> </span><span class="nf">withSender:</span><span class="p">(</span><span class="kt">id</span><span class="p">)</span><span class="nv">sender</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">action</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="k">@selector</span><span class="p">(</span><span class="k">copy</span><span class="o">:</span><span class="p">);</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
+</code></pre></div></td></tr></table></div>
+
+<p>I made sure that this method really only returned <code>YES</code> for the Copy item, proceeded to explicitly return <code>NO</code> for <code>selectAll:</code> and, when that failed as well, even changed the implementation of this method to just return <code>NO</code> for <strong>any</strong> item. But Select All doesn't take <code>NO</code> for an answer, and it stubbornly showed up anyway! I was baffled and could not get rid of this Select All item.</p>
+<p>I did some research, and learned that <code>UIMenuController</code> uses the responder chain to figure out what items to show. Furthermore, the documentation for <code>canPerformAction:withSender:</code> read:</p>
+<blockquote>
+<p>This default implementation of this method returns YES if the responder class implements the requested action and calls the next responder if it does not.</p>
+</blockquote>
+<p>That would explain the problem, if it weren't for the fact that Select All was the only other item that showed. Cut, Paste, Select, etc. did not. What was so special about Select All that no matter what I did, it always decided to make an unwanted appearance?</p>
+<p>Finally I saw it. One of the last methods of the view controller that created this label had a method named, you guessed it, <code>selectAll:</code>. I didn't immediately connect the dots, but at least renaming that method to <code>selectAllContacts:</code> (which was a better name for that method anyway) got rid of Select All.</p>
+<p>But how? I returned <code>NO</code> from my label's <code>canPerformAction:withSender:</code> for all actions except <code>copy:</code>. This means that for all other actions (see the informal <code>UIResponderStandardEditActions</code>), the next responder in the chain would be called. And (if necessary) the next, and the next.</p>
+<p>At some point, my view controller, which participates in the responder chain, became the first responder and returned <code>YES</code> for the <code>selectAll:</code> action, simply because the method was implemented and part of <code>UIResponderStandardEditActions</code>.</p>
+<p>So if implementing a method in that protocol is all that's needed to show the corresponding menu item, that would mean that implementing <code>canPerformAction:withSender:</code> in my <code>UILabel</code> subclass was unnecessary. I removed the method altogether and sure enough, the Copy menu item was still there. Problem solved.</p></div>
+</div>	
+<div class='article'>
+    <h2 class="article-title"><a href="../../2014/08/10/xcode-objective-c-oddities/">Xcode & Objective-C Oddities</a></h2>
+    <div class="article-content"><p>Any developer that has worked with Xcode to write a little more than just "Hello, World" knows that Xcode and Objective-C have their quirks. Chances are you have heard of <a href="https://twitter.com/TextFromXcode">@TextFromXcode</a>, the Twitter handle that portrays Xcode as a high school bully in fake text conversations like this:</p>
+<p><img alt="Xcode Bully" src="https://cl.ly/image/0I2P191S0Q2k/20140227.PNG"></p>
+<p>But it's not always Xcode that makes Apple platform developers sometimes frown and sigh. Sometimes it's the developers themselves, sometimes it's the documentation, and sometimes a hidden gem from within Apple frameworks makes an appearance. I've compiled a short list of things I've encountered. Because it's Sunday and I didn't have anything better to do.</p>
+<h2 id="uigobblergesturerecognizer"><code>UIGobblerGestureRecognizer</code></h2>
+<p>Say what? A "<a href="https://github.com/nst/iOS-Runtime-Headers/blob/master/Frameworks/UIKit.framework/UIGobblerGestureRecognizer.h"><code>gobbler</code></a>" recognizer? Does it recognize when the user imitates a turkey? Well, maybe, but according to <a href="https://twitter.com/ortwingentz/status/225508227234791424">BJ Homer</a>, it is used to avoid recognition of a gesture while animations are in progress. Ah of course! Now the name "gobbler" makes perfect sense! 😶</p>
+<h2 id="uitapandahalfrecognizer"><code>UITapAndAHalfRecognizer</code></h2>
+<p>Speaking of gesture recognizers, there's another remarkable one that lives in the private section of UIKit: <code>UITapAndAHalfRecognizer</code>. This is a private subclass of <code>UIGestureRecognizer</code> that records "a tap and a half".</p>
+<p>So what does that mean? Does it detect whether the user goes in for a second tap, but never actually touches the screen? Or does the user touch the screen ever so slightly that the second tap can hardly be considered a complete tap? Nope! This recognizer fires when a second tap stays on the screen. Not sure for what functionality Apple needs this, but it's been around since at least iOS 4, so it probably has a purpose.</p>
+<h2 id="naming-is-hard">Naming is hard</h2>
+<blockquote>
+<p>There are only two hard things in Computer Science: cache invalidation and naming things.<br>
+- Phil Karlton</p>
+</blockquote>
+<p>Naming <strong>is</strong> hard, but Objective-C developers always say that verbosity is one of Objective-C's strengths because its naming conventions are self-documenting. Normally I'd agree, but in this case, I think Apple may want to consider a different name.</p>
+<p><a href="https://developer.apple.com/library/prerelease/ios/releasenotes/General/iOS80APIDiffs/frameworks/HomeKit.html"><code>HMCharacteristicValueLockMechanismLastKnownActionUnsecuredUsingPhysicalMovementExterior</code></a> is a brand new constant in iOS 8 and has got to be one of the longest constants that's available in iOS. Try saying it without taking a breath in the middle. </p>
+<p>I found it in the iOS 8 API diffs, but it did make me wonder. What is the longest Objective-C method available in Cocoa Touch? Well, a quick Google search led to a blog post by <a href="https://initwithstyle.net/2013/10/in-search-of-the-longest-method">Stuart Sharpe</a>, who used the Objective-C runtime to generate a list of methods in the iOS 7 SDK.</p>
+<p>Turns out, the longest method in the iOS 7 SDK is</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span class="normal"> 1</span>
+<span class="normal"> 2</span>
+<span class="normal"> 3</span>
+<span class="normal"> 4</span>
+<span class="normal"> 5</span>
+<span class="normal"> 6</span>
+<span class="normal"> 7</span>
+<span class="normal"> 8</span>
+<span class="normal"> 9</span>
+<span class="normal">10</span>
+<span class="normal">11</span>
+<span class="normal">12</span>
+<span class="normal">13</span>
+<span class="normal">14</span>
+<span class="normal">15</span>
+<span class="normal">16</span>
+<span class="normal">17</span>
+<span class="normal">18</span>
+<span class="normal">19</span>
+<span class="normal">20</span>
+<span class="normal">21</span>
+<span class="normal">22</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="o">+</span><span class="p">[</span><span class="n">CUIShapeEffectStack</span><span class="w"> </span><span class="n">shapeEffectSingleBlurFrom</span><span class="o">:</span><span class="w"></span>
+<span class="w">                               </span><span class="nl">withInteriorFill</span><span class="p">:</span><span class="w"></span>
+<span class="w">                                         </span><span class="nl">offset</span><span class="p">:</span><span class="w"></span>
+<span class="w">                                       </span><span class="nl">blurSize</span><span class="p">:</span><span class="w"></span>
+<span class="w">                                   </span><span class="nl">innerGlowRed</span><span class="p">:</span><span class="w"></span>
+<span class="w">                                 </span><span class="nl">innerGlowGreen</span><span class="p">:</span><span class="w"></span>
+<span class="w">                                  </span><span class="nl">innerGlowBlue</span><span class="p">:</span><span class="w"></span>
+<span class="w">                               </span><span class="nl">innerGlowOpacity</span><span class="p">:</span><span class="w"></span>
+<span class="w">                                 </span><span class="nl">innerShadowRed</span><span class="p">:</span><span class="w"></span>
+<span class="w">                               </span><span class="nl">innerShadowGreen</span><span class="p">:</span><span class="w"></span>
+<span class="w">                                </span><span class="nl">innerShadowBlue</span><span class="p">:</span><span class="w"></span>
+<span class="w">                             </span><span class="nl">innerShadowOpacity</span><span class="p">:</span><span class="w"></span>
+<span class="w">                                   </span><span class="nl">outerGlowRed</span><span class="p">:</span><span class="w"></span>
+<span class="w">                                 </span><span class="nl">outerGlowGreen</span><span class="p">:</span><span class="w"></span>
+<span class="w">                                  </span><span class="nl">outerGlowBlue</span><span class="p">:</span><span class="w"></span>
+<span class="w">                               </span><span class="nl">outerGlowOpacity</span><span class="p">:</span><span class="w"></span>
+<span class="w">                                 </span><span class="nl">outerShadowRed</span><span class="p">:</span><span class="w"></span>
+<span class="w">                               </span><span class="nl">outerShadowGreen</span><span class="p">:</span><span class="w"></span>
+<span class="w">                                </span><span class="nl">outerShadowBlue</span><span class="p">:</span><span class="w"></span>
+<span class="w">                             </span><span class="nl">outerShadowOpacity</span><span class="p">:</span><span class="w"></span>
+<span class="w">                            </span><span class="nl">hasInsideShadowBlur</span><span class="p">:</span><span class="w"></span>
+<span class="w">                           </span><span class="nl">hasOutsideShadowBlur</span><span class="p">:]</span><span class="w"></span>
+</code></pre></div></td></tr></table></div>
+
+<p>Unless iOS 8 introduces a longer method name, this one takes the cake with 22 arguments and 352 characters. If you have Xcode configured to line-break at 80 characters (yes, some people still do that), this method signature alone, without any arguments, takes up 5 lines.</p>
+<p>Another beauty of a method lives in Core Animation and its method signature is </p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span class="normal">1</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="o">-</span><span class="w"> </span><span class="p">[</span><span class="bp">CAMediaTimingFunction</span><span class="w"> </span><span class="n">functionWithControlPoints</span><span class="o">::::</span><span class="p">]</span><span class="w"></span>
+</code></pre></div></td></tr></table></div>
+
+<p><code>::::</code>? Is that even valid syntax? Yes, and you call the method like this:</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span class="normal">1</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="p">[</span><span class="bp">CAMediaTimingFunction</span><span class="w"> </span><span class="n">functionWithControlPoints</span><span class="o">:</span><span class="mf">0.25</span><span class="w"> </span><span class="o">:</span><span class="mf">.50</span><span class="w"> </span><span class="o">:</span><span class="mi">0</span><span class="w"> </span><span class="o">:</span><span class="mf">1.0</span><span class="p">];</span><span class="w"></span>
+</code></pre></div></td></tr></table></div>
+
+<p>Was an array really too much to ask...?</p>
+<h2 id="nsdate-nildate"><code>[NSDate nilDate]</code></h2>
+<p>This one has made the rounds throughout the developer community before, but I'm adding it here in case you haven't seen it yet. Try running the following code:</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span class="normal">1</span>
+<span class="normal">2</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="bp">NSCalendar</span><span class="w"> </span><span class="o">*</span><span class="n">calendar</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="bp">NSCalendar</span><span class="w"> </span><span class="n">currentCalendar</span><span class="p">];</span><span class="w"></span>
+<span class="p">[</span><span class="n">calendar</span><span class="w"> </span><span class="n">components</span><span class="o">:</span><span class="n">NSCalendarUnitYear</span><span class="w"> </span><span class="n">fromDate</span><span class="o">:</span><span class="nb">nil</span><span class="w"> </span><span class="n">toDate</span><span class="o">:</span><span class="p">[</span><span class="bp">NSDate</span><span class="w"> </span><span class="n">date</span><span class="p">]</span><span class="w"> </span><span class="n">options</span><span class="o">:</span><span class="mi">0</span><span class="p">];</span><span class="w"></span>
+</code></pre></div></td></tr></table></div>
+
+<p>In the console log, you'll find the following output:</p>
+<blockquote>
+<p>*** -[__NSCFCalendar components:fromDate:toDate:options:]: fromDate cannot be nil<br>
+I mean really, what do you think that operation is supposed to mean with a nil fromDate?<br>
+An exception has been avoided for now.<br>
+A few of these errors are going to be reported with this complaint, then further violations will simply silently do whatever random thing results from the nil.</p>
+</blockquote>
+<p>Either a grumpy Apple developer woke up at the wrong side of the bed or has a great sense of humor. In any case, I wouldn't mind if more sarcastic warnings started popping up in Xcode's console.</p>
+<h2 id="defying-the-uncertainty-principle-in-ios">Defying the Uncertainty Principle in iOS</h2>
+<blockquote>
+<p>[I]n 1927, Werner Heisenberg stated that the more precisely the position of some particle is determined, the less precisely its momentum can be known, and vice versa.<br>
+<a href="https://en.wikipedia.org/wiki/Uncertainty_principle">Wikipedia</a></p>
+</blockquote>
+<p>If that's true, and it's fairly safe to assume that it is, I'd avoid using <code>-[CLLocation speed]</code> for apps like radar detectors. I wonder if we're ever going to get a <code>-[CLSpeed location]</code> method, which has a more accurate speed and a less accurate location.</p>
+<h2 id="xcode-at-it-again">Xcode at it again</h2>
+<p>Lastly, the following is a screenshot I personally took at work that completely baffled me.</p>
+<p><img src="/images/XcodeScreenshot.png" style="width: 700px; margin: 0 auto; display: block;"></p>
+<p>This would not go away, even after cleaning the build folder and rebuilding. In the end I resolved the problem by running</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span class="normal">1</span>
+<span class="normal">2</span></pre></div></td><td class="code"><div><pre><span></span><code>$ git stash
+$ git reset --hard HEAD
+</code></pre></div></td></tr></table></div>
+
+<p>Then, after a clean build and <code>git stash pop</code> the errors finally went away...</p>
+<p>That's just a few things I've found while working with Xcode and Objective-C over the years. If you have more, please share!</p></div>
+</div>	
+<div class='article'>
+    <h2 class="article-title"><a href="../../2014/07/25/objective-c-prefixes-a-thing-of-the-past/">Objective-C prefixes: a thing of the past?</a></h2>
+    <div class="article-content"><p>This past week, there was, again, a lot to do about Objective-C and prefixing. To most iOS developers, the story sounds familiar: one camp is strongly in favor, another camps is strongly against, and a third camp couldn't really care less.</p>
+<p>Unless I'm unaware of any other platforms where the discussion was also a hot topic, this time I was at least a little responsible for instigating a debate that will never see a clear winner, with the following tweet:</p>
+<blockquote class="twitter-tweet" lang="en" align="center"><p><a href="https://twitter.com/bobmccune">@bobmccune</a> <a href="https://twitter.com/invalidname">@invalidname</a> Also no option to enter class prefix anymore, even for Objective-C projects</p>&mdash; Scott Berrevoets (@ScottBerrevoets) <a href="https://twitter.com/ScottBerrevoets/statuses/492012762940588033">July 23, 2014</a></blockquote>
+<script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script>
+
+<p>Let's first clear up that Swift doesn't <strong>need</strong> to have class prefixes, because it has built-in support for namespacing through modules. From what I read, earlier Xcode 6/Swift betas did not have module support, but at least we know it's coming before 1.0 hits.</p>
+<p>However, this doesn't solve any of the problems Objective-C has, and so it was surprising to see this field was removed when creating a new Objective-C project. You can still set this prefix per project <strong>after</strong> you create it, but since most Xcode templates create source files for you, those files will be created without a prefix.</p>
+<p>I noticed the lack of this option, as well as the lack of a file template for Objective-C categories, back in beta 2 and immediately filed two bugs. The missing file template is as of this writing still open, but the class prefix got closed a few days later. Normally, radars aren't known for their wealth of information related to the issue the radar was filed for, but Apple Engineering made an exception this time.</p>
+<blockquote>
+<p>After much deliberation, engineering has removed this feature.</p>
+<p>This was removed intentionally. We are no longer encouraging the use of prefixes for app code, and for frameworks, you can create a prefix in the Project Inspector after creating the project.</p>
+</blockquote>
+<p>Okay, so no more prefixes for app code. Didn't see that coming. Does Apple now encourage developers to start making extensive use of frameworks?</p>
+<blockquote>
+<p>No. If you want to use a prefix, you can set one in the project inspector. Especially for frameworks, this is easy since the template creates no source files that should be prefixed. If you really want to prefix the classes in your main app binary, you might need to rename the few that are created initially, but the recommendation is generally that frameworks should use prefixes (in Obj-C, not in Swift) to avoid namespace issues, and apps generally don't need to.</p>
+</blockquote>
+<p>The key part here is in the last few words: "don't need to".</p>
+<p>Third-party libraries, especially frameworks that don't ship with the source code, need a prefix, because the chances of naming collisions with other code or, even worse, other libraries is significant. Users of the libraries can't (and even if they can, are likely not willing to) change the name of your classes because they collide with some other library's code.</p>
+<p>"App code" on the other hand, is very unique to one particular app. It contains the UI and some of the business logic that puts your app together. Most view controllers, for example, are app code. App code is not likely to be reused, because it's very specific in what it does and is therefore unlikely to collide with other classes (assuming you name your classes well). If you think "well, this functionality may be reused in some other project", it's a great candidate for a framework!</p>
+<p>I was always a big fan of the class prefixes, and while it was sometimes hard to come up with what prefix to use, I've come to actually <strong>like</strong> how they look, too. Classes that don't have a prefix feel like they're missing something. However, the guideline of "prefix frameworks, not app code" does make sense, so I will start using that from now on as well.</p></div>
+</div>	
+
+<div class="pagination">
+<ul>
+    <li class="prev"><a href="../../page/2/">&larr; Previous</a></li>
+    <li class="next disabled">Next &rarr;</li>
+</ul>
+</div>
+
+</body>
+</html>

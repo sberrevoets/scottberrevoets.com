@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+          <title>@objc creates a wrong class name in Objective-C - Scott Berrevoets</title>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <meta name="description" content="There are some unexpected compiler issues when using @objc to rename a class in Xcode 6.1" />
+
+
+        <link rel="stylesheet" type="text/css" href="../../../../theme/css/style.css" />
+</head>
+
+<body id="index" class="home">
+        <header id="banner" class="body">
+            <h1><a href="../../../../">Scott Berrevoets</a></h1>
+
+            <ul id="social">
+                <li><a href="https://twitter.com/ScottBerrevoets"><img src="../../../../theme/images/twitter.svg"></a></li>
+                <li><a href="https://github.com/sberrevoets"><img src="../../../../theme/images/github.svg"></a></li>
+                <li><a href="http://stackoverflow.com/users/751268/scott-berrevoets"><img src="../../../../theme/images/stackoverflow.svg"></a></li>
+                <li><a href="https://www.youtube.com/watch?v=dQw4w9WgXcQ"><img src="../../../../theme/images/youtube.svg"></a></li>
+            </ul>
+        </header><!-- /#banner -->
+        <nav id="menu"><ul>
+            <li><a href="/">Blog</a></li>
+            <li><a href="/archive.html">Archive</a></li>
+            <li><a href="../../../../about.html">About</a></li>
+        </ul></nav><!-- /#menu -->
+<section id="content" class="body">
+  <header>
+      <h2 class="article-title">@objc creates a wrong class name in Objective-C</h2>
+ 
+    <time class="published" datetime="2014-12-15T00:00:00-08:00">
+      15 December 2014
+    </time>
+  </header>
+  <div class="article-content">
+    <p>A few months ago, I decided I'd get started porting <a href="https://github.com/sberrevoets/SDCAlertView">SDCAlertView</a> to Swift, but I was only a few minutes in until I ran into a problem I had no idea how to solve: I couldn't get my class names right in both Swift and Objective-C. Even though there are copious amounts of documentation covering the interoperability of Swift and Objective-C, somehow I couldn't get it to work and I brushed it off as me being stupid.</p>
+<p>Tonight I tried again, and after some more research it turned out that the behavior I saw was actually a bug in the compiler! I'm surprised that the latest Xcode version is 6.1.1 and that apparently not enough people have run into this problem for Apple to make it a priority.</p>
+<p>The bug can easily be reproduced by creating an Objective-C project in Xcode, and then adding the following Swift class:</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span class="normal">1</span>
+<span class="normal">2</span>
+<span class="normal">3</span>
+<span class="normal">4</span>
+<span class="normal">5</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="kd">import</span> <span class="nc">UIKit</span>
+
+<span class="kr">@objc</span><span class="p">(</span><span class="n">SDCMyLabel</span><span class="p">)</span>
+<span class="kd">class</span> <span class="nc">MyLabel</span><span class="p">:</span> <span class="bp">UILabel</span> <span class="p">{</span>
+<span class="p">}</span>
+</code></pre></div></td></tr></table></div>
+
+<p>You would expect that, once you import <code>MyProject-Swift.h</code> in your Objective-C class, you could instantiate a class named <code>SDCMyLabel</code>. However, instead, you can only instantiate a class named <code>MyLabel</code>.</p>
+<p>I found this very recent <a href="https://stackoverflow.com/questions/26132823/name-of-swift-class-when-exposed-to-objective-c-code-does-not-respect-the-objc">Stack Overflow</a> question which pretty much asks the same thing. "milos" gives a great answer by explaining the observed behavior in Xcode 6.0.1, and the expected behavior according to the WWDC session <a href="https://developer.apple.com/videos/wwdc/2014/">video</a>.</p>
+<p>After reading the answer and watching the relevant parts of the vide, I slightly changed my previously-drawn conclusion from "I'm stupid" to "Xcode's stupid" and filed <a href="rdar://19261044">rdar://19261044</a>. If you're running into the same problem, please duplicate and cross your fingers the engineers at the fruit company will fix it soon.</p>
+  </div><!-- /.entry-content -->
+</section>
+
+</body>
+</html>

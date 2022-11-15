@@ -1,0 +1,920 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+        <title>Scott Berrevoets</title>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <link rel="stylesheet" type="text/css" href="./theme/css/style.css" />
+</head>
+
+<body id="index" class="home">
+        <header id="banner" class="body">
+            <h1><a href="./">Scott Berrevoets</a></h1>
+
+            <ul id="social">
+                <li><a href="https://twitter.com/ScottBerrevoets"><img src="./theme/images/twitter.svg"></a></li>
+                <li><a href="https://github.com/sberrevoets"><img src="./theme/images/github.svg"></a></li>
+                <li><a href="http://stackoverflow.com/users/751268/scott-berrevoets"><img src="./theme/images/stackoverflow.svg"></a></li>
+                <li><a href="https://www.youtube.com/watch?v=dQw4w9WgXcQ"><img src="./theme/images/youtube.svg"></a></li>
+            </ul>
+        </header><!-- /#banner -->
+        <nav id="menu"><ul>
+            <li><a href="/">Blog</a></li>
+            <li><a href="/archive.html">Archive</a></li>
+            <li><a href="./about.html">About</a></li>
+        </ul></nav><!-- /#menu -->
+
+<div class='article'>
+    <h2 class="article-title"><a href="./2022/11/15/migration-strategies-in-large-codebases/">Migration strategies in large codebases</a></h2>
+    <div class="article-content"><p>Code migrations are a fact of life for large codebases. New technologies pop up,
+platforms see improvements, and programming languages get new features you might
+want to adopt. Not performing these migrations and keeping up with the times is
+simply not an option in most cases. While some migrations are easy 1 for 1
+replacements that can/should be scripted, that’s not true for the more
+“semantic” migrations—the new code accomplishes the same but in an entirely
+different manner.</p>
+<p>We’ve done a number of these semantic migrations in Lyft’s mobile codebases and
+while we’ve learned something from every one of them (and applied the learnings
+the next time), they only get harder as time goes on.</p>
+<p>What makes migrations so difficult? This generally comes down to how development
+works in large codebases: there is no 1 mobile team, but rather a lot of
+vertical teams (e.g. payments, new user experience, etc.) that all build their
+own features, using shared foundational code and architectural patterns. The
+coordination of dozens of teams on the progress of a migration is what makes
+this difficult:</p>
+<ul>
+<li>Codebases tend to grow ad infinitum, so there is simply more code to migrate
+  each time and there are more “weird” cases that make automating a migration
+  difficult.</li>
+<li>Getting (and keeping) buy-in and commitment. Teams all have their own plans
+  and priorities, and migrating code from pattern A to pattern B is often not
+  high on the priority list. If it is, that could change before the migration is
+  completed.</li>
+<li>Senior engineers on those teams tend to have good judgment on the importance
+  of reducing tech debt and can weigh it against other priorities coming from
+  product managers and designers. Junior engineers that get pulled in 4
+  different directions are less likely to push back against their direct
+  teammates, so tech debt tickets are moved to an ever-expanding Jira backlog.</li>
+<li>Teams are not static. You might inherit code written years ago that still
+  works and is in use, but you didn’t even know it existed until last week. And
+  now it needs to be migrated? Or it’s that one feature that is somehow mission
+  critical but no one knows how to even get in the state to show it, let alone
+  test new code in it.</li>
+</ul>
+<p>So how do we get these migrations done anyway? There is no silver bullet, but we
+have started using a number of strategies to make these migrations less
+painful—and almost all of them have to do with improving the communication and
+expectations everyone involved has.</p>
+<h2 id="migration-tracker">Migration tracker</h2>
+<p>The biggest leap forward for us was the rollout of an in-house web dashboard
+that shows progress on all ongoing migrations in our iOS and Android codebases.
+It shows all the important information anyone could want to know: the start
+date, (projected) completion date, links to documentation and support channels,
+relative priority (more on that below), etc.</p>
+<p>But the real win is automatic progress tracking. Every migration is defined as
+the presence of a certain pattern in the codebase we want to get rid of. A cron
+job records all instances of that pattern on the main branch once a day, so we
+know exactly how much code has been migrated and how much is left.</p>
+<p>Furthermore, our codebase is heavily modularized, and through CODEOWNERS every
+module is required to define what team owns it. This data is shared with the
+Migration Tracker, so it can give a detailed breakdown by module <em>and by team</em>
+of how much unmigrated code is left. This is extremely helpful in understanding
+which teams might need extra time, help, or nudging in getting everything done.</p>
+<h2 id="timeline">Timeline</h2>
+<p>The “deadline” of a migration needs to be carefully chosen. Not giving people
+enough time makes them not do the work at all, giving them too much time means
+people will procrastinate and needlessly extend the migration time. If it looks
+like teams are not going to make the deadline (as projected by the Migration
+Tracker), we ask them when they <em>can</em> get it done. We usually accept whatever
+answer the team gives, but hold them accountable to that since they themselves
+picked that timeframe.</p>
+<h2 id="priorities">Priorities</h2>
+<p>Teams that are far behind in code modernization might have to migrate their code
+in multiple ways. We give each migration a priority (P0/P1/P2/P3) to give teams
+a sense of where to focus their tech debt energy first.</p>
+<p>A P0 migration is a “must-do-or-else” (externally mandated changes, tight
+deadlines, extremely high impact on overall trajectory of the codebase or
+product, etc.), a P1 is high impact but not as urgent, P2 is a nice to have, and
+P3 is almost more of an FYI.</p>
+<p>This helps everyone understand where they should focus their energy, instead of
+seeing a potentially long list of items that are all seemingly equally important
+migrations.</p>
+<h2 id="incremental-value">Incremental value</h2>
+<p>Where possible (which is most cases), we try to bring incremental value as a
+migration is being performed. For example, if we set out to replace all uses of
+class A with class B because class B performs better, the places where class B
+is used should see that performance increase before the rest of the code has
+been migrated. This has a few benefits:</p>
+<ul>
+<li>It rewards teams that have done their part of the overall migration</li>
+<li>It’s easier to convince people doing their part has value since they
+  themselves immediately see that value</li>
+<li>It de-risks long-running migrations—if it gets to 95% completion we realize
+  95% of the benefits and not 0%</li>
+</ul>
+<h2 id="only-invest-in-the-new">Only invest in the new</h2>
+<p>The initial value (like performance improvements in the example above) teams get
+from migrating their own code might not be enough to convince them to do it. But
+as more and more improvements are made to “class B” (e.g. API ergonomics,
+integrated analytics, compatibility with other systems) that “class A” doesn’t
+have, the value proposition for the migration changes with time. We no longer
+update A, which means there's some amount of bit rot and it becomes more
+cumbersome to use.</p>
+<p>In extreme cases we could even remove features of class A that would necessitate
+a migration, but we haven’t done that so far and would like to avoid it to avoid
+losing goodwill with teams.</p>
+<h2 id="develop-great-partnerships">Develop great partnerships</h2>
+<p>Getting adoption of a new pattern or tool is difficult even if it doesn’t
+involve a new migration, because there is no precedent. Early adopters will hit
+all the rough edges and have often incomplete documentation and no sample code.
+The developer experience isn’t great (yet), so we make ourselves very available
+to their needs. We take their feedback seriously and address it promptly, sit
+down with them to help solve their issues, and generally spend a lot of time
+with them working out the kinks. We do this 1) to build more confidence that
+what we built is production-ready and 2) to recognize/reward people that want to
+try new things by reducing as much of the growing pains as possible.</p>
+<p>Of course, good developer experience is important for all teams and not just
+early adopters, but piloting teams can help us get the ball rolling with other
+teams as well. Positive reviews from users of Great New Thing is different than
+hearing it from the developers of Great New Thing.</p>
+<h2 id="avoid-new-uses">Avoid new uses</h2>
+<p>To avoid creating a moving target, as soon as we start a new migration we lock
+down the uses of that pattern to only the current ones and no longer accept new
+uses of this pattern. Depending on the situation we have a few different ways of
+accomplishing this:</p>
+<ul>
+<li>We add a linter rule or sometimes entirely new type of (custom) linter and
+  introduce exceptions to all existing use cases</li>
+<li>We rename a class or method by prepending the current name with <code>DEPRECATED</code>.
+  This isn’t particularly elegant, but it alerts the author and PR reviewers
+  that new legacy code is being introduced, which usually has them dig deeper
+  and figure out what to do instead.</li>
+<li>If an entire module is being deprecated, we don’t easily let new modules
+  depend on it. Exceptions are always possible, but engineers have to talk to us
+  first so we can guide them in the right direction.</li>
+</ul>
+<p>These measures are just to generate awareness that a pattern is outdated, it
+doesn’t always communicate why it’s being deprecated and what’s replacing it.
+But if people come to us asking for an exception we can explain it or link to
+docs, an opportunity we wouldn’t have had if we didn’t do any of the things
+above.</p>
+<h2 id="support-support-support">Support, support, support</h2>
+<p>And that brings me to the most critical and time-consuming piece: support. This
+means helping people with questions, plugging gaps new patterns have compared to
+the old ones, checking in with people on progress, celebrating the completion of
+major (or all!) migrations with everyone that helped contribute, assisting teams
+that are having difficulty prioritizing the work, and anything else that gets
+the work done.</p>
+<p>Migrations are a very specific type of codebase maintenance due to the large
+footprint they often have in a lot of the codebase. It’s an all-hands on deck
+situation and requires proper coordination and communication, sometimes for
+years on end. It’s hard to get them right and we’re still fine-tuning our
+strategies but applying the learnings I described here have made us become
+better at them. I can only hope one day refactoring tools become smart enough to
+automate the work for us.</p></div>
+</div>	
+<div class='article'>
+    <h2 class="article-title"><a href="./2022/09/28/human-factors-in-choosing-technologies/">Human Factors in Choosing Technologies</a></h2>
+    <div class="article-content"><p>I recently saw a thread where someone wanted to introduce a more capable
+architecture pattern than what most apps start out with in a small team, but
+received some pushback from teammates and was looking for help in countering
+their arguments.</p>
+<p>The thread for the most part focused on the technical benefits of the proposed
+pattern, such as testability, separation of concerns, modularity, etc. These are
+all valid trade-offs to consider: we’ve done the same at Lyft when figuring out
+what architectures would suit us best. This is also not unique to architectures,
+any big technology that influences the overall direction of the codebase:
+SwiftUI vs. UIKit, RxSwift vs. Combine vs. async/await, etc.</p>
+<p>But over time I’ve realized that even with a technically “perfect” solution (a
+real oxymoron!), there is an entirely different yet equally important factor to
+consider: who are the people using it—now and in the future? The success of a
+particular technology is highly dependent on the answer to that question, and it
+plays a huge role at different stages of the development of that technology.</p>
+<p>In the thread I mentioned above there was very little focus on the human aspect
+of the proposal, so I wanted to list a number of things that I personally ask
+myself and our teams before considering moving forward:</p>
+<p><strong>How much is the onboarding/ramp-up cost?</strong> While I generally think short-term
+pain is worth long-term gain, onboarding is often a continuous cost. New people
+join, you might have interns, non-mobile engineers wanting to make quick
+contributions, etc. If those people first need a lot of time to ramp up, it’s
+worth wondering if the benefits are worth it, or how to reduce that burden. For
+example, while we currently aren't using any SwiftUI at Lyft, we have a layer of
+<a href="http://www.scottberrevoets.com/2021/10/14/ios-architecture-at-lyft/#declarative-ui">sugar syntax on top of UIKit</a> that enables us to use SwiftUI-like syntax anyway.
+This makes it easier for both new people that join and already know SwiftUI and
+for everybody to move over to SwiftUI if/when we're ready for that.</p>
+<p><strong>How easy is it to undo?</strong> Or: what is the cost of mistakes? If things don’t
+pan out the way we want them to, how easily could we switch to something else?
+The more difficult switching back is, the higher the commitment level and the
+more we need to be sure it’s worth it. This applies both to the internals of the
+framework and how the code that uses the framework is structured.</p>
+<p><strong>Is it easy to do the right thing?</strong> This one is straightforward: if it’s easy
+to do the right thing it’s more likely people will do the right thing and
+achieve the architecture’s potential more. Conversely, if it’s easy to do the
+wrong thing, the benefits aren’t realized as much. Especially considering my
+previous point, if it’s hard to undo bad usage it’s maybe worth going back to
+the drawing board.</p>
+<p><strong>How much support is available?</strong> Popular technologies have a lot of online
+material available for support in the form of Stack Overflow questions and
+answers, blog posts, videos, open source code + discussions on GitHub, etc. A
+home-built solution means this knowledge only lives in-house which increases the
+bus factor. The same is true for very opinionated third-party libraries like
+RxSwift or The Composable Architecture. I’m a fan of both, but without fully
+understanding how they’re implemented you’re at the mercy of the developers and
+contributors of these libraries for years to come.</p>
+<p><strong>How much institutional knowledge does it require?</strong> Good architectures hide
+domain complexity for its consumers, and incur the complexity internally. To
+some extent that’s fine, but if the internals become so complicated that few
+people know how it works there is again a high bus factor. It can absolutely be
+worth putting some complexity/boilerplate burden onto feature owners to avoid
+making complex abstractions that are hard to change in the future once it’s used
+everywhere and the original developers have left.</p>
+<p><strong>How much effort does it take to see 100% adoption?</strong> Depending on the size of
+the existing code base, it could take a long time to get 100% adoption. That can
+be OK if this is the codebase’s first serious architecture, but if it’s version
+5 and some parts of the codebase still use version 1 through 3, it’s probably
+worth removing those first and reducing <a href="http://mikehadlow.blogspot.com/2014/12/the-lava-layer-anti-pattern.html">lava layers</a>. Even if the change
+from version 10 to 11 is small and easy, the fragmentation of the codebase
+inhibits developer productivity. The quicker the migration the better, and if
+the codebase can safely be migrated through automation that’s the best case
+outcome.</p>
+<p>But the most important one of all: <strong>do people actually like the architecture?</strong>
+No one likes working in a codebase where everything is a hassle, the underlying
+concepts never seem to make sense, abstractions are leaky, and you seem to
+always have to do work for it instead of it working for you. Those codebases
+diminish the team’s motivation levels and will affect many of the other points
+from above.</p>
+<p>On the flip side, if people like the proposed patterns, they will put in a lot
+more work in to use them correctly, try harder to do the right thing, are
+willing to help others, etc. If not, forcing patterns people don’t like could
+lead to developer unhappiness and attrition. We have more than a few examples of
+this at Lyft, where a slightly inferior technical solution is overall much more
+beneficial because the pattern is a bit simpler to use than the alternative.</p>
+<p>Going back to why I started writing this in the first place: in my opinion the
+question “what counterarguments can I use” is not a great first question to ask
+when it comes to convincing people your solution is the best one out there.
+Understanding <em>why</em> people are resistant is key. Sure, some people just don’t
+like change, but papering over any of the concerns above with a technically
+superior solution is a recipe for a bunch of barely-adopted technologies in a
+codebase that’s often worse off than if nothing had been done in the first
+place.</p></div>
+</div>	
+<div class='article'>
+    <h2 class="article-title"><a href="./2022/07/15/third-party-libraries-are-no-party-at-all/">Third-party libraries are no party at all</a></h2>
+    <div class="article-content"><p><em>What better way to end the week than with a hot take?</em></p>
+<p>In my 8 years at Lyft, product managers or engineers have often wanted to add
+third-party libraries to one of our apps. Sometimes it’s necessary to integrate
+with a specific vendor (like PayPal), sometimes it’s to avoid having to build
+something complicated, and sometimes it’s simply to not reinvent the wheel.</p>
+<p>While these are generally reasonable considerations, the risks and associated
+costs of using a third-party library are often overlooked or misunderstood. In
+some cases the risk is worth it, but to be able to determine that you first need
+to be able to define that risk accurately. To make that risk assessment more
+transparent and consistent, we defined a process of things we look at to
+determine how much risk we're incurring by integrating it and shipping it in one
+or more production apps.</p>
+<h2 id="risks">Risks</h2>
+<p>Most larger organizations, including ours, have some form of code review as part
+of their development practices. For those teams, adding a third-party library is
+equivalent to adding a bunch of unreviewed code written by someone who doesn't
+work on the team, subverting the standards upheld during code review and
+shipping code of unknown quality. This introduces risk in how the app runs,
+long-term development of the app, and, for larger teams, overall business risk.</p>
+<h3 id="runtime-risks">Runtime risks</h3>
+<p>Library code generally has the same level of access to system resources as
+general app code, but they don't necessarily apply the best practices the
+team put in place for managing these resources. This means they have access
+to the disk, network, memory, CPU, etc. without any restrictions or
+limitations, so they can (over)write files to disk, be memory or CPU hogs
+with unoptimized code, cause dead locks or main thread delays, download (and
+upload!) tons of data, etc. Worse, they can cause crashes or even <a href="https://www.theverge.com/2020/5/7/21250689/facebook-sdk-bug-ios-app-crash-apple-spotify-venmo-tiktok-tinder">crash
+loops</a>. <a href="https://github.com/facebook/facebook-ios-sdk/issues/1427">Twice</a>.</p>
+<p>Many of these situations aren't discovered until the app is already available to
+customers, at which point fixing it requires creating a new build and going
+through the review process which is often time intensive and costly. The risk
+can be somewhat mitigated by invoking the library behind a feature flag, but
+that isn't a silver bullet either (see below).</p>
+<h3 id="development-risks">Development risks</h3>
+<p>To quote a coworker: "every line of code is a liability", and this is even more
+true for code you didn't write yourself. Libraries could be slow in adopting new
+technologies or APIs holding the codebase back, or too fast causing a deployment
+target that's too high. When Apple and Google introduce new OS versions each
+year, they often require developers update their code based on changes in their
+SDKs, and library developers have to follow suit. This requires coordinated
+efforts, alignment in priorities, and the ability to get the work done in a
+timely manner.</p>
+<p>As the mobile platforms are ever-changing this becomes a continuous, ongoing
+risk, compounded by the problem that teams and organizations aren't static
+either. When a library that was integrated by a team that no longer exists needs
+to be updated, it takes a long time to figure out who should do so. It has
+proven extremely rare and extremely difficult to remove a library once it's
+there, so we treat it as a long-term maintenance cost.</p>
+<h3 id="business-risks">Business risks</h3>
+<p>As I mentioned above, modern OSes make no distinction between app code and
+library code, so in addition to system resources they also have access to user
+information. As app developers we're responsible for using that information
+properly, and any libraries are part of that responsibility.</p>
+<p>If the user grants location access to the Lyft app, any third-party library
+automatically gets access too. They could then upload that data to their own
+servers, competitors' servers, or who knows where else. This is even more
+problematic when a library needs a <em>new</em> permission we didn't already have.</p>
+<p>Similarly, a system is as secure as its weakest link but if you include
+unreviewed, unknown code you have no idea how secure it really is. Your
+well-designed secure coding practices could all be undone by one misbehaving
+library. The same goes for any policies Apple and Google put in place like "you
+are not allowed to fingerprint the user".</p>
+<h2 id="mitigating-the-risk">Mitigating the risk</h2>
+<p>When evaluating a library for production usage, we ask a few questions to
+understand the need for the library in the first place.</p>
+<p><strong>Can we build this functionality in-house?</strong></p>
+<p>In some cases we were able to simply copy/paste the parts of a library we really
+needed. In more complex scenarios, where a library talked to a custom backend we
+reverse-engineered that API and built a mini-SDK ourselves (again, only the
+parts we needed). This is the preferred option 90% of the time, but isn't always
+feasible when integrating with very specific vendors or requirements.</p>
+<p><strong>How many customers benefit from this library?</strong></p>
+<p>In one scenario, we were considering adding a very risky library (according to
+the criteria below) intended for a tiny subset of users while still exposing all
+of our users to the library. We ran the risk of something going wrong for all
+our customers in all our markets for a small group of customers we thought would
+benefit from it.</p>
+<p><strong>What transitive dependencies does this library have?</strong></p>
+<p>We'll want to evaluate the criteria below for all dependencies of the library as
+well.</p>
+<p><strong>What are the exit criteria?</strong></p>
+<p>If integration is successful, is there a path to moving it in-house? If it isn't
+successful, is there a path to removal?</p>
+<h2 id="evaluation-criteria">Evaluation criteria</h2>
+<p>If at this point the team still wants to integrate the library, we ask them to
+“score” the library according to a standard set of criteria. The list below is
+not comprehensive but should give a good indication of the things we look at.</p>
+<h3 id="blocking-criteria">Blocking criteria</h3>
+<p>These criteria will prevent us from including the library altogether, either
+technically or by company policy, and need to be resolved before we can move
+forward:</p>
+<ul>
+<li><strong>Too high deployment target/target SDKs</strong>. We support major OSes going back
+  at least 4 years so third-party libraries have to support at least that many
+  too.</li>
+<li><strong>Improper/missing LICENSE</strong>. We bundle license files with the apps to make
+  sure we can legally use the code and attribute it to the license holders.</li>
+<li><strong>No conflicting transitive dependencies</strong>. A library can't have a transitive
+  dependency we already include but at a different version.</li>
+<li><strong>Does not display its own UI</strong>. We put great care in making our products look
+  as uniform as possible, custom UIs are a detriment to that.</li>
+<li><strong>Does not use private APIs</strong>. We are not willing to risk app rejection over
+  the use of private APIs.</li>
+</ul>
+<h3 id="major-concerns">Major concerns</h3>
+<ul>
+<li><strong>Closed source</strong>. Access to the source means we can pick and choose which
+  parts of a library we want to include and how to bundle that source with the
+  rest of the app. A closed source, binary distribution is much more difficult
+  for us to integrate.</li>
+<li><strong>Builds with warnings</strong>. We have "warnings as errors" enabled, and a library
+  with build warnings is a decent indication of the overall quality of the
+  library.</li>
+<li><strong>Poor documentation</strong>. We look for high quality inline docstrings, external
+  "how to use" documentation, and meaningful change logs.</li>
+<li><strong>Binary size impact</strong>. How big is this library? Some libraries provide a lot
+  of functionality of which we only need a fraction. Especially without source
+  access it's often an all-or-nothing situation.</li>
+<li><strong>External network traffic</strong>. A library that communicates with upstream
+  servers/endpoints we have no control over could take the entire app down when
+  the server is down, bad data is sent back, etc. This also has the same privacy
+  implications I mentioned above.</li>
+<li><strong>Technical support</strong>. When things don't work as they should we need to be
+  able to report/escalate issues and get them fixed in a reasonable amount of
+  time. Open source projects are often run by volunteers and usually can't
+  commit to timelines, but at least we could make changes ourselves. This is
+  impossible without source access.</li>
+<li><strong>Inability to disable</strong>. While most libraries specifically require us to
+  initialize it, some are more "proactive" in their instantiation and will
+  perform work themselves without us ever calling into it. This means when the
+  library causes issues we have no option to turn it off through feature flags
+  or other mechanisms.</li>
+</ul>
+<p>We assign point values to all these (and a few others) criteria and ask
+engineers to tally those up for the library they want to include. While low
+scores aren't hard-rejected by default, we often ask for more justification to
+move forward.</p>
+<h2 id="final-notes">Final notes</h2>
+<p>While this process may seem very strict and the potential risk hypothetical in
+many cases, we have actual, real examples of every scenario I described in this
+blog post. Having the evaluations written down and publicly available also helps
+in conveying relative risk to people unfamiliar with how mobile platforms works
+and demonstrating we're not arbitrarily evaluating the risks.</p>
+<p>Also, I don't want to claim every third-party library is inherently bad. We
+actually use quite a few at Lyft: RxSwift and RxJava, Bugsnag's SDK, Google
+Maps, Tensorflow, and a few smaller ones for very specific use cases. But all of
+these are either well-vetted, or we've decided the risk is worth the benefit
+while actually having a clear idea of what those risks and benefits really are.</p>
+<p>Lastly, as a developer pro-tip: always create your own abstractions on top of
+the library's APIs and never call their APIs directly. This makes it much easier
+to swap (or remove) underlying libraries in the future, again mitigating some
+risk associated with long-term development.</p></div>
+</div>	
+<div class='article'>
+    <h2 class="article-title"><a href="./2021/10/14/ios-architecture-at-lyft/">iOS Architecture at Lyft</a></h2>
+    <div class="article-content"><p>June 30, 2014 was my first day at Lyft as the first iOS hire on the ~3 person
+team. The app was written in Objective-C, and the architecture was a 5000-line
+nested switch statement.</p>
+<p>Since then, the team has grown to about 70 people and the codebase to 1.5M lines
+of code. This required some major changes to how we architect our code, and
+since it had been a while since we've given an update like this, now seems as
+good a time as any.</p>
+<h2 id="requirements">Requirements</h2>
+<p>The effort to overhaul and modernize the architecture began around mid-2017.
+We started to reach the limits of the patterns we established in the 2015
+rewrite of the app, and it was clear the codebase and the team would continue to
+grow and probably more rapidly than it had in the past.</p>
+<p>The primary problems that the lack of a more mature architecture presented and
+that we wanted to solve were:</p>
+<ul>
+<li><strong>Isolation</strong>: Features were heavily intertwined, which made it difficult to
+  safely make changes</li>
+<li><strong>Testability</strong>: We were still mostly following MVC with view controllers being
+  the main source of business logic which made it difficult to test that logic</li>
+<li><strong>State management</strong>: The navigation in most of our app relied on local +
+  server state, which grew with the number of features. How and when state
+  changed then became too difficult to manage.</li>
+</ul>
+<p>There was not going to be one solution that would solve all of this inherently,
+but over the course of a few years we developed a number of processes and
+technical solutions to reduce these problems.</p>
+<h2 id="modules">Modules</h2>
+<p>First, to provide better feature separation, we introduced modules. Every
+feature had its own module, with its own test suite, that could be developed in
+isolation from other modules. This forced us to think more about public APIs and
+hiding implementation details behind them. Compile times improved, and it
+required much less collaboration with other teams to make changes.</p>
+<p>We also introduced an ownership model that ensured each module has at least one
+team that's responsible for that module's tech debt, documentation, etc.</p>
+<h3 id="module-types">Module types</h3>
+<p>After fully modularizing the app and having 700 modules worth of code, we took
+this a step further and introduced a number of <em>module types</em> that each module
+would follow.</p>
+<ul>
+<li><code>UI</code> modules only contain UI elements (views, view controllers)</li>
+<li><code>Flow</code> modules contain <a href="#flows">routing infrastructure</a></li>
+<li><code>Service</code> modules contain code to interact with endpoints related to the
+  feature's functionality</li>
+<li><code>Logic</code> modules contain pure business logic, data transformations, etc.</li>
+</ul>
+<p>Breaking modules down this way enabled us to implement dependency validators: we
+can validate that certain modules can't depend on others. For example, a logic
+module can't depend on a <code>UI</code> module, and a <code>Service</code> module can't import UIKit.</p>
+<p>This module structure also prevents complicated circular dependencies,
+e.g. a <code>Coupons</code> module depending on <code>Payments</code> and vice versa. Instead, the
+<code>Payments</code> module can now import <code>CouponsUI</code> without needing to import the full
+<code>Coupons</code> feature. It's led to micromodules in some areas, but we've generally
+been able to provide good tooling to make this easier to deal with.</p>
+<p>All in all we now have almost 2000 modules total for all Lyft apps.</p>
+<h2 id="dependency-injection">Dependency Injection</h2>
+<p>Module types solved many of our dependency tree problems at the module level,
+but we also needed something more scalable than singletons at the code level.</p>
+<p>For that we've built a lightweight dependency injection framework which we
+detailed in a <a href="https://www.youtube.com/watch?v=dA9rGQRwHGs">SLUG talk</a>. It resembles a service locator pattern, with a
+basic dictionary mapping protocols to instantiations:</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span class="normal">1</span>
+<span class="normal">2</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="kd">let</span> <span class="nv">getNetworkCommunicator</span><span class="p">:</span> <span class="n">NetworkCommunicating</span> <span class="p">=</span>
+    <span class="n">bind</span><span class="p">(</span><span class="n">NetworkCommunicating</span><span class="p">.</span><span class="kc">self</span><span class="p">,</span> <span class="n">to</span><span class="p">:</span> <span class="p">{</span> <span class="n">NetworkCommunicator</span><span class="p">()</span> <span class="p">})</span>
+</code></pre></div></td></tr></table></div>
+
+<p>The implementation of <code>bind()</code> doesn't immediately return <code>NetworkCommunicator</code>,
+but requires the object be mocked if we're in a testing environment:</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span class="normal"> 1</span>
+<span class="normal"> 2</span>
+<span class="normal"> 3</span>
+<span class="normal"> 4</span>
+<span class="normal"> 5</span>
+<span class="normal"> 6</span>
+<span class="normal"> 7</span>
+<span class="normal"> 8</span>
+<span class="normal"> 9</span>
+<span class="normal">10</span>
+<span class="normal">11</span>
+<span class="normal">12</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="kd">let</span> <span class="nv">productionInstantiators</span><span class="p">:</span> <span class="p">[</span><span class="nb">ObjectIdentifier</span><span class="p">:</span> <span class="p">()</span> <span class="p">-&gt;</span> <span class="nb">Any</span><span class="p">]</span> <span class="p">=</span> <span class="p">[:]</span>
+<span class="kd">let</span> <span class="nv">mockedInstantiators</span><span class="p">:</span> <span class="p">[</span><span class="nb">ObjectIdentifier</span><span class="p">:</span> <span class="p">()</span> <span class="p">-&gt;</span> <span class="nb">Any</span><span class="p">]</span> <span class="p">=</span> <span class="p">[:]</span>
+
+<span class="kd">func</span> <span class="nf">bind</span><span class="p">&lt;</span><span class="n">T</span><span class="p">&gt;(</span><span class="kd">protocol</span><span class="p">:</span> <span class="n">T</span><span class="p">.</span><span class="kr">Type</span><span class="p">,</span> <span class="n">instantiator</span><span class="p">:</span> <span class="p">()</span> <span class="p">-&gt;</span> <span class="n">T</span><span class="p">)</span> <span class="p">-&gt;</span> <span class="n">T</span> <span class="p">{</span>
+    <span class="kd">let</span> <span class="nv">identifier</span> <span class="p">=</span> <span class="nb">ObjectIdentifier</span><span class="p">(</span><span class="n">T</span><span class="p">.</span><span class="kc">self</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">NSClassFromString</span><span class="p">(</span><span class="s">&quot;XCTestCase&quot;</span><span class="p">)</span> <span class="p">==</span> <span class="kc">nil</span> <span class="p">{</span>
+        <span class="k">return</span> <span class="n">productionInstantiators</span><span class="p">[</span><span class="n">identifier</span><span class="p">]</span> <span class="p">??</span> <span class="n">instantiator</span><span class="p">()</span>
+    <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+        <span class="k">return</span> <span class="n">mockedInstantiators</span><span class="p">[</span><span class="n">identifier</span><span class="p">]</span><span class="o">!</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></td></tr></table></div>
+
+<p>In tests, the mock is required or the test will crash:</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span class="normal">1</span>
+<span class="normal">2</span>
+<span class="normal">3</span>
+<span class="normal">4</span>
+<span class="normal">5</span>
+<span class="normal">6</span>
+<span class="normal">7</span>
+<span class="normal">8</span>
+<span class="normal">9</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="kr">final</span> <span class="kd">class</span> <span class="nc">NetworkingTests</span><span class="p">:</span> <span class="n">XCTestCase</span> <span class="p">{</span>
+    <span class="kd">private</span> <span class="kd">var</span> <span class="nv">communicator</span> <span class="p">=</span> <span class="n">MockNetworkCommunicator</span><span class="p">()</span>
+
+    <span class="kd">func</span> <span class="nf">testNetworkCommunications</span><span class="p">()</span> <span class="p">{</span>
+        <span class="n">mock</span><span class="p">(</span><span class="n">NetworkCommunicating</span><span class="p">.</span><span class="kc">self</span><span class="p">)</span> <span class="p">{</span> <span class="kc">self</span><span class="p">.</span><span class="n">communicator</span> <span class="p">}</span>
+
+        <span class="c1">// ...</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></td></tr></table></div>
+
+<p>This brings two benefits:</p>
+<ol>
+<li>It forces developers to mock objects in tests, avoiding production side
+   effects like making network requests</li>
+<li>It provided a gradual adoption path rather than updating the entire app at
+   once through some more advanced system</li>
+</ol>
+<p>Although this framework has some of the same problems as other <a href="https://en.wikipedia.org/wiki/Service_locator_pattern">Service
+Locator</a> implementations, it works well enough for us and the limitations are
+generally acceptable.</p>
+<h2 id="flows">Flows</h2>
+<p>Flows, inspired by Square's <a href="https://square.github.io/workflow/">Workflow</a>, are the backbone of all Lyft apps.
+Flows define the navigation rules around a number of related screens the user
+can navigate to. The term <code>flow</code> was already common in everyday communications
+("after finishing the in-ride flow we present the user with the payments flow")
+so this terminology mapped nicely to familiar terminology.</p>
+<p>Flows rely on state-driven routers that can either show a screen, or route to
+other routers that driven by different state. This makes them easy to compose,
+which promoted the goal of feature isolation.</p>
+<p>At the core of flows lies the <code>Routable</code> protocol:</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span class="normal">1</span>
+<span class="normal">2</span>
+<span class="normal">3</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="kd">protocol</span> <span class="nc">Routable</span> <span class="p">{</span>
+    <span class="kd">let</span> <span class="nv">viewController</span><span class="p">:</span> <span class="bp">UIViewController</span>
+<span class="p">}</span>
+</code></pre></div></td></tr></table></div>
+
+<p>It just has to be able to produce a view controller. The (simplified) router
+part of a flow is implemented like this:</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span class="normal"> 1</span>
+<span class="normal"> 2</span>
+<span class="normal"> 3</span>
+<span class="normal"> 4</span>
+<span class="normal"> 5</span>
+<span class="normal"> 6</span>
+<span class="normal"> 7</span>
+<span class="normal"> 8</span>
+<span class="normal"> 9</span>
+<span class="normal">10</span>
+<span class="normal">11</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="kr">final</span> <span class="kd">class</span> <span class="nc">Router</span><span class="p">&lt;</span><span class="n">State</span><span class="p">&gt;</span> <span class="p">{</span>
+    <span class="kd">private</span> <span class="kd">let</span> <span class="nv">routes</span><span class="p">:</span> <span class="p">[(</span><span class="n">condition</span><span class="p">:</span> <span class="p">(</span><span class="n">State</span><span class="p">)</span> <span class="p">-&gt;</span> <span class="nb">Bool</span><span class="p">,</span> <span class="n">routable</span><span class="p">:</span> <span class="n">Routable</span><span class="p">?)]</span>
+
+    <span class="kd">func</span> <span class="nf">addRoute</span><span class="p">(</span><span class="n">routable</span><span class="p">:</span> <span class="n">Routable</span><span class="p">?,</span> <span class="kc">_</span> <span class="n">condition</span><span class="p">:</span> <span class="p">@</span><span class="n">escaping</span> <span class="p">(</span><span class="n">State</span><span class="p">)</span> <span class="p">-&gt;</span> <span class="nb">Bool</span><span class="p">)</span> <span class="p">{</span>
+        <span class="kc">self</span><span class="p">.</span><span class="n">routes</span><span class="p">.</span><span class="n">append</span><span class="p">((</span><span class="n">condition</span><span class="p">,</span> <span class="n">routable</span><span class="p">))</span>
+    <span class="p">}</span>
+
+    <span class="kd">func</span> <span class="nf">route</span><span class="p">(</span><span class="k">for</span> <span class="n">state</span><span class="p">:</span> <span class="n">State</span><span class="p">)</span> <span class="p">-&gt;</span> <span class="n">Routable</span><span class="p">?</span> <span class="p">{</span>
+        <span class="kc">self</span><span class="p">.</span><span class="n">routes</span><span class="p">.</span><span class="bp">first</span> <span class="p">{</span> <span class="nv">$0</span><span class="p">.</span><span class="n">condition</span><span class="p">(</span><span class="n">state</span><span class="p">)</span> <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></td></tr></table></div>
+
+<p>In other words: it takes a bunch of rules where if the condition is true
+(accepting the flow's state as input) it provides a <code>Routable</code>. Each flow defines
+its own possible routes and matches those to a <code>Routable</code>:</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span class="normal"> 1</span>
+<span class="normal"> 2</span>
+<span class="normal"> 3</span>
+<span class="normal"> 4</span>
+<span class="normal"> 5</span>
+<span class="normal"> 6</span>
+<span class="normal"> 7</span>
+<span class="normal"> 8</span>
+<span class="normal"> 9</span>
+<span class="normal">10</span>
+<span class="normal">11</span>
+<span class="normal">12</span>
+<span class="normal">13</span>
+<span class="normal">14</span>
+<span class="normal">15</span>
+<span class="normal">16</span>
+<span class="normal">17</span>
+<span class="normal">18</span>
+<span class="normal">19</span>
+<span class="normal">20</span>
+<span class="normal">21</span>
+<span class="normal">22</span>
+<span class="normal">23</span>
+<span class="normal">24</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="kd">struct</span> <span class="nc">OnboardingState</span> <span class="p">{</span>
+    <span class="kd">let</span> <span class="nv">phoneNumber</span><span class="p">:</span> <span class="nb">String</span><span class="p">?</span>
+    <span class="kd">let</span> <span class="nv">verificationCode</span><span class="p">:</span> <span class="nb">String</span><span class="p">?</span>
+    <span class="kd">let</span> <span class="nv">email</span><span class="p">:</span> <span class="nb">String</span><span class="p">?</span>
+<span class="p">}</span>
+
+<span class="kr">final</span> <span class="kd">class</span> <span class="nc">OnboardingFlow</span> <span class="p">{</span>
+    <span class="kd">private</span> <span class="kd">let</span> <span class="nv">router</span> <span class="p">=</span> <span class="n">Router</span><span class="p">&lt;</span><span class="n">OnboardingState</span><span class="p">&gt;</span>
+    <span class="kd">private</span> <span class="kd">let</span> <span class="nv">state</span> <span class="p">=</span> <span class="n">OnboardingState</span><span class="p">()</span>
+
+    <span class="kd">init</span><span class="p">()</span> <span class="p">{</span>
+        <span class="kc">self</span><span class="p">.</span><span class="n">router</span><span class="p">.</span><span class="n">addRoute</span><span class="p">({</span> <span class="nv">$0</span><span class="p">.</span><span class="n">phoneNumber</span> <span class="p">==</span> <span class="kc">nil</span> <span class="p">},</span> <span class="n">EnterPhoneNumberViewController</span><span class="p">())</span>
+        <span class="kc">self</span><span class="p">.</span><span class="n">router</span><span class="p">.</span><span class="n">addRoute</span><span class="p">({</span> <span class="nv">$0</span><span class="p">.</span><span class="n">verificationCode</span> <span class="p">==</span> <span class="kc">nil</span> <span class="p">},</span> <span class="n">VerifyPhoneViewController</span><span class="p">())</span>
+        <span class="kc">self</span><span class="p">.</span><span class="n">router</span><span class="p">.</span><span class="n">addRoute</span><span class="p">({</span> <span class="nv">$0</span><span class="p">.</span><span class="n">email</span> <span class="p">==</span> <span class="kc">nil</span> <span class="p">},</span> <span class="n">EnterEmailViewController</span><span class="p">())</span>
+
+        <span class="c1">// If all login details are provided, return  `nil` to indicate this flow has</span>
+        <span class="c1">// no (other) Routable to provide and should be exited</span>
+        <span class="kc">self</span><span class="p">.</span><span class="n">router</span><span class="p">.</span><span class="n">addRoute</span><span class="p">({</span> <span class="kc">_</span> <span class="k">in</span> <span class="p">},</span> <span class="kc">nil</span><span class="p">)</span>
+    <span class="p">}</span>
+
+    <span class="kd">func</span> <span class="nf">currentRoutable</span><span class="p">()</span> <span class="p">-&gt;</span> <span class="n">Routable</span> <span class="p">{</span>
+        <span class="k">return</span> <span class="kc">self</span><span class="p">.</span><span class="n">router</span><span class="p">.</span><span class="n">route</span><span class="p">(</span><span class="k">for</span><span class="p">:</span> <span class="n">state</span><span class="p">)</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></td></tr></table></div>
+
+<p>We're then composing flows by adding <code>Routable</code> conformance to each flow and
+have it provide a view controller, adding its current <code>Routable</code>s view
+controller as a child:</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span class="normal">1</span>
+<span class="normal">2</span>
+<span class="normal">3</span>
+<span class="normal">4</span>
+<span class="normal">5</span>
+<span class="normal">6</span>
+<span class="normal">7</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="kd">extension</span> <span class="nc">Flow</span><span class="p">:</span> <span class="n">Routable</span> <span class="p">{</span>
+    <span class="kd">var</span> <span class="nv">rootViewController</span><span class="p">:</span> <span class="bp">UIViewController</span> <span class="p">{</span>
+        <span class="kd">let</span> <span class="nv">parent</span> <span class="p">=</span> <span class="bp">UIViewController</span><span class="p">()</span>
+        <span class="n">parent</span><span class="p">.</span><span class="n">addChild</span><span class="p">(</span><span class="kc">self</span><span class="p">.</span><span class="n">currentRoutable</span><span class="p">().</span><span class="n">viewController</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">parent</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></td></tr></table></div>
+
+<p>Now a flow can also route to another flow by adding an entry to its router:</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span class="normal">1</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="kc">self</span><span class="p">.</span><span class="n">router</span><span class="p">.</span><span class="n">addRoute</span><span class="p">({</span> <span class="nv">$0</span><span class="p">.</span><span class="n">needsOnboarding</span> <span class="p">},</span> <span class="n">OnboardingFlow</span><span class="p">())</span>
+</code></pre></div></td></tr></table></div>
+
+<p>This pattern could let you build entire trees of flows:</p>
+<p><img alt="Simplified flow diagram" src="/images/flows.png"></p>
+<p>When we first conceptualized flows we imagined having a tree of about 20 flows
+total; today we have more than 80. Flows have become the "unit of development"
+of our apps: developers no longer need to care about the full application or a
+single module, but can build an ad-hoc app with just the flow they're working
+on.</p>
+<h2 id="plugins">Plugins</h2>
+<p>Although flows simplify state management and navigation, the logic of the
+individual screens within a flow could still be very intertwined. To mitigate
+that problem, we've introduced plugins. Plugins allow for attaching
+functionality to a flow without the flow even knowing that the plugin exists.</p>
+<p>For example, to add more screens to the OnboardingFlow from above, we can expose
+a method on it that would call into its router:</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span class="normal">1</span>
+<span class="normal">2</span>
+<span class="normal">3</span>
+<span class="normal">4</span>
+<span class="normal">5</span>
+<span class="normal">6</span>
+<span class="normal">7</span>
+<span class="normal">8</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="kd">extension</span> <span class="nc">OnboardingFlow</span> <span class="p">{</span>
+    <span class="kd">public</span> <span class="kd">func</span> <span class="nf">addRoutingPlugin</span><span class="p">(</span>
+        <span class="n">routable</span><span class="p">:</span> <span class="n">Routable</span><span class="p">?,</span>
+        <span class="kc">_</span> <span class="n">condition</span><span class="p">:</span> <span class="p">@</span><span class="n">escaping</span> <span class="p">(</span><span class="n">OnboardingState</span><span class="p">)</span> <span class="p">-&gt;</span> <span class="nb">Bool</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="kc">self</span><span class="p">.</span><span class="n">router</span><span class="p">.</span><span class="n">addRoute</span><span class="p">((</span><span class="n">condition</span><span class="p">,</span> <span class="n">routable</span><span class="p">))</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></td></tr></table></div>
+
+<p>Since this method is public, any plugin that imports it can add a new screen. The
+flow doesn't know anything about this plugin, so the entire dependency tree is
+inverted with plugins. Instead of a flow depending on all the functionalities of
+all of its plugins, it provides a simple interface that lets plugins extend this
+functionality in isolation by having them depend on the flow.</p>
+<p><img alt="Simplified plugin setup" src="/images/plugins.png"></p>
+<p>Since all Lyft apps operate on a tree of flows, the overall dependency graph
+changes from a tree shape to a "bubble" shape:</p>
+<p><img alt="Bubble dependency graph" src="/images/graph.png"></p>
+<p>This setup provides feature isolation at the compiler level which makes it much
+harder to accidentally intertwine features. Each plugin also has its own feature
+flag, making it very easy to disable a feature if necessary.</p>
+<p>In addition to routing plugins, we also provide interfaces to add additional
+views to any view controller, deep link plugins to deep link to any arbitrary
+part of the app, list plugins to build lists with custom content, and a few
+others very unique to Lyft's use cases.</p>
+<h2 id="unidirectional-data-flow">Unidirectional Data Flow</h2>
+<p>More recently we introduced a redux-like unidirectional data flow (UDF) for
+screens and views within flows. Flows were optimized for state management within
+a collection of screens, the UDF brings the same benefits we saw there to
+individual screens.</p>
+<p>A typical redux implementation has state flowing into the UI and actions that
+modify state coming out of the UI. Influenced by <a href="https://github.com/pointfreeco/swift-composable-architecture">The Composable
+Architecture</a>, our implementation of redux actions also includes executing
+side effects to interact with the environment (network, disk, notifications,
+etc.).</p>
+<h2 id="declarative-ui">Declarative UI</h2>
+<p>In 2018, we began building out our <a href="https://design.lyft.com/building-a-design-system-library-3a1f0d09088f">Design System</a>. At the time, it was a
+layer on top of UIKit, often with a slightly modernized API, that would provide
+UI elements with common defaults like fonts, colors, icons, dimensions, etc.</p>
+<p>When Apple introduced SwiftUI in mid-2019, it required a deployment target of
+iOS 13. At the time, we still supported iOS 10 and even today we still support
+iOS 12 so we still can't use it.</p>
+<p>However, we did write an internal library called <code>DeclarativeUI</code>, which provides
+the same declarative APIs that SwiftUI brings but leveraging the Design System
+we had already built. Even better, we've built <code>binding</code> conveniences into both
+DeclarativeUI and our UDF <code>Store</code> types to make them work together seamlessly: </p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span class="normal"> 1</span>
+<span class="normal"> 2</span>
+<span class="normal"> 3</span>
+<span class="normal"> 4</span>
+<span class="normal"> 5</span>
+<span class="normal"> 6</span>
+<span class="normal"> 7</span>
+<span class="normal"> 8</span>
+<span class="normal"> 9</span>
+<span class="normal">10</span>
+<span class="normal">11</span>
+<span class="normal">12</span>
+<span class="normal">13</span>
+<span class="normal">14</span>
+<span class="normal">15</span>
+<span class="normal">16</span>
+<span class="normal">17</span>
+<span class="normal">18</span>
+<span class="normal">19</span>
+<span class="normal">20</span>
+<span class="normal">21</span>
+<span class="normal">22</span>
+<span class="normal">23</span>
+<span class="normal">24</span>
+<span class="normal">25</span>
+<span class="normal">26</span>
+<span class="normal">27</span>
+<span class="normal">28</span>
+<span class="normal">29</span>
+<span class="normal">30</span>
+<span class="normal">31</span>
+<span class="normal">32</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="kd">import</span> <span class="nc">DeclarativeUI</span>
+<span class="kd">import</span> <span class="nc">Unidirectional</span>
+
+<span class="kr">final</span> <span class="kd">class</span> <span class="nc">QuestionView</span><span class="p">:</span> <span class="n">DeclarativeUI</span><span class="p">.</span><span class="n">View</span> <span class="p">{</span>
+    <span class="kd">private</span> <span class="kd">let</span> <span class="nv">viewStore</span><span class="p">:</span> <span class="n">Store</span><span class="p">&lt;</span><span class="n">QuestionState</span><span class="p">&gt;</span>
+
+    <span class="kd">init</span><span class="p">(</span><span class="n">store</span><span class="p">:</span> <span class="n">Store</span><span class="p">&lt;</span><span class="n">QuestionState</span><span class="p">&gt;)</span> <span class="p">{</span>
+        <span class="kc">self</span><span class="p">.</span><span class="n">viewStore</span> <span class="p">=</span> <span class="n">store</span>
+    <span class="p">}</span>
+
+    <span class="kd">var</span> <span class="nv">body</span><span class="p">:</span> <span class="n">DeclarativeUI</span><span class="p">.</span><span class="n">View</span> <span class="p">{</span>
+        <span class="k">return</span> <span class="n">VStackView</span><span class="p">(</span><span class="n">spacing</span><span class="p">:</span> <span class="p">.</span><span class="n">three</span><span class="p">)</span> <span class="p">{</span>
+            <span class="n">HeaderView</span><span class="p">(</span><span class="n">store</span><span class="p">:</span> <span class="kc">self</span><span class="p">.</span><span class="n">store</span><span class="p">)</span>
+            <span class="n">Label</span><span class="p">(</span><span class="n">text</span><span class="p">:</span> <span class="n">viewStore</span><span class="p">.</span><span class="n">bind</span><span class="p">(</span><span class="err">\</span><span class="p">.</span><span class="n">header</span><span class="p">))</span>
+                <span class="p">.</span><span class="n">textStyle</span><span class="p">(.</span><span class="n">titleF1</span><span class="p">)</span>
+                <span class="p">.</span><span class="n">textAlignment</span><span class="p">(.</span><span class="n">center</span><span class="p">)</span>
+                <span class="p">.</span><span class="n">lineLimit</span><span class="p">(</span><span class="kc">nil</span><span class="p">)</span>
+                <span class="p">.</span><span class="n">accessibility</span><span class="p">(</span><span class="n">postScreenChanged</span><span class="p">:</span> <span class="n">viewStore</span><span class="p">.</span><span class="n">bind</span><span class="p">(</span><span class="err">\</span><span class="p">.</span><span class="n">header</span><span class="p">))</span>
+            <span class="n">VStackView</span><span class="p">(</span><span class="n">viewStore</span><span class="p">.</span><span class="n">bind</span><span class="p">(</span><span class="err">\</span><span class="p">.</span><span class="n">choices</span><span class="p">),</span> <span class="n">spacing</span><span class="p">:</span> <span class="p">.</span><span class="n">two</span><span class="p">)</span> <span class="p">{</span> <span class="n">choice</span> <span class="k">in</span>
+                <span class="n">TwoChoiceButton</span><span class="p">(</span><span class="n">choice</span><span class="p">:</span> <span class="n">choice</span><span class="p">).</span><span class="n">onEvent</span><span class="p">(</span>
+                    <span class="p">.</span><span class="n">touchUpInside</span><span class="p">,</span>
+                    <span class="n">action</span><span class="p">:</span> <span class="n">viewStore</span><span class="p">.</span><span class="n">send</span><span class="p">(.</span><span class="n">choiseSelected</span><span class="p">(</span><span class="n">index</span><span class="p">:</span> <span class="n">choice</span><span class="p">.</span><span class="n">index</span><span class="p">)))</span>
+            <span class="p">}</span>
+            <span class="p">.</span><span class="n">hidden</span><span class="p">(</span><span class="n">viewStore</span><span class="p">.</span><span class="n">bind</span><span class="p">(</span><span class="err">\</span><span class="p">.</span><span class="n">choices</span><span class="p">.</span><span class="bp">isEmpty</span><span class="p">))</span>
+
+            <span class="k">if</span> <span class="n">viewStore</span><span class="p">.</span><span class="n">currentState</span><span class="p">.</span><span class="n">model</span><span class="p">.</span><span class="n">usesButtonToIncrementQuestion</span> <span class="p">{</span>
+                <span class="n">NextQuestionButton</span><span class="p">(</span><span class="n">store</span><span class="p">:</span> <span class="kc">self</span><span class="p">.</span><span class="n">store</span><span class="p">)</span>
+                    <span class="p">.</span><span class="n">hidden</span><span class="p">(</span><span class="n">viewStore</span><span class="p">.</span><span class="n">bind</span><span class="p">(</span><span class="err">\</span><span class="p">.</span><span class="n">choices</span><span class="p">.</span><span class="bp">isEmpty</span><span class="p">))</span>
+            <span class="p">}</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></td></tr></table></div>
+
+<h2 id="putting-it-all-together">Putting it all together</h2>
+<p>All these technologies combined make for a completely different developer
+experience now than five years ago. Doing the right thing is easy, doing the
+wrong thing is difficult. Features are isolated from each other, and even
+feature components are separated from each other in different modules.</p>
+<p>Testing was never easier: unit tests for modules with pure business logic,
+snapshot tests for UI modules, and for integration tests it takes little effort
+to sping up a standalone app with just the flow you're interested in.</p>
+<p>State is easy to track with debug conveniences built into the architectures,
+building UI is more enjoyable than it was with plain UIKit, and adding a feature
+from 1 app into another is often just a matter of attaching the plugin to a
+second flow without detangling it from all other features on that screen.</p>
+<p>It's amazing to look back at where the codebase started some 6 years ago, and
+where it is now. Who knows where it will be in another 6 years!</p>
+<p><em>Note: If you're interested in hearing more, I also talked about many of these
+technologies on the <a href="https://podcasts.apple.com/us/podcast/mobile-architecture-pt-1-with-scott-berrevoets/id1453587931?i=1000512549072">Lyft Mobile Podcast</a>!</em></p></div>
+</div>	
+<div class='article'>
+    <h2 class="article-title"><a href="./2018/08/08/re-binding-self-the-debuggers-breaking-point/">Re-binding self: the debugger's break(ing) point</a></h2>
+    <div class="article-content"><p><strong>Update 07-29-2019: The bug described below is fixed in Xcode 11 so this blog
+post has become irrelevant. I'm leaving it up for historical purposes.</strong></p>
+<p>For the Objective-C veterans in the audience, the strong-self-weak-self dance is
+a practice mastered early on and one that is used very frequently. There are a
+lot of different incantations, but the most basic one goes something like this:</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span class="normal">1</span>
+<span class="normal">2</span>
+<span class="normal">3</span>
+<span class="normal">4</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">__weak</span><span class="w"> </span><span class="nf">typeof</span><span class="p">(</span><span class="nb">self</span><span class="p">)</span><span class="w"> </span><span class="n">weakSelf</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">self</span><span class="p">;</span><span class="w"></span>
+<span class="n">dispatch_group_async</span><span class="p">(</span><span class="n">dispatch_get_main_queue</span><span class="p">(),</span><span class="w"> </span><span class="o">^</span><span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="p">[</span><span class="n">weakSelf</span><span class="w"> </span><span class="n">doSomething</span><span class="p">];</span><span class="w"></span>
+<span class="p">});</span><span class="w"></span>
+</code></pre></div></td></tr></table></div>
+
+<p>Then, if you needed a strong reference to <code>self</code> again inside the block, you'd
+change it to this:</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span class="normal">1</span>
+<span class="normal">2</span>
+<span class="normal">3</span>
+<span class="normal">4</span>
+<span class="normal">5</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">__weak</span><span class="w"> </span><span class="nf">typeof</span><span class="p">(</span><span class="nb">self</span><span class="p">)</span><span class="w"> </span><span class="n">weakSelf</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">self</span><span class="p">;</span><span class="w"></span>
+<span class="n">dispatch_group_async</span><span class="p">(</span><span class="n">dispatch_get_main_queue</span><span class="p">(),</span><span class="w"> </span><span class="o">^</span><span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="k">typeof</span><span class="p">(</span><span class="n">weakSelf</span><span class="p">)</span><span class="w"> </span><span class="n">strongSelf</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">weakSelf</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="p">[</span><span class="n">strongSelf</span><span class="p">.</span><span class="n">someOtherObject</span><span class="w"> </span><span class="n">doSomethingWith</span><span class="o">:</span><span class="n">strongSelf</span><span class="p">];</span><span class="w"></span>
+<span class="p">});</span><span class="w"></span>
+</code></pre></div></td></tr></table></div>
+
+<p>Fortunately, this was much easier on day 1 of Swift when using the <code>[weak self]</code>
+directive:</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span class="normal">1</span>
+<span class="normal">2</span>
+<span class="normal">3</span>
+<span class="normal">4</span>
+<span class="normal">5</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="n">DispatchQueue</span><span class="p">.</span><span class="n">main</span><span class="p">.</span><span class="k">async</span> <span class="p">{</span> <span class="p">[</span><span class="kr">weak</span> <span class="kc">self</span><span class="p">]</span> <span class="k">in</span>
+    <span class="k">if</span> <span class="kd">let</span> <span class="nv">strongSelf</span> <span class="p">=</span> <span class="kc">self</span> <span class="p">{</span>
+        <span class="n">strongSelf</span><span class="p">.</span><span class="n">someOtherObject</span><span class="p">.</span><span class="n">doSomething</span><span class="p">(</span><span class="n">with</span><span class="p">:</span> <span class="n">strongSelf</span><span class="p">)</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></td></tr></table></div>
+
+<p><code>self</code> is now <code>weak</code> inside the closure, making it an optional. Unwrapping it
+into <code>strongSelf</code> makes it a non-optional while still avoiding a retain cycle.
+It doesn't feel very Swifty, but it's not terrible.</p>
+<p>More recently, it's become known that Swift supports re-binding <code>self</code> if you
+wrap it in backticks. That makes for an arguably much nicer syntax:</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span class="normal">1</span>
+<span class="normal">2</span>
+<span class="normal">3</span>
+<span class="normal">4</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="n">DispatchQueue</span><span class="p">.</span><span class="n">main</span><span class="p">.</span><span class="k">async</span> <span class="p">{</span> <span class="p">[</span><span class="kr">weak</span> <span class="kc">self</span><span class="p">]</span> <span class="k">in</span>
+    <span class="k">guard</span> <span class="kd">let</span> <span class="p">`</span><span class="kc">self</span><span class="p">`</span> <span class="p">=</span> <span class="kc">self</span> <span class="k">else</span> <span class="p">{</span> <span class="k">return</span> <span class="p">}</span>
+    <span class="kc">self</span><span class="p">.</span><span class="n">someOtherObject</span><span class="p">.</span><span class="n">doSomething</span><span class="p">(</span><span class="n">with</span><span class="p">:</span> <span class="kc">self</span><span class="p">)</span>
+<span class="p">}</span>
+</code></pre></div></td></tr></table></div>
+
+<p>This was long considered, and <a href="https://lists.swift.org/pipermail/swift-evolution/Week-of-Mon-20160118/007425.html">confirmed</a> to be, a hack that worked due to a bug in the compiler, but
+since it worked and there weren't plans to remove it, people (including us at
+Lyft) started treating it as a feature.</p>
+<p><strong>However, there is one big caveat</strong>: the debugger is entirely hosed for
+anything you do in that closure. Ever seen an error like this in your Xcode
+console?</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span class="normal">1</span>
+<span class="normal">2</span>
+<span class="normal">3</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="n">error</span><span class="o">:</span><span class="w"> </span><span class="n">warning</span><span class="o">:</span><span class="w"> </span><span class="o">&lt;</span><span class="n">EXPR</span><span class="o">&gt;:</span><span class="mi">12</span><span class="o">:</span><span class="mi">9</span><span class="o">:</span><span class="w"> </span><span class="n">warning</span><span class="o">:</span><span class="w"> </span><span class="n">initialization</span><span class="w"> </span><span class="n">of</span><span class="w"> </span><span class="n">variable</span><span class="w"> </span><span class="s1">&#39;$__lldb_error_result&#39;</span><span class="w"> </span><span class="n">was</span><span class="w"> </span><span class="n">never</span><span class="w"> </span><span class="n">used</span><span class="o">;</span><span class="w"> </span><span class="n">consider</span><span class="w"> </span><span class="n">replacing</span><span class="w"> </span><span class="k">with</span><span class="w"> </span><span class="n">assignment</span><span class="w"> </span><span class="n">to</span><span class="w"> </span><span class="s1">&#39;_&#39;</span><span class="w"> </span><span class="n">or</span><span class="w"> </span><span class="n">removing</span><span class="w"> </span><span class="n">it</span><span class="w"></span>
+<span class="w">    </span><span class="n">var</span><span class="w"> </span><span class="n">$__lldb_error_result</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">__lldb_tmp_error</span><span class="w"></span>
+<span class="w">        </span><span class="o">~~~~^~~~~~~~~~~~~~~~~~~~</span><span class="w"></span>
+</code></pre></div></td></tr></table></div>
+
+<p>That's because <code>self</code> was re-bound. This is easy to reproduce: create a new
+Xcode project and add the following snippet to <code>viewDidLoad()</code>:</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span class="normal">1</span>
+<span class="normal">2</span>
+<span class="normal">3</span>
+<span class="normal">4</span>
+<span class="normal">5</span>
+<span class="normal">6</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="n">DispatchQueue</span><span class="p">.</span><span class="n">main</span><span class="p">.</span><span class="k">async</span> <span class="p">{</span> <span class="p">[</span><span class="kr">weak</span> <span class="kc">self</span><span class="p">]</span> <span class="k">in</span>
+    <span class="k">guard</span> <span class="kd">let</span> <span class="p">`</span><span class="kc">self</span><span class="p">`</span> <span class="p">=</span> <span class="kc">self</span> <span class="k">else</span> <span class="p">{</span> <span class="k">return</span> <span class="p">}</span>
+
+    <span class="kd">let</span> <span class="nv">description</span> <span class="p">=</span> <span class="kc">self</span><span class="p">.</span><span class="n">description</span>
+    <span class="bp">print</span><span class="p">(</span><span class="n">description</span><span class="p">)</span> <span class="c1">// set a breakpoint here</span>
+<span class="p">}</span>
+</code></pre></div></td></tr></table></div>
+
+<p>When the breakpoint hits, execute <code>(lldb) po description</code> and you'll see the
+error from above. Note that you're not even <em>using</em> <code>self</code> - merely re-binding
+it makes the debugger entirely useless inside that scope.</p>
+<p>People with way more knowledge of LLDB than I do can explain this in more detail
+(and <a href="https://bugs.swift.org/browse/SR-6156">have</a>), but the gist is that the
+debugger doesn't like <code>self</code>'s type changing. At the beginning of the closure
+scope, the debugging context assumes that <code>self</code>'s type is <code>Optional</code>, but it is
+then re-bound to a non-optional, which the debugger doesn't know how to handle.
+It's actually pretty surprising the compiler supports changing a variable's type
+at all.</p>
+<p>Because of this problem, at Lyft we have decided to eliminate this pattern
+entirely in our codebases, and instead re-bind <code>self</code> to a variable named
+<code>this</code>.</p>
+<p>If you do continue to use this pattern, note that in a
+<a href="https://forums.swift.org/t/the-future-of-weak-self-rebinding/10846">discussion</a>
+on the Swift forums many people agreed that re-binding <code>self</code> should be
+supported by the language without the need for backticks. The <a href="https://github.com/apple/swift/pull/15306">pull
+request</a> was merged shortly after and
+with the release of Swift 4.2 in the fall, you'll be able to use <code>guard let self
+= self else { return }</code> (at the cost of losing debugging capabilities!)</p></div>
+</div>	
+
+<div class="pagination">
+<ul>
+    <li class="prev disabled">&larr; Previous</li>
+    <li class="next"><a href="./page/2/">Next &rarr;</a></li>
+</ul>
+</div>
+
+</body>
+</html>

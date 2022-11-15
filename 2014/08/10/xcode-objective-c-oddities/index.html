@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+          <title>Xcode & Objective-C Oddities - Scott Berrevoets</title>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <meta name="description" content="Some fun things about working with Xcode and Objective-C" />
+
+
+        <link rel="stylesheet" type="text/css" href="../../../../theme/css/style.css" />
+</head>
+
+<body id="index" class="home">
+        <header id="banner" class="body">
+            <h1><a href="../../../../">Scott Berrevoets</a></h1>
+
+            <ul id="social">
+                <li><a href="https://twitter.com/ScottBerrevoets"><img src="../../../../theme/images/twitter.svg"></a></li>
+                <li><a href="https://github.com/sberrevoets"><img src="../../../../theme/images/github.svg"></a></li>
+                <li><a href="http://stackoverflow.com/users/751268/scott-berrevoets"><img src="../../../../theme/images/stackoverflow.svg"></a></li>
+                <li><a href="https://www.youtube.com/watch?v=dQw4w9WgXcQ"><img src="../../../../theme/images/youtube.svg"></a></li>
+            </ul>
+        </header><!-- /#banner -->
+        <nav id="menu"><ul>
+            <li><a href="/">Blog</a></li>
+            <li><a href="/archive.html">Archive</a></li>
+            <li><a href="../../../../about.html">About</a></li>
+        </ul></nav><!-- /#menu -->
+<section id="content" class="body">
+  <header>
+      <h2 class="article-title">Xcode & Objective-C Oddities</h2>
+ 
+    <time class="published" datetime="2014-08-10T00:00:00-07:00">
+      10 August 2014
+    </time>
+  </header>
+  <div class="article-content">
+    <p>Any developer that has worked with Xcode to write a little more than just "Hello, World" knows that Xcode and Objective-C have their quirks. Chances are you have heard of <a href="https://twitter.com/TextFromXcode">@TextFromXcode</a>, the Twitter handle that portrays Xcode as a high school bully in fake text conversations like this:</p>
+<p><img alt="Xcode Bully" src="https://cl.ly/image/0I2P191S0Q2k/20140227.PNG"></p>
+<p>But it's not always Xcode that makes Apple platform developers sometimes frown and sigh. Sometimes it's the developers themselves, sometimes it's the documentation, and sometimes a hidden gem from within Apple frameworks makes an appearance. I've compiled a short list of things I've encountered. Because it's Sunday and I didn't have anything better to do.</p>
+<h2 id="uigobblergesturerecognizer"><code>UIGobblerGestureRecognizer</code></h2>
+<p>Say what? A "<a href="https://github.com/nst/iOS-Runtime-Headers/blob/master/Frameworks/UIKit.framework/UIGobblerGestureRecognizer.h"><code>gobbler</code></a>" recognizer? Does it recognize when the user imitates a turkey? Well, maybe, but according to <a href="https://twitter.com/ortwingentz/status/225508227234791424">BJ Homer</a>, it is used to avoid recognition of a gesture while animations are in progress. Ah of course! Now the name "gobbler" makes perfect sense! 😶</p>
+<h2 id="uitapandahalfrecognizer"><code>UITapAndAHalfRecognizer</code></h2>
+<p>Speaking of gesture recognizers, there's another remarkable one that lives in the private section of UIKit: <code>UITapAndAHalfRecognizer</code>. This is a private subclass of <code>UIGestureRecognizer</code> that records "a tap and a half".</p>
+<p>So what does that mean? Does it detect whether the user goes in for a second tap, but never actually touches the screen? Or does the user touch the screen ever so slightly that the second tap can hardly be considered a complete tap? Nope! This recognizer fires when a second tap stays on the screen. Not sure for what functionality Apple needs this, but it's been around since at least iOS 4, so it probably has a purpose.</p>
+<h2 id="naming-is-hard">Naming is hard</h2>
+<blockquote>
+<p>There are only two hard things in Computer Science: cache invalidation and naming things.<br>
+- Phil Karlton</p>
+</blockquote>
+<p>Naming <strong>is</strong> hard, but Objective-C developers always say that verbosity is one of Objective-C's strengths because its naming conventions are self-documenting. Normally I'd agree, but in this case, I think Apple may want to consider a different name.</p>
+<p><a href="https://developer.apple.com/library/prerelease/ios/releasenotes/General/iOS80APIDiffs/frameworks/HomeKit.html"><code>HMCharacteristicValueLockMechanismLastKnownActionUnsecuredUsingPhysicalMovementExterior</code></a> is a brand new constant in iOS 8 and has got to be one of the longest constants that's available in iOS. Try saying it without taking a breath in the middle. </p>
+<p>I found it in the iOS 8 API diffs, but it did make me wonder. What is the longest Objective-C method available in Cocoa Touch? Well, a quick Google search led to a blog post by <a href="https://initwithstyle.net/2013/10/in-search-of-the-longest-method">Stuart Sharpe</a>, who used the Objective-C runtime to generate a list of methods in the iOS 7 SDK.</p>
+<p>Turns out, the longest method in the iOS 7 SDK is</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span class="normal"> 1</span>
+<span class="normal"> 2</span>
+<span class="normal"> 3</span>
+<span class="normal"> 4</span>
+<span class="normal"> 5</span>
+<span class="normal"> 6</span>
+<span class="normal"> 7</span>
+<span class="normal"> 8</span>
+<span class="normal"> 9</span>
+<span class="normal">10</span>
+<span class="normal">11</span>
+<span class="normal">12</span>
+<span class="normal">13</span>
+<span class="normal">14</span>
+<span class="normal">15</span>
+<span class="normal">16</span>
+<span class="normal">17</span>
+<span class="normal">18</span>
+<span class="normal">19</span>
+<span class="normal">20</span>
+<span class="normal">21</span>
+<span class="normal">22</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="o">+</span><span class="p">[</span><span class="n">CUIShapeEffectStack</span><span class="w"> </span><span class="n">shapeEffectSingleBlurFrom</span><span class="o">:</span><span class="w"></span>
+<span class="w">                               </span><span class="nl">withInteriorFill</span><span class="p">:</span><span class="w"></span>
+<span class="w">                                         </span><span class="nl">offset</span><span class="p">:</span><span class="w"></span>
+<span class="w">                                       </span><span class="nl">blurSize</span><span class="p">:</span><span class="w"></span>
+<span class="w">                                   </span><span class="nl">innerGlowRed</span><span class="p">:</span><span class="w"></span>
+<span class="w">                                 </span><span class="nl">innerGlowGreen</span><span class="p">:</span><span class="w"></span>
+<span class="w">                                  </span><span class="nl">innerGlowBlue</span><span class="p">:</span><span class="w"></span>
+<span class="w">                               </span><span class="nl">innerGlowOpacity</span><span class="p">:</span><span class="w"></span>
+<span class="w">                                 </span><span class="nl">innerShadowRed</span><span class="p">:</span><span class="w"></span>
+<span class="w">                               </span><span class="nl">innerShadowGreen</span><span class="p">:</span><span class="w"></span>
+<span class="w">                                </span><span class="nl">innerShadowBlue</span><span class="p">:</span><span class="w"></span>
+<span class="w">                             </span><span class="nl">innerShadowOpacity</span><span class="p">:</span><span class="w"></span>
+<span class="w">                                   </span><span class="nl">outerGlowRed</span><span class="p">:</span><span class="w"></span>
+<span class="w">                                 </span><span class="nl">outerGlowGreen</span><span class="p">:</span><span class="w"></span>
+<span class="w">                                  </span><span class="nl">outerGlowBlue</span><span class="p">:</span><span class="w"></span>
+<span class="w">                               </span><span class="nl">outerGlowOpacity</span><span class="p">:</span><span class="w"></span>
+<span class="w">                                 </span><span class="nl">outerShadowRed</span><span class="p">:</span><span class="w"></span>
+<span class="w">                               </span><span class="nl">outerShadowGreen</span><span class="p">:</span><span class="w"></span>
+<span class="w">                                </span><span class="nl">outerShadowBlue</span><span class="p">:</span><span class="w"></span>
+<span class="w">                             </span><span class="nl">outerShadowOpacity</span><span class="p">:</span><span class="w"></span>
+<span class="w">                            </span><span class="nl">hasInsideShadowBlur</span><span class="p">:</span><span class="w"></span>
+<span class="w">                           </span><span class="nl">hasOutsideShadowBlur</span><span class="p">:]</span><span class="w"></span>
+</code></pre></div></td></tr></table></div>
+
+<p>Unless iOS 8 introduces a longer method name, this one takes the cake with 22 arguments and 352 characters. If you have Xcode configured to line-break at 80 characters (yes, some people still do that), this method signature alone, without any arguments, takes up 5 lines.</p>
+<p>Another beauty of a method lives in Core Animation and its method signature is </p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span class="normal">1</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="o">-</span><span class="w"> </span><span class="p">[</span><span class="bp">CAMediaTimingFunction</span><span class="w"> </span><span class="n">functionWithControlPoints</span><span class="o">::::</span><span class="p">]</span><span class="w"></span>
+</code></pre></div></td></tr></table></div>
+
+<p><code>::::</code>? Is that even valid syntax? Yes, and you call the method like this:</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span class="normal">1</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="p">[</span><span class="bp">CAMediaTimingFunction</span><span class="w"> </span><span class="n">functionWithControlPoints</span><span class="o">:</span><span class="mf">0.25</span><span class="w"> </span><span class="o">:</span><span class="mf">.50</span><span class="w"> </span><span class="o">:</span><span class="mi">0</span><span class="w"> </span><span class="o">:</span><span class="mf">1.0</span><span class="p">];</span><span class="w"></span>
+</code></pre></div></td></tr></table></div>
+
+<p>Was an array really too much to ask...?</p>
+<h2 id="nsdate-nildate"><code>[NSDate nilDate]</code></h2>
+<p>This one has made the rounds throughout the developer community before, but I'm adding it here in case you haven't seen it yet. Try running the following code:</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span class="normal">1</span>
+<span class="normal">2</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="bp">NSCalendar</span><span class="w"> </span><span class="o">*</span><span class="n">calendar</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="bp">NSCalendar</span><span class="w"> </span><span class="n">currentCalendar</span><span class="p">];</span><span class="w"></span>
+<span class="p">[</span><span class="n">calendar</span><span class="w"> </span><span class="n">components</span><span class="o">:</span><span class="n">NSCalendarUnitYear</span><span class="w"> </span><span class="n">fromDate</span><span class="o">:</span><span class="nb">nil</span><span class="w"> </span><span class="n">toDate</span><span class="o">:</span><span class="p">[</span><span class="bp">NSDate</span><span class="w"> </span><span class="n">date</span><span class="p">]</span><span class="w"> </span><span class="n">options</span><span class="o">:</span><span class="mi">0</span><span class="p">];</span><span class="w"></span>
+</code></pre></div></td></tr></table></div>
+
+<p>In the console log, you'll find the following output:</p>
+<blockquote>
+<p>*** -[__NSCFCalendar components:fromDate:toDate:options:]: fromDate cannot be nil<br>
+I mean really, what do you think that operation is supposed to mean with a nil fromDate?<br>
+An exception has been avoided for now.<br>
+A few of these errors are going to be reported with this complaint, then further violations will simply silently do whatever random thing results from the nil.</p>
+</blockquote>
+<p>Either a grumpy Apple developer woke up at the wrong side of the bed or has a great sense of humor. In any case, I wouldn't mind if more sarcastic warnings started popping up in Xcode's console.</p>
+<h2 id="defying-the-uncertainty-principle-in-ios">Defying the Uncertainty Principle in iOS</h2>
+<blockquote>
+<p>[I]n 1927, Werner Heisenberg stated that the more precisely the position of some particle is determined, the less precisely its momentum can be known, and vice versa.<br>
+<a href="https://en.wikipedia.org/wiki/Uncertainty_principle">Wikipedia</a></p>
+</blockquote>
+<p>If that's true, and it's fairly safe to assume that it is, I'd avoid using <code>-[CLLocation speed]</code> for apps like radar detectors. I wonder if we're ever going to get a <code>-[CLSpeed location]</code> method, which has a more accurate speed and a less accurate location.</p>
+<h2 id="xcode-at-it-again">Xcode at it again</h2>
+<p>Lastly, the following is a screenshot I personally took at work that completely baffled me.</p>
+<p><img src="/images/XcodeScreenshot.png" style="width: 700px; margin: 0 auto; display: block;"></p>
+<p>This would not go away, even after cleaning the build folder and rebuilding. In the end I resolved the problem by running</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span class="normal">1</span>
+<span class="normal">2</span></pre></div></td><td class="code"><div><pre><span></span><code>$ git stash
+$ git reset --hard HEAD
+</code></pre></div></td></tr></table></div>
+
+<p>Then, after a clean build and <code>git stash pop</code> the errors finally went away...</p>
+<p>That's just a few things I've found while working with Xcode and Objective-C over the years. If you have more, please share!</p>
+  </div><!-- /.entry-content -->
+</section>
+
+</body>
+</html>

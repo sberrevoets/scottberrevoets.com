@@ -1,0 +1,433 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+        <title>Scott Berrevoets</title>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <link rel="stylesheet" type="text/css" href="../../theme/css/style.css" />
+</head>
+
+<body id="index" class="home">
+        <header id="banner" class="body">
+            <h1><a href="../../">Scott Berrevoets</a></h1>
+
+            <ul id="social">
+                <li><a href="https://twitter.com/ScottBerrevoets"><img src="../../theme/images/twitter.svg"></a></li>
+                <li><a href="https://github.com/sberrevoets"><img src="../../theme/images/github.svg"></a></li>
+                <li><a href="http://stackoverflow.com/users/751268/scott-berrevoets"><img src="../../theme/images/stackoverflow.svg"></a></li>
+                <li><a href="https://www.youtube.com/watch?v=dQw4w9WgXcQ"><img src="../../theme/images/youtube.svg"></a></li>
+            </ul>
+        </header><!-- /#banner -->
+        <nav id="menu"><ul>
+            <li><a href="/">Blog</a></li>
+            <li><a href="/archive.html">Archive</a></li>
+            <li><a href="../../about.html">About</a></li>
+        </ul></nav><!-- /#menu -->
+
+<div class='article'>
+    <h2 class="article-title"><a href="../../2017/03/06/using-interface-builder-at-lyft/">Using Interface Builder at Lyft</a></h2>
+    <div class="article-content"><p>Last week people realized that Xcode 8.3 by default uses storyboards in new
+projects without a checkbox to turn this off. This of course sparked the
+Interface Builder vs. programmatic UI discussion again, so I wanted to give some
+insight in our experience using Interface Builder in building the Lyft app. This
+is not intended as hard "you should also use Interface Builder" advice, but
+rather to show that IB <em>can</em> work at a larger scale.</p>
+<p>First, some stats about the Lyft app:</p>
+<ul>
+<li>40 storyboards</li>
+<li>100 XIB files</li>
+<li>150 view controllers</li>
+<li>20 people on the iOS team with occasional outside contributors</li>
+</ul>
+<p>With the
+<a href="https://www.skilled.io/u/keithsmiley/tales-of-a-rewrite-at-lyft">rewrite</a> of
+our app we moved to using IB for about 95% of our UI.</p>
+<p>The #1 complaint about using Interface Builder for a project with more than 1
+developer is that it's impossible to resolve merge conflicts. <strong>We never have
+this problem.</strong> Everybody on the team can attest that they have never run into
+major conflicts they couldn't reasonably resolve.</p>
+<p>With that concern out of the way, what about some of the other common criticisms
+Interface Builder regularly gets?</p>
+<h2 id="improving-the-workflow">Improving the workflow</h2>
+<p>Out of the box, IB has a number of shortcomings that could make working with it
+more painful than it needs to be. For example, referencing IB objects from code
+still can only be done with string identifiers. There is also no easy way to
+embed custom views (designed in IB) in other custom views.</p>
+<p>Over time we have improved the workflow for our developers to mitigate some of
+these shortcomings, either by writing some tools or by writing a little bit of
+code that can be used project-wide.</p>
+<h3 id="storyboarder-script">storyboarder script</h3>
+<p>To solve the issue of stringly-typed view controller identifiers, we wrote a
+script that, just before compiling the app, generates a struct with static
+properties that exposes all view controllers from the app in a strongly-typed
+manner. This means that now we can instantiate a view controller in code like
+this:</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span class="normal">1</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="kd">let</span> <span class="nv">viewController</span> <span class="p">=</span> <span class="n">Onboarding</span><span class="p">.</span><span class="n">SignUp</span><span class="p">.</span><span class="n">instantiate</span><span class="p">()</span>
+</code></pre></div></td></tr></table></div>
+
+<p>Not only is <code>viewController</code> now guaranteed to be there at runtime (if something
+is wrong in the setup of IB the code won't even compile), but it's also
+recognized as a <code>SignUpViewController</code> and not a generic <code>UIViewController</code>.</p>
+<h3 id="strongly-typed-segues">Strongly-typed segues</h3>
+<p>All our view controllers have a base view controller named <code>ViewController</code>.
+This base controller implements <code>prepare(for:sender:)</code> like this:</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span class="normal"> 1</span>
+<span class="normal"> 2</span>
+<span class="normal"> 3</span>
+<span class="normal"> 4</span>
+<span class="normal"> 5</span>
+<span class="normal"> 6</span>
+<span class="normal"> 7</span>
+<span class="normal"> 8</span>
+<span class="normal"> 9</span>
+<span class="normal">10</span>
+<span class="normal">11</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="n">open</span> <span class="kr">override</span> <span class="kd">func</span> <span class="nf">prepare</span><span class="p">(</span><span class="k">for</span> <span class="n">segue</span><span class="p">:</span> <span class="bp">UIStoryboardSegue</span><span class="p">,</span> <span class="n">sender</span><span class="p">:</span> <span class="nb">Any</span><span class="p">?)</span> <span class="p">{</span>
+    <span class="k">guard</span> <span class="kd">let</span> <span class="nv">identifier</span> <span class="p">=</span> <span class="n">segue</span><span class="p">.</span><span class="n">identifier</span> <span class="k">else</span> <span class="p">{</span>
+        <span class="k">return</span>
+    <span class="p">}</span>
+
+    <span class="kd">let</span> <span class="nv">segueName</span> <span class="p">=</span> <span class="n">identifier</span><span class="p">.</span><span class="n">firstLetterUpperString</span><span class="p">()</span>
+    <span class="kd">let</span> <span class="nv">selector</span> <span class="p">=</span> <span class="nb">Selector</span><span class="p">(</span><span class="s">&quot;prepareFor</span><span class="si">\(</span><span class="n">segueName</span><span class="si">)</span><span class="s">:sender:&quot;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="kc">self</span><span class="p">.</span><span class="n">responds</span><span class="p">(</span><span class="n">to</span><span class="p">:</span> <span class="n">selector</span><span class="p">)</span> <span class="p">{</span>
+        <span class="kc">self</span><span class="p">.</span><span class="n">perform</span><span class="p">(</span><span class="n">selector</span><span class="p">,</span> <span class="n">with</span><span class="p">:</span> <span class="n">segue</span><span class="p">.</span><span class="n">destination</span><span class="p">,</span> <span class="n">with</span><span class="p">:</span> <span class="n">sender</span><span class="p">)</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></td></tr></table></div>
+
+<p>This means that a view controller that has a segue to
+<code>TermsOfServiceViewController</code> can now do this:</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span class="normal">1</span>
+<span class="normal">2</span>
+<span class="normal">3</span>
+<span class="normal">4</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="kr">@objc</span>
+<span class="kd">private</span> <span class="kd">func</span> <span class="nf">prepareForTermsOfService</span><span class="p">(</span><span class="kc">_</span> <span class="n">viewController</span><span class="p">:</span> <span class="n">TermsOfServiceViewController</span><span class="p">,</span> <span class="n">sender</span><span class="p">:</span> <span class="nb">Any</span><span class="p">?)</span> <span class="p">{</span>
+    <span class="n">viewController</span><span class="p">.</span><span class="n">onTermsAccepted</span> <span class="p">=</span> <span class="p">{</span> <span class="p">[</span><span class="kr">weak</span> <span class="kc">self</span><span class="p">]</span> <span class="kc">self</span><span class="p">?.</span><span class="n">proceed</span><span class="p">()</span> <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></td></tr></table></div>
+
+<p>We no longer have to implement <code>prepareForSegue</code> and then <code>switch</code> on the
+segue's identifier or destination controller, but we can implement a separate
+method for every segue from this view controller instead which makes the code
+much more readable.</p>
+<h3 id="nibview"><code>NibView</code></h3>
+<p>We wrote a <code>NibView</code> class to make it more convenient to embed custom views in
+other views from IB. We marked this class with <code>@IBDesignable</code> so that it knows
+to render itself in IB. All we have to do is drag out a regular <code>UIView</code> from
+the object library and change its class. If there is a XIB with the same name as
+the class, <code>NibView</code> will automatically instantiate it and render it in the
+canvas at design time and on screen at runtime.</p>
+<p>Every standalone view we design in IB (which effectively means every view in our
+app) inherits from <code>NibView</code> so we can have an "unlimited" number of nested
+views show up and see the final result.</p>
+<h3 id="basic-ibdesignables">Basic <code>@IBDesignable</code>s</h3>
+<p>Since a lot of our views have corner radii and borders, we have created this
+<code>UIView</code> extension:</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span class="normal"> 1</span>
+<span class="normal"> 2</span>
+<span class="normal"> 3</span>
+<span class="normal"> 4</span>
+<span class="normal"> 5</span>
+<span class="normal"> 6</span>
+<span class="normal"> 7</span>
+<span class="normal"> 8</span>
+<span class="normal"> 9</span>
+<span class="normal">10</span>
+<span class="normal">11</span>
+<span class="normal">12</span>
+<span class="normal">13</span>
+<span class="normal">14</span>
+<span class="normal">15</span>
+<span class="normal">16</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="kd">public</span> <span class="kd">extension</span> <span class="bp">UIView</span> <span class="p">{</span>
+    <span class="kr">@IBInspectable</span> <span class="kd">public</span> <span class="kd">var</span> <span class="nv">cornerRadius</span><span class="p">:</span> <span class="n">CGFloat</span> <span class="p">{</span>
+        <span class="kr">get</span> <span class="p">{</span> <span class="k">return</span> <span class="kc">self</span><span class="p">.</span><span class="n">layer</span><span class="p">.</span><span class="n">cornerRadius</span> <span class="p">}</span>
+        <span class="kr">set</span> <span class="p">{</span> <span class="kc">self</span><span class="p">.</span><span class="n">layer</span><span class="p">.</span><span class="n">cornerRadius</span> <span class="p">=</span> <span class="n">newValue</span> <span class="p">}</span>
+    <span class="p">}</span>
+
+    <span class="kr">@IBInspectable</span> <span class="kd">public</span> <span class="kd">var</span> <span class="nv">borderWidth</span><span class="p">:</span> <span class="n">CGFloat</span> <span class="p">{</span>
+        <span class="kr">get</span> <span class="p">{</span> <span class="k">return</span> <span class="kc">self</span><span class="p">.</span><span class="n">layer</span><span class="p">.</span><span class="n">borderWidth</span> <span class="p">}</span>
+        <span class="kr">set</span> <span class="p">{</span> <span class="kc">self</span><span class="p">.</span><span class="n">layer</span><span class="p">.</span><span class="n">borderWidth</span> <span class="p">=</span> <span class="n">newValue</span> <span class="p">}</span>
+    <span class="p">}</span>
+
+    <span class="kr">@IBInspectable</span> <span class="kd">public</span> <span class="kd">var</span> <span class="nv">borderColor</span><span class="p">:</span> <span class="bp">UIColor</span> <span class="p">{</span>
+        <span class="kr">get</span> <span class="p">{</span> <span class="k">return</span> <span class="bp">UIColor</span><span class="p">(</span><span class="n">cgColor</span><span class="p">:</span> <span class="kc">self</span><span class="p">.</span><span class="n">layer</span><span class="p">.</span><span class="n">borderColor</span><span class="p">!)</span> <span class="p">}</span>
+        <span class="kr">set</span> <span class="p">{</span> <span class="kc">self</span><span class="p">.</span><span class="n">layer</span><span class="p">.</span><span class="n">borderColor</span> <span class="p">=</span> <span class="n">newValue</span><span class="p">.</span><span class="n">cgColor</span> <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></td></tr></table></div>
+
+<p>This lets us easily set these properties on <em>any</em> view (including the ones from
+UIKit) from Interface Builder.</p>
+<h3 id="linter">Linter</h3>
+<p>We wrote a linter to make sure views are not misplaced, have
+accessibility labels, trait variations are disabled (since we only officially
+support portrait mode on iPhone), etc.</p>
+<h3 id="ibunfuck">ibunfuck</h3>
+<p>A <a href="https://forums.developer.apple.com/thread/8116">bug</a> impacting developers
+that use Interface Builder on both Retina and non-Retina screens (which at Lyft
+is every developer) has caused us enough grief to write
+<a href="https://github.com/Reflejo/ib-unfuck-git"><code>ibunfuck</code></a> - a tool to remove
+unwanted changes from IB files.</p>
+<h3 id="color-palette">Color palette</h3>
+<p>We created a custom color palette with the commonly used colors in our app so
+it's easy to select these colors when building a new UI. The color names in the
+palette follow the same names designers use when they give us new designs, so
+it's easy to refer to and use without having to copy RGB or hex values.</p>
+<h2 id="our-approach">Our approach</h2>
+<p>In addition to these tools and project-level improvements, we have a number of
+"rules" around our use of IB to keep things sane:</p>
+<ul>
+<li>Do as little as possible in code, do as much as possible in IB. That means
+  fonts, colors, images, and other properties should not be set in code if they
+  don't change at runtime.</li>
+<li>Use <code>@IBInspectable</code> on custom views whenever possible.</li>
+<li>Create as much Auto Layout constraints in IB as possible. Sometimes this means
+  being clever with how we create constraints so that at runtime we need very
+  little code to manipulate a layout.</li>
+<li>If we do need to create constraints in code, we don't use the
+  <code>NSLayoutConstraint</code> (or <code>NSLayoutAnchor</code>) methods directly. Instead we use
+  <a href="https://github.com/SnapKit/SnapKit">SnapKit</a>'s convenience methods.</li>
+<li>We still manually push and present view controllers where possible. Even
+  though we have created some niceties around using segues, it's still easy to
+  accidentally remove one and not find out about it until runtime.</li>
+<li>We tend to create a new storyboard when we recognize a common theme in related
+  view controllers. Just as with code, we don't want bloated storyboards with
+  all kinds of unrelated things in there. Most of our storyboards have fewer
+  than 10 scenes.</li>
+<li><a href="https://scottberrevoets.com/2016/03/21/outlets-strong-or-weak/">Our outlets are defined
+  carefully.</a></li>
+</ul>
+<p>Of course, even with these improvements everything is not peaches and cream.
+There are definitely still problems. New versions of Xcode often change the XML
+representation which leads to a noisy diff. Some properties can simply not be
+set in IB meaning we're forced to break our "do everything in IB" rule.
+Interface Builder has bugs we can't always work around.</p>
+<p>However, with our improved infrastructure and the points from above, we are
+happy with how IB works for us. We don't have to write tons of Auto Layout code
+(which would be incredibly painful due to the nature of our UIs), get a visual
+representation of how a view looks without having to run the app after every
+minor change, and maybe one day we can get our designers make changes to our UI
+without developers' help.</p></div>
+</div>	
+<div class='article'>
+    <h2 class="article-title"><a href="../../2016/08/01/silencing-nslog/">Silencing NSLog</a></h2>
+    <div class="article-content"><p>When your app has a lot of third-party dependencies, what often happens is that
+those libraries log a bunch of things to the Xcode console to help their own
+debugging. Unfortunately, a lot of these logs are useful only to the developers
+of the library, but not the developers of apps that integrate the library. For
+example, they log things like <code>&lt;SomeLibrary&gt; (version 1.2.3) initialized</code>, or
+<code>&lt;SomeLibrary&gt; started &lt;primary functionality&gt;</code>, sometimes with a long list of
+parameters or input sources that are irrelevant to you.</p>
+<p>Finding your own log statements in a jungle of other logs can then be
+very difficult and adds to the frustration of not being able to work the debugger
+as you would like to.</p>
+<p>If a library is open source you can suggest a change by removing the log or
+otherwise make it less obtrusive. However, if your change gets accepted at all,
+that doesn't solve the immediate problem of being able to debug your own code
+using the console.</p>
+<p>Meet <code>_NSSetLogCStringFunction()</code>. This C function has been around in Foundation
+for a long time, and while there is some
+<a href="https://support.apple.com/kb/TA45403?locale=en_US">documentation</a> on it, it's
+still a private method. However, that doesn't mean you can't use it in debug
+mode when your logs are the most valuable!</p>
+<p>In short, this function lets you set a function pointer that can log C strings,
+which <code>NSLog</code> then uses instead of the normal implementation. You can do this
+in two ways.</p>
+<p>The first one is by adding this to your Objective-C bridging header:</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span class="normal">1</span>
+<span class="normal">2</span>
+<span class="normal">3</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="cp">#if DEBUG</span>
+<span class="k">extern</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">_NSSetLogCStringFunction</span><span class="p">(</span><span class="kt">void</span><span class="p">(</span><span class="o">*</span><span class="p">)(</span><span class="k">const</span><span class="w"> </span><span class="kt">char</span><span class="o">*</span><span class="p">,</span><span class="w"> </span><span class="kt">unsigned</span><span class="p">,</span><span class="w"> </span><span class="kt">BOOL</span><span class="p">));</span><span class="w"></span>
+<span class="cp">#endif</span>
+</code></pre></div></td></tr></table></div>
+
+<p>and then use it like this:</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span class="normal">1</span>
+<span class="normal">2</span>
+<span class="normal">3</span>
+<span class="normal">4</span>
+<span class="normal">5</span>
+<span class="normal">6</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="kd">func</span> <span class="nf">disableNSLog</span><span class="p">()</span> <span class="p">{</span>
+<span class="cp">#if</span> <span class="cp">DEBUG</span>
+    <span class="n">_NSSetLogCStringFunction</span> <span class="p">{</span> <span class="n">message</span><span class="p">,</span> <span class="kc">_</span><span class="p">,</span> <span class="kc">_</span> <span class="k">in</span>
+        <span class="c1">// no actual logging, message just gets lost</span>
+    <span class="p">}</span>
+<span class="cp">#endif</span>
+</code></pre></div></td></tr></table></div>
+
+<p>If you want to stick to pure Swift, you can do so by adding this to your code
+somewhere:</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span class="normal">1</span>
+<span class="normal">2</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="p">@</span><span class="n">_silgen_name</span><span class="p">(</span><span class="s">&quot;_NSSetLogCStringFunction&quot;</span><span class="p">)</span>
+<span class="kd">func</span> <span class="nf">setNSLogFunction</span><span class="p">(</span><span class="kc">_</span><span class="p">:</span> <span class="p">@</span><span class="n">convention</span><span class="p">(</span><span class="n">c</span><span class="p">)</span> <span class="p">(</span><span class="nb">UnsafePointer</span><span class="p">&lt;</span><span class="nb">Int8</span><span class="p">&gt;,</span> <span class="nb">UInt32</span><span class="p">,</span> <span class="n">ObjCBool</span><span class="p">)</span> <span class="p">-&gt;</span> <span class="nb">Void</span><span class="p">)</span>
+</code></pre></div></td></tr></table></div>
+
+<p>and then use it like this:</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span class="normal">1</span>
+<span class="normal">2</span>
+<span class="normal">3</span>
+<span class="normal">4</span>
+<span class="normal">5</span>
+<span class="normal">6</span>
+<span class="normal">7</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="kd">func</span> <span class="nf">disableNSLog</span><span class="p">()</span> <span class="p">{</span>
+<span class="cp">#if</span> <span class="cp">DEBUG</span>
+    <span class="n">setNSLogFunction</span> <span class="p">{</span> <span class="n">message</span><span class="p">,</span> <span class="kc">_</span><span class="p">,</span> <span class="kc">_</span> <span class="k">in</span>
+        <span class="c1">// no actual logging, message just gets lost</span>
+    <span class="p">}</span>
+<span class="cp">#endif</span>
+<span class="p">}</span>
+</code></pre></div></td></tr></table></div>
+
+<p>Obviously, you can do anything you want inside the closure, including writing to
+a file, annotating the message with a date/time, passing it to your custom
+logging library, etc.</p>
+<p>One downside of this is that Apple's frameworks use <code>NSLog</code> extensively as well,
+so in the above case of completely disabling logging, helpful messages get lost
+as well. You won't be able to use <code>NSLog</code> yourself either anymore, so I suggest
+you use <code>print()</code> or a custom logging framework that's not <code>NSLog</code> based.</p>
+<p>If you're not afraid of doing (more) horrible things in your codebase, you can
+avoid losing Apple frameworks' messages by parsing the stack trace and looking
+at the framework that called this function and see if it's something you want to
+let through:</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span class="normal"> 1</span>
+<span class="normal"> 2</span>
+<span class="normal"> 3</span>
+<span class="normal"> 4</span>
+<span class="normal"> 5</span>
+<span class="normal"> 6</span>
+<span class="normal"> 7</span>
+<span class="normal"> 8</span>
+<span class="normal"> 9</span>
+<span class="normal">10</span>
+<span class="normal">11</span>
+<span class="normal">12</span>
+<span class="normal">13</span>
+<span class="normal">14</span>
+<span class="normal">15</span>
+<span class="normal">16</span>
+<span class="normal">17</span>
+<span class="normal">18</span>
+<span class="normal">19</span>
+<span class="normal">20</span>
+<span class="normal">21</span>
+<span class="normal">22</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="kd">func</span> <span class="nf">disableNSLog</span><span class="p">()</span> <span class="p">{</span>
+<span class="cp">#if</span> <span class="cp">DEBUG</span>
+    <span class="n">_NSSetLogCStringFunction</span> <span class="p">{</span> <span class="n">message</span><span class="p">,</span> <span class="kc">_</span><span class="p">,</span> <span class="kc">_</span> <span class="k">in</span>
+        <span class="c1">// message is of type UnsafePointer&lt;Int8&gt; so first see if we can get a</span>
+        <span class="c1">// normal String from that. Safety first!</span>
+
+        <span class="k">guard</span> <span class="kd">let</span> <span class="nv">message</span> <span class="p">=</span> <span class="nb">String</span><span class="p">.</span><span class="n">fromCString</span><span class="p">(</span><span class="n">message</span><span class="p">)</span> <span class="k">else</span> <span class="p">{</span>
+            <span class="k">return</span>
+        <span class="p">}</span>
+
+        <span class="kd">let</span> <span class="nv">callStack</span> <span class="p">=</span> <span class="bp">NSThread</span><span class="p">.</span><span class="n">callStackSymbols</span><span class="p">()</span>
+        <span class="kd">let</span> <span class="nv">sourceString</span> <span class="p">=</span> <span class="n">callStack</span><span class="p">[</span><span class="mi">6</span><span class="p">]</span>
+        <span class="kd">let</span> <span class="nv">separatorSet</span> <span class="p">=</span> <span class="bp">NSCharacterSet</span><span class="p">(</span><span class="n">charactersInString</span><span class="p">:</span> <span class="s">&quot; -[]+?.,&quot;</span><span class="p">)</span>
+        <span class="kd">let</span> <span class="nv">stackFrame</span> <span class="p">=</span> <span class="n">sourceString</span><span class="p">.</span><span class="n">componentsSeparatedByCharactersInSet</span><span class="p">(</span><span class="n">separatorSet</span><span class="p">)</span>
+        <span class="kd">let</span> <span class="nv">frameworkName</span> <span class="p">=</span> <span class="n">stackFrame</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span>
+
+        <span class="k">if</span> <span class="n">frameworkName</span> <span class="p">==</span> <span class="s">&quot;UIKit&quot;</span> <span class="o">||</span> <span class="n">frameworkName</span> <span class="p">==</span> <span class="s">&quot;Foundation&quot;</span> <span class="p">{</span>
+            <span class="n">MyCustomLogger</span><span class="p">.</span><span class="n">log</span><span class="p">(</span><span class="n">message</span><span class="p">)</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+<span class="cp">#endif</span>
+<span class="p">}</span>
+</code></pre></div></td></tr></table></div>
+
+<p>This discards all logs, except if they're coming from <code>UIKit</code> or <code>Foundation</code>.
+The stack trace parsing is by no means safe (its format could change, for
+example), but since it's wrapped in <code>#if DEBUG</code> directives it won't mess with
+anything in the App Store build.</p>
+<p>Note that static libraries are part of your main app's target, which means you
+have to filter out logs from your own target to hide those.</p>
+<p>You could even go a bit farther and check the message for keywords you like or
+don't like and make a decision on whether you want to log or not. Keep in mind,
+though, that any work you do here needs to be fast as you don't always know just
+how much is being logged.</p></div>
+</div>	
+<div class='article'>
+    <h2 class="article-title"><a href="../../2016/03/21/outlets-strong-or-weak/">Outlets: strong! or weak?</a></h2>
+    <div class="article-content"><p>There are a lot of styles out there when it comes to using Interface Builder outlets in Swift. Even Apple's documentation and sample code isn't always consistent. The most common one, the one Apple uses in its sample code, follows this pattern:</p>
+<p><code>@IBOutlet private weak var someLabel: UILabel!</code></p>
+<p>Let's break this down by keyword:</p>
+<ul>
+<li><code>@IBOutlet</code> makes Interface Builder recognize the outlet</li>
+<li><code>private</code> ensures the outlet isn't accessed outside the current class</li>
+<li><code>weak</code> is used because in most situations the owner of the outlet isn't the same as the owner of the view. For example, a view controller doesn't own <code>someLabel</code> - the view controller's <code>view</code> does.</li>
+<li><code>var</code> because outlets are, by definition, set <em>after</em> initialization</li>
+<li><code>someLabel: UILabel</code> is just an example, this applies to outlets of any kind</li>
+<li><code>!</code>, or the implicitly unwrapped optional, is convenient because you don't have to litter your code with <code>?</code> and <code>if let</code>s (or just <code>!</code>) everywhere</li>
+</ul>
+<p>While at first this seems like a solid approach, at Lyft we quickly realized we weren't fans of this one-size-fits-all way of defining outlets. Instead, the behavior and consequences of the different elements should define the outlet's exact syntax, just like any other variable.</p>
+<p>For example, if there is a code path that removes an outlet from its superview, or the outlet is (intentionally) not hooked up in the storyboard, it needs to be an optional because the outlet is not guaranteed to be there when it's accessed.</p>
+<p><code>@IBOutlet private var someLabel: UILabel?</code></p>
+<p>If there is no code path that re-adds the outlet to the view hierarchy, it would also be good to make it <code>weak</code> to not hold on to it unnecessarily when it gets removed:</p>
+<p><code>@IBOutlet private weak var someLabel: UILabel?</code></p>
+<p>This ensures that if the label is removed from the superview, it's not being kept in memory by the strong reference in the view controller. In the most common case, where there is an outlet that will always be there, a strong, implicitly unwrapped optional is appropriate:</p>
+<p><code>@IBOutlet private var someLabel: UILabel!</code></p>
+<p>The outlet isn't <code>weak</code> in case the code ever changes so that there <em>is</em> a code path that removes the view from the view hierarchy but you forget to update the optionality of the property. The object will stay in memory and using it won't crash your app.</p>
+<p>These examples all follow 3 simple rules:</p>
+<ol>
+<li><code>!</code> needs a guarantee that the view exists, so always use <code>strong</code> to provide that guarantee</li>
+<li>If it's possible the view isn't part of the view hierarchy, use <code>?</code> and appropriate optional-handling (optional binding/chaining) for safety</li>
+<li>If you don't need a view anymore after removing it from the view hierarchy, use <code>weak</code> so it gets removed from memory.</li>
+</ol>
+<p>Applying these three rules means you properly use the optional semantics. After all, using <code>!</code> for a view that may not exist is no different than defining any other property as an implicitly unwrapped optional that may not exist.</p></div>
+</div>	
+<div class='article'>
+    <h2 class="article-title"><a href="../../2015/07/23/objc-class-prefixes-fixed-in-xcode-7-beta-4/">@objc class prefixes fixed in Xcode 7 beta 4</a></h2>
+    <div class="article-content"><p>Back in December I <a href="/2014/12/15/at-objc-creates-a-wrong-class-name-in-objective-c/">wrote</a> about what I thought was a bug in the Swift compiler that would expose the wrong class name for a Swift class in Objective-C. I then later <a href="https://devforums.apple.com/message/1072175#1072175">found out</a> everything worked as intended and I had just misunderstood what <code>@objc()</code> exactly did. Apparently it was never supposed to modify the class name at compile time, but only at runtime.</p>
+<p>I'm sure changing the class name just at runtime has its uses, but in my opinion, this would be most helpful if it also affected the compile time name of Objective-C classes. It allows you to namespace your classes in Objective-C using your three-letter prefix, without needing that prefix in Swift because you could namespace by way of modules.</p>
+<p>And fortunately, in Xcode 7 beta 4, they have actually modified the <code>@objc()</code> notation so that it <em>does</em> do this. For example, if I have a Swift module that I want others to be able to use in their Objective-C codebase, I could write a class like this:</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span class="normal">1</span>
+<span class="normal">2</span>
+<span class="normal">3</span>
+<span class="normal">4</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="kr">@objc</span><span class="p">(</span><span class="n">SDCMyClass</span><span class="p">)</span>
+<span class="kd">class</span> <span class="bp">MyClass</span><span class="p">:</span> <span class="bp">NSObject</span> <span class="p">{</span>
+    <span class="c1">// ...</span>
+<span class="p">}</span>
+</code></pre></div></td></tr></table></div>
+
+<p>And in <code>MyProject-Swift.h</code> the Objective-C class is defined as:</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span class="normal">1</span>
+<span class="normal">2</span>
+<span class="normal">3</span>
+<span class="normal">4</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="n">SWIFT_CLASS_NAMED</span><span class="p">(</span><span class="s">&quot;MyClass&quot;</span><span class="p">)</span><span class="w"></span>
+<span class="k">@interface</span> <span class="nc">SDCMyClass</span> : <span class="bp">NSObject</span><span class="w"></span>
+<span class="p">-</span> <span class="p">(</span><span class="n">nonnull</span><span class="w"> </span><span class="kt">instancetype</span><span class="p">)</span><span class="nf">init</span><span class="w"> </span><span class="n">OBJC_DESIGNATED_INITIALIZER</span><span class="p">;</span><span class="w"></span>
+<span class="k">@end</span><span class="w"></span>
+</code></pre></div></td></tr></table></div>
+
+<p>In Swift I can simply use the class as <code>MyClass</code>, but in Objective-C its name is <code>SDCMyClass</code>, which ensures it doesn't collide with other classes named <code>MyClass</code>. Needless to say, I'm very happy they changed this behavior, it makes much more sense now.</p></div>
+</div>	
+<div class='article'>
+    <h2 class="article-title"><a href="../../2015/06/13/the-power-of-uistackview/">The power of UIStackView</a></h2>
+    <div class="article-content"><p>I was in the audience for "Implementing UI Designs in Interface Builder" at WWDC, where Apple touted <code>UIStackView</code> as a new, better way to lay out your views that in a lot of cases didn't require Auto Layout.</p>
+<p>While the presentation looked good, I wasn't quite sure this solved a real problem, as the required constraints weren't too complicated to build in the first pace. However, after I found some time to play around with <code>UIStackView</code>, I'm convinced. This view is very, very powerful and can make building common UIs a lot simpler. Take, for example, a number grid:</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span class="normal">1</span>
+<span class="normal">2</span>
+<span class="normal">3</span>
+<span class="normal">4</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">[1] [2] [3]</span><span class="w"></span>
+<span class="k">[4] [5] [6]</span><span class="w"></span>
+<span class="k">[7] [8] [9]</span><span class="w"></span>
+<span class="w">    </span><span class="k">[0]</span><span class="w"></span>
+</code></pre></div></td></tr></table></div>
+
+<p>It would take a while to build this kind of UI in Auto Layout. You would have to create constraints between individual labels, make the labels the same size everywhere, make the spacing between all the labels equal, and avoid hardcoding any numbers to keep the whole thing adaptive. This can be a tedious process in Interface Builder, but imagine you're building this in code. It would take forever, especially after debugging your UI.</p>
+<p>With <code>UIStackView</code>, doing all of this takes about 30 seconds. After dragging out all the labels, you just need to embed every row in its own stack view. Set the distribution (in code that's <code>UIStackViewDistribution</code>) for these stack views to "fill equally" (<code>.FillEqually</code>), then embed all four stack views in their own stack view.</p>
+<p><img alt="UIStackView example" src="/images/UIStackView.png"></p>
+<p>The top-level, vertical stack view should get top/leading/trailing/bottom space to its superview (or the layout guides), the 4 horizontal stack views an "equal width" constraint to their superview. Finally, center the text of the individual labels (you can select all labels at once and do this with 1 action). Done - that's it.</p>
+<p>But it gets better. Say you want to conditionally show or hide the <code>0</code> label at the bottom. I don't know why you would want that, but just go with it 😛</p>
+<p>To do this, all you have to is <strong>toggle the</strong> <code>hidden</code> <strong>property of that label</strong>. The containing stack view will automatically reposition its subviews. If you put that line in an animation block, it will reposition its subviews in an animated fashion.</p>
+<p>That last part is a very welcome feature for developers that work with a lot of dynamic views. Instead of creating redundant constraints with lower priorities, removing views from their view hierarchies, and re-adding the view and all its constraints if the new views needs to be re-shown, you can simply toggle <code>hidden</code> instead.</p>
+<p>As more people get their hands on <code>UIStackView</code> I'm sure it will show off more of its powers, but needless to say I'm sold. Too bad I can't use it for a while...</p></div>
+</div>	
+
+<div class="pagination">
+<ul>
+    <li class="prev"><a href="../../">&larr; Previous</a></li>
+    <li class="next"><a href="../../page/3/">Next &rarr;</a></li>
+</ul>
+</div>
+
+</body>
+</html>
