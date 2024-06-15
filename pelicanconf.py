@@ -54,8 +54,8 @@ DATE_FORMATS = { 'en': '%d %B %Y' }
 DISPLAY_SOCIAL_MEDIA = True
 SOCIALMEDIAITEMS = [
     ('github.svg', 'https://github.com/sberrevoets'),
-    ('linkedin.svg', 'https://linkedin.com/sberrevoets'),
-    ('mastodon.svg', 'https://hachyderm.io/ScottBerrevoets'),
+    ('linkedin.svg', 'https://linkedin.com/in/sberrevoets'),
+    ('mastodon.svg', 'https://hachyderm.io/@ScottBerrevoets'),
     ('mail.svg', 'mailto:hi@scottberrevoets.com'),
 ]
 
