@@ -52,10 +52,12 @@ DATE_FORMATS = { 'en': '%d %B %Y' }
 
 # Social media
 DISPLAY_SOCIAL_MEDIA = True
-SOCIALMEDIAITEMS = [('twitter.svg', 'https://twitter.com/ScottBerrevoets'),
-                    ('github.svg', 'https://github.com/sberrevoets'),
-                    ('stackoverflow.svg', 'http://stackoverflow.com/users/751268/scott-berrevoets'),
-                    ('youtube.svg', 'https://www.youtube.com/watch?v=dQw4w9WgXcQ')]
+SOCIALMEDIAITEMS = [
+    ('github.svg', 'https://github.com/sberrevoets'),
+    ('linkedin.svg', 'https://linkedin.com/in/sberrevoets'),
+    ('mastodon.svg', 'https://hachyderm.io/@ScottBerrevoets'),
+    ('mail.svg', 'mailto:hi@scottberrevoets.com'),
+]
 
 # No feeds in development mode
 FEED_DOMAIN = SITEURL

@@ -27,3 +27,4 @@ Found a mistake, typo, or formatting error? Contributions are welcome!
 
 - Code is published under the [MIT license](https://github.com/sberrevoets/scottberrevoets.com/blob/master/LICENSE)
 - Content is published under [CC BY-NC 3.0](https://creativecommons.org/licenses/by-nc/3.0/)
+- Icons used are from tabler.io and distributed under the [MIT license](https://tabler.io/license)
