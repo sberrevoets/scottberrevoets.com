@@ -34,3 +34,4 @@ pelicanconf.pyc
 publishconf.pyc
 srv.pid
 *.swp
+output
