@@ -1,29 +1,21 @@
 {% extends "base.html" %}
+{% block title %}{{ SITENAME }}{% endblock %}
 {% block content %}
 
-{% if articles %}
-{% for article in (articles_page.object_list if articles_page else articles) %}
-<div class='article'>
-    <h2 class="article-title"><a href="{{ SITEURL }}/{{ article.url }}">{{ article.title }}</a></h2>
-    <div class="article-content">{{ article.content }}</div>
-</div>	
+<div class="page-content">
+<dl id="archive">
+{% for article in dates %}
+    {% if dates[loop.index0 - 1].date.year != article.date.year %}
+    <dt>{{ article.date.year }}</dt>
+    {% endif %}
+    <dd>
+    <time datetime="{{ article.date.isoformat() }}">{{ article.date.strftime("%b %d") }}</time>
+    <a href="{{ SITEURL }}/{{ article.url }}"
+         title="{{ article.locale_date }}: {{ article.summary|striptags|escape }}">
+        {{ article.title }}
+      </a>
+    </dd>
 {% endfor %}
-{% endif %}
-
-<div class="pagination">
-<ul>
-    {% if articles_page.has_previous() %}
-    {% set num = articles_page.previous_page_number() %}
-    <li class="prev"><a href="{{ SITEURL }}/{{ articles_previous_page.url }}">&larr; Previous</a></li>
-    {% else %}
-    <li class="prev disabled">&larr; Previous</li>
-    {% endif %}
-    {% if articles_page.has_next() %}
-    <li class="next"><a href="{{ SITEURL }}/{{ articles_next_page.url }}">Next &rarr;</a></li>
-    {% else %}
-    <li class="next disabled">Next &rarr;</li>
-    {% endif %}
-</ul>
+</dl>
 </div>
-
 {% endblock %}
