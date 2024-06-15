@@ -9,7 +9,7 @@ for your own Pelican installation, but I can't help you out with customizations.
 ## Installation
 
 ```bash
-$ pip3 install
+$ pip3 install -r requirements.txt
 ```
 
 ## Writing
