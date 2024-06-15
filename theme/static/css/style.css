@@ -90,6 +90,11 @@ nav#menu ul li a {
     text-transform: uppercase;
     text-decoration: none;
     font-weight: bold;
+    color: rgb(180, 180, 180);
+}
+
+nav#menu ul li.active a {
+    color: rgb(50, 50, 50);
 }
 
 h2.article-title {

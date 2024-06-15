@@ -50,8 +50,8 @@
             {% endif %}
         </header><!-- /#banner -->
         <nav id="menu"><ul>
-        {% for title, link in MENUITEMS %}
-            <li><a href="{{ link }}">{{ title }}</a></li>
+        {% for item, link in MENUITEMS %}
+            <li{% if page|default('', true) == link %} class="active"{% endif %}><a href="{{ SITEURL }}/{{ link }}">{{ item }}</a></li>
         {% endfor %}
         {% if DISPLAY_PAGES_ON_MENU %}
           {% for p in pages %}
