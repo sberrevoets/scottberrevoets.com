@@ -37,8 +37,8 @@ PAGINATION_PATTERNS = (
 )
 
 # Create and link to index and archive
-DIRECT_TEMPLATES = ('index', 'archive')
-MENUITEMS = [('Blog', '/'), ('Archive', '/archive.html')]
+DIRECT_TEMPLATES = ('index')
+MENUITEMS = [('Blog', '')]
 
 # Disable authors, categories, and tags
 AUTHOR_SAVE_AS = False
