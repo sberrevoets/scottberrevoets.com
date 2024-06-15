@@ -1,4 +1,4 @@
-Title: Human Factors in Choosing Technologies
+Title: Human factors in choosing technologies
 Date: 2022-09-28
 Summary: Discussion on what human factors to consider when choosing to adopt a new technology
 
