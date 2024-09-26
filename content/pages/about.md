@@ -21,7 +21,8 @@ Some my other extracurriculars include:
 * [Advanced Auto Layout] at RWDevCon 2017
 * [Keeping the Lyft App Accessible]
 
-For a full list of my work, check out my [resume]({static}/resume.pdf).
+For a full list of my work, check out my resume [[PDF]({static}/resume.pdf) |
+[HTML]({static}/resume.html).
 </div>
 
 [Kodeco]: https://www.kodeco.com/u/scottb
