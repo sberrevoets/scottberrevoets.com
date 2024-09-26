@@ -40,6 +40,9 @@ PAGINATION_PATTERNS = (
 DIRECT_TEMPLATES = ('index')
 MENUITEMS = [('Blog', '')]
 
+# Disable parsing HTML files
+READERS = {'html': None}
+
 # Disable authors, categories, and tags
 AUTHOR_SAVE_AS = False
 CATEGORY_SAVE_AS = False
