@@ -171,7 +171,6 @@ dl#archive dd {
     margin: 20px 0 20px 40px;
 }
 
-
 @media only screen and (max-width: 320px) {
     dl#archive dd {
         margin-left: 0;
@@ -213,6 +212,32 @@ blockquote {
     padding-left: 1.5em;
     border-left: 4px solid rgb(221, 221, 221);
     color: #777;
+}
+
+.admonition {
+  border-left: 5px solid #4CAF50; /* Accent color for the border */
+  background-color: #f9f9f9; /* Light background */
+  padding: 15px;
+  margin: 20px 0;
+  margin-bottom: 50px;
+  border-radius: 8px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.admonition-title {
+  font-weight: bold;
+  font-size: 1.1em;
+  margin-bottom: 10px;
+  color: #333;
+}
+
+.admonition p {
+  margin: 0;
+}
+
+img {
+    max-width: 100%;
+    height: auto;
 }
 
 div#disqus_thread {
