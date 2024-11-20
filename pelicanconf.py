@@ -52,7 +52,7 @@ TAG_SAVE_AS = False
 # Locale settings
 DEFAULT_LANG = 'en'
 TIMEZONE = 'America/Los_Angeles'
-DATE_FORMATS = { 'en': '%d %B %Y' }
+DATE_FORMATS = { 'en': '%B %d, %Y' }
 
 # Social media
 DISPLAY_SOCIAL_MEDIA = True
