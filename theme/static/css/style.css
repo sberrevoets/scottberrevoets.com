@@ -97,6 +97,10 @@ nav#menu ul li.active a {
     color: rgb(50, 50, 50);
 }
 
+.note ol {
+    margin-bottom: 0;
+}
+
 h2.article-title {
     font-size: 2.5em;
     padding: 0 10px;
