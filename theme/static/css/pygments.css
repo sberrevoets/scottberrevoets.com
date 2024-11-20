@@ -50,6 +50,13 @@ code {
     font-size: 1em;
 }
 
+:not(pre) > code {
+    background-color: #f4f4f5;
+    padding: .25rem;
+    border-radius: 0.25rem;
+    font-weight: bold;
+}
+
 .highlighttable .highlight pre {
     color: #C1C2C3;
     padding-left: 10px;
