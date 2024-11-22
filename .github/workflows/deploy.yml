@@ -16,3 +16,4 @@ jobs:
       env:
         GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
         GH_PAGES_CNAME: www.scottberrevoets.com
+        PELICAN_CONFIG_FILE: publishconf.py
