@@ -1,6 +1,6 @@
 Title: Looking up words in a dictionary with Neovim
 Date: 2024-12-08
-Description: Configuring Neovim to enable a quick dictionary lookup for words under the cursor
+Summary: Configuring Neovim to enable a quick dictionary lookup for words under the cursor
 
 When writing code in neovim, I frequently use `⌘K` to look up documentation,
 function signatures, variable definitions, etc. In markdown files that doesn't
