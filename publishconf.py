@@ -7,6 +7,7 @@ from __future__ import unicode_literals
 
 import os
 import sys
+
 sys.path.append(os.curdir)
 from pelicanconf import *
 
@@ -17,9 +18,9 @@ DELETE_OUTPUT_DIRECTORY = True
 RELATIVE_URLS = False
 
 # Generate feeds
-FEED_ATOM = 'feeds/atom.xml'
-FEED_RSS = 'feeds/rss.xml'
-FEED_ALL_ATOM = 'feeds/all.atom.xml'
-FEED_ALL_RSS = 'feeds/all.rss.xml'
+FEED_ATOM = "feeds/atom.xml"
+FEED_RSS = "feeds/rss.xml"
+FEED_ALL_ATOM = "feeds/all.atom.xml"
+FEED_ALL_RSS = "feeds/all.rss.xml"
 
-GOATCOUNTER_ID = 'sberrevoets'
+GOATCOUNTER_ID = "sberrevoets"
