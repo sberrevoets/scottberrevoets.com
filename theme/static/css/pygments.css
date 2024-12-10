@@ -5,8 +5,8 @@
 
 pre, code {
     font-family: 'SFMono-Regular', 'SF Mono', Menlo, monospace;
-    font-size: 0.8em;
     color: #555;
+    font-size: 1rem;
 }
 
 .highlight {
@@ -52,7 +52,6 @@ code {
     overflow: auto;
     max-width: 100%;
     display: inline;
-    font-size: 1em;
 }
 
 :not(pre) > code {
