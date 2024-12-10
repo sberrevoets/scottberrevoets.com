@@ -1,13 +1,5 @@
 @import url("pygments.css");
 
-/* Fix code block font sizes */
-/* https://stackoverflow.com/a/34284777 */
-@media screen and (max-device-width: 480px){
-  body{
-    -webkit-text-size-adjust: 100%;
-  }
-}
-
 body {
     color: rgb(50, 50, 50);
     margin: 0 auto;
@@ -62,6 +54,12 @@ h1 a {
 @media only screen and (max-width: 500px) {
     h1 a {
         font-size: 1.2em;
+    }
+
+    /* Fix code block font sizes */
+    /* https://stackoverflow.com/a/34284777 */
+    body {
+        -webkit-text-size-adjust: 100%;
     }
 }
 
