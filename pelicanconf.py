@@ -64,6 +64,7 @@ SOCIALMEDIAITEMS = [
     ("linkedin.svg", "https://linkedin.com/in/sberrevoets"),
     ("mastodon.svg", "https://hachyderm.io/@ScottBerrevoets"),
     ("mail.svg", "mailto:hi@scottberrevoets.com"),
+    ("rss.svg", "/feeds/all.atom.xml"),
 ]
 
 # No feeds in development mode
