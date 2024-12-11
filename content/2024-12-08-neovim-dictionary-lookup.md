@@ -2,7 +2,7 @@ Title: Looking up words in a dictionary with Neovim
 Date: 2024-12-08
 Summary: Configuring Neovim to enable a quick dictionary lookup for words under the cursor
 
-When writing code in neovim, I frequently use `⌘K` to look up documentation,
+When writing code in neovim, I frequently use `K` to look up documentation,
 function signatures, variable definitions, etc. In markdown files that doesn't
 make too much sense, but I wanted to use it to look up words in the dictionary
 instead. This didn't appear to be possible out of the box but the power of
@@ -12,7 +12,7 @@ The steps to build this roughly were:
 
 1. Write a dictionary lookup tool
 2. Parse this tool's output and show it in neovim
-3. Configure neovim's `⌘K` functionality
+3. Configure neovim's `K` functionality
 
 ## `dict`
 
@@ -118,7 +118,7 @@ This file needs to be in the `PATH` which I did by putting it in
 
 ## Neovim integration
 
-I wanted to invoke `dict` using `⌘K` passing in the word under the cursor as the
+I wanted to invoke `dict` using `K` passing in the word under the cursor as the
 trigger and show the output in a popup window. Other than the plain vim
 configuration this required some text manipulation so I put all that in
 `~/.vim/plugin/dictionary.lua`:
@@ -242,15 +242,15 @@ local function apply_ansi_highlighting(buf, line_num, text)
 end
 ```
 
-## Configuring `⌘K`
+## Configuring `K`
 
 Opening any file and calling `:lua DictionaryLookup()` already works (and `:lua
-ClosePopup()` to dismiss it) but that's a lot of typing and it better fits `⌘K`
+ClosePopup()` to dismiss it) but that's a lot of typing and it better fits `K`
 in markdown files since that's otherwise unused anyway.
 
 I mapped the first to a vim command `:Dict` and wanted to hide the window with
 any cursor movement, similar to how this works for other documentation lookups. 
-`keywordprg` is the command that gets invoked through `⌘K` (and can also be set
+`keywordprg` is the command that gets invoked through `K` (and can also be set
 through `set keywordprg`).
 
 I put this in `~/.vim/ftplugin/markdown.lua` so that it automatically is applied
