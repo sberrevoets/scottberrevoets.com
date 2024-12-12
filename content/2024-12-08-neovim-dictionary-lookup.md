@@ -107,14 +107,9 @@ This file needs to be in the `PATH` which I did by putting it in
 
 `dict ambiguous` now gives a nicely formatted definition:
 
-> <span style="color: green; font-weight: bold">ambiguous</span>
-> 
-> <span style="color: blue">adjective</span>  <span style="color: lightgray">(equivocal)</span>
->
->   1. Open to multiple interpretations. (e.g., The politician was criticized
->      for his ambiguous statements and lack of precision.)
->   2. Vague and unclear. (e.g., He gave an ambiguous answer.)
->   3. (of persons) Hesitant; uncertain; not taking sides.
+![Dictionary lookup of the word ambiguous in the
+terminal](/images/dictionary-lookup-cli.png)
+
 
 ## Neovim integration
 
@@ -265,6 +260,11 @@ vim.api.nvim_create_autocmd("CursorMoved", {
   callback = ClosePopup,
 })
 ```
+
+With the end result being:
+
+![Dictionary lookup of the word ambiguous in
+neovim](/images/dictionary-lookup-neovim.png)
 
 Dictionary lookup also still works in non-markdown files by directly invoking
 `:Dict`, which is a bit more typing but also much less common. That's all that
