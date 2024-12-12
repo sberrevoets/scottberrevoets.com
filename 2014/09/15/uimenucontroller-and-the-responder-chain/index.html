@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+          <title>UIMenuController and the responder chain - Scott Berrevoets</title>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <link href="https://scottberrevoets.com/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="Scott Berrevoets Full Atom Feed" />
+        <link href="https://scottberrevoets.com/feeds/all.rss.xml" type="application/rss+xml" rel="alternate" title="Scott Berrevoets Full RSS Feed" />
+        <link href="https://scottberrevoets.com/feeds/atom.xml" type="application/atom+xml" rel="alternate" title="Scott Berrevoets Atom Feed" />
+        <link href="https://scottberrevoets.com/feeds/rss.xml" type="application/rss+xml" rel="alternate" title="Scott Berrevoets RSS Feed" />
+
+    <meta name="description" content="Explaining unexpected behavior when using the responder chain and UIMenuController" />
+
+
+        <link rel="stylesheet" type="text/css" href="https://scottberrevoets.com/theme/css/style.css" />
+</head>
+
+<body id="index" class="home">
+        <header id="banner" class="body">
+            <h1><a href="https://scottberrevoets.com/">Scott Berrevoets</a></h1>
+
+            <ul id="social">
+                <li><a href="https://github.com/sberrevoets"><img src="https://scottberrevoets.com/theme/images/github.svg"></a></li>
+                <li><a href="https://linkedin.com/in/sberrevoets"><img src="https://scottberrevoets.com/theme/images/linkedin.svg"></a></li>
+                <li><a href="https://hachyderm.io/@ScottBerrevoets"><img src="https://scottberrevoets.com/theme/images/mastodon.svg"></a></li>
+                <li><a href="mailto:hi@scottberrevoets.com"><img src="https://scottberrevoets.com/theme/images/mail.svg"></a></li>
+                <li><a href="/feeds/all.atom.xml"><img src="https://scottberrevoets.com/theme/images/rss.svg"></a></li>
+            </ul>
+        </header><!-- /#banner -->
+        <nav id="menu"><ul>
+            <li class="active"><a href="https://scottberrevoets.com/">Blog</a></li>
+            <li><a href="https://scottberrevoets.com/about.html">About</a></li>
+        </ul></nav><!-- /#menu -->
+<section id="content" class="body">
+  <header>
+      <h2 class="article-title">UIMenuController and the responder chain</h2>
+ 
+    <time class="published" datetime="2014-09-15T00:00:00-07:00">
+      September 15, 2014
+    </time>
+  </header>
+  <div class="article-content">
+    <p>The responder chain is a very important paradigm in the world of iOS development, and not terribly hard to understand. Dozens of articles have been written about it, and with some examples, the concept of finding a responder to a certain event by traversing a chain of potential responders is fairly straight-forward.</p>
+<p>But today it completely threw me off. The goal was very simple and has been done many times before: showing a label whose text can be copied to the clipboard. Having never worked with <code>UIMenuController</code>, I fired up Google and of course found an excellent <a href="https://nshipster.com/uimenucontroller/">NSHipster</a> article near the top.</p>
+<p>I did as the article said. I created my <code>UILabel</code> subclass (only accepting <code>copy:</code> as an action it can perform), added my gesture recognizer, and configured and showed the <code>UIMenuController</code>. It worked, but instead of only showing the Copy menu item, it also showed the Select All item.</p>
+<p>Well, that's weird. I implemented <code>canPerformAction:withSender:</code> like this:</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span class="normal">1</span>
+<span class="normal">2</span>
+<span class="normal">3</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="p">-</span> <span class="p">(</span><span class="kt">BOOL</span><span class="p">)</span><span class="nf">canPerformAction:</span><span class="p">(</span><span class="kt">SEL</span><span class="p">)</span><span class="nv">action</span><span class="w"> </span><span class="nf">withSender:</span><span class="p">(</span><span class="kt">id</span><span class="p">)</span><span class="nv">sender</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">action</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="k">@selector</span><span class="p">(</span><span class="k">copy</span><span class="o">:</span><span class="p">);</span>
+<span class="p">}</span>
+</code></pre></div></td></tr></table></div>
+
+<p>I made sure that this method really only returned <code>YES</code> for the Copy item, proceeded to explicitly return <code>NO</code> for <code>selectAll:</code> and, when that failed as well, even changed the implementation of this method to just return <code>NO</code> for <strong>any</strong> item. But Select All doesn't take <code>NO</code> for an answer, and it stubbornly showed up anyway! I was baffled and could not get rid of this Select All item.</p>
+<p>I did some research, and learned that <code>UIMenuController</code> uses the responder chain to figure out what items to show. Furthermore, the documentation for <code>canPerformAction:withSender:</code> read:</p>
+<blockquote>
+<p>This default implementation of this method returns YES if the responder class implements the requested action and calls the next responder if it does not.</p>
+</blockquote>
+<p>That would explain the problem, if it weren't for the fact that Select All was the only other item that showed. Cut, Paste, Select, etc. did not. What was so special about Select All that no matter what I did, it always decided to make an unwanted appearance?</p>
+<p>Finally I saw it. One of the last methods of the view controller that created this label had a method named, you guessed it, <code>selectAll:</code>. I didn't immediately connect the dots, but at least renaming that method to <code>selectAllContacts:</code> (which was a better name for that method anyway) got rid of Select All.</p>
+<p>But how? I returned <code>NO</code> from my label's <code>canPerformAction:withSender:</code> for all actions except <code>copy:</code>. This means that for all other actions (see the informal <code>UIResponderStandardEditActions</code>), the next responder in the chain would be called. And (if necessary) the next, and the next.</p>
+<p>At some point, my view controller, which participates in the responder chain, became the first responder and returned <code>YES</code> for the <code>selectAll:</code> action, simply because the method was implemented and part of <code>UIResponderStandardEditActions</code>.</p>
+<p>So if implementing a method in that protocol is all that's needed to show the corresponding menu item, that would mean that implementing <code>canPerformAction:withSender:</code> in my <code>UILabel</code> subclass was unnecessary. I removed the method altogether and sure enough, the Copy menu item was still there. Problem solved.</p>
+  </div><!-- /.entry-content -->
+</section>
+
+  <script data-goatcounter="https://sberrevoets.goatcounter.com/count"
+          async src="//gc.zgo.at/count.js"></script>
+</body>
+</html>
