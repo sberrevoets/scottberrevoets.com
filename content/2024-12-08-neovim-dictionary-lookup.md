@@ -114,7 +114,7 @@ terminal](/images/dictionary-lookup-cli.png)
 ## Neovim integration
 
 I wanted to invoke `dict` using `K` passing in the word under the cursor as the
-trigger and show the output in a popup window. Other than the plain vim
+trigger and showing the output in a popup window. Other than the plain vim
 configuration this required some text manipulation so I put all that in
 `~/.vim/plugin/dictionary.lua`:
 
