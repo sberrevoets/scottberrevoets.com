@@ -12,7 +12,7 @@ body {
 
 body > header {
     margin: 0;
-    border-top: 5px solid rgb(203, 18, 22);
+    border-top: 5px solid rgb(10, 57, 102);
 }
 
 a {
@@ -20,7 +20,7 @@ a {
 }
 
 a:hover {
-   color: rgb(203, 18, 22);
+   color: rgb(10, 57, 102);
 }
 
 ul#social {
@@ -46,7 +46,7 @@ h1 {
 }
 
 h1 a {
-   color: rgb(203, 18, 22);
+   color: rgb(10, 57, 102);
    text-decoration: none;
    font-size: 2em;
 }
