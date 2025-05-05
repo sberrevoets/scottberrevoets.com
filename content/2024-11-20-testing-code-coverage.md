@@ -3,7 +3,7 @@ Date: 2024-11-20
 Summary: How we collect, track, and use code coverage data to improve our testing culture
 
 !!! note
-    This is the second post in a series on shifting our testing culture.
+    This is the third post in a series on shifting our testing culture.
 
     1. [Motivation]
     2. [Infrastructure]
