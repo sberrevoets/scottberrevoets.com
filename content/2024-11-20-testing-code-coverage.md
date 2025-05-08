@@ -71,7 +71,7 @@ eventually moved to an in-house web portal where this data is stored and easily
 accessible. We've also built tooling integration so developers can run a simple
 command on their own machine to get `llvm-cov`'s output generated for their
 modules, though viewing it in Xcode is often the better choice for local
-development. The only part that's missing is seeing this source overlays in
+development. The only part that's missing is seeing the source overlays in
 GitHub so you can immediately tell which code changes require more tests.
 
 [codecov]: https://codecov.io
@@ -85,8 +85,8 @@ coverage. We aggregate the data by team and for the codebase as a whole, and
 display it on the web portal. This gives anyone immediate access to answer
 common questions about their team's testing progress.
 
-developers are often interested in more than just the raw code coverage numbers -
-they also want to understand what code isn't tested so they can add more
+Developers are often interested in more than just the raw code coverage numbers
+- they also want to understand what code isn't tested so they can add more
 coverage. To make this easier, the web portal also displays the source overlays
 for all source files in a module for easy viewing without having to open Xcode
 for it.
@@ -99,7 +99,7 @@ for it.
 
 Many companies enforce a minimum coverage level all code has to hit. Although it
 sounds enticing, it could also turn into exactly what Goodhart's law warns
-about. developers will likely work around it if they feel they need to, or write
+about. Developers will likely work around it if they feel they need to, or write
 low-quality tests just to hit the minimum. It's also not clear what number to
 pick and what to base that on. 
 
@@ -108,7 +108,7 @@ own minimum coverage percentage_ in the `BUILD` file, and that percentage is
 then enforced by our CI system. It's a good balance between establishing a
 minimum while giving developers enough control to not make it feel overbearing.
 
-developers are free to set that minimum to any percentage they want through a
+Developers are free to set that minimum to any percentage they want through a
 pull request, but lowering it too drastically requires a good justification and
 comes with social friction. Increases are often celebrated as a job well done.
 
