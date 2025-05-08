@@ -13,8 +13,8 @@ Summary: How we collect, track, and use code coverage data to improve our testin
 [Infrastructure]: {filename}2024-11-19-testing-infrastructure.md
 
 Most people will say that code coverage is a measure of how well-tested your
-code is. However, it's better to say it's a measure of how _untested_ a codebase
-is. For example:
+code is. I prefer to say it's a measure of how _untested_ a codebase is. Take
+this example:
 
 ```swift
 func myFunction(input: Int) -> String {
@@ -34,11 +34,11 @@ func testMyunction() {
 ```
 
 This yields 66.7% code coverage, but although the test passes, it doesn't
-validate any business logic. The example is a bit derived, but in a more
-realistic scenario where tools report you have 66.7% code coverage, you don't
-actually know if that code is actively tested or just happens to be executed
-while running tests. What you do know is that the other 33.3% is _definitely
-not_ tested.
+validate any business logic because the test has no assertion. The example is a
+bit derived, but in a more realistic scenario where tools report you have 66.7%
+code coverage, you don't actually know if that code is actively tested or just
+happens to be executed while running tests. What you do know is that the other
+33.3% is _definitely not_ tested.
 
 ## `llvm-cov`
 
