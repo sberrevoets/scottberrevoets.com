@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+          <title>Outlets: strong! or weak? - Scott Berrevoets</title>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <link rel="icon" type="image/png" href="https://scottberrevoets.com/theme/images/favicon.png">
+        <link rel="apple-touch-icon" type="image/png" sizes="any" href="https://scottberrevoets.com/theme/images/favicon.png">
+        <link href="https://scottberrevoets.com/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="Scott Berrevoets Full Atom Feed" />
+        <link href="https://scottberrevoets.com/feeds/all.rss.xml" type="application/rss+xml" rel="alternate" title="Scott Berrevoets Full RSS Feed" />
+        <link href="https://scottberrevoets.com/feeds/atom.xml" type="application/atom+xml" rel="alternate" title="Scott Berrevoets Atom Feed" />
+        <link href="https://scottberrevoets.com/feeds/rss.xml" type="application/rss+xml" rel="alternate" title="Scott Berrevoets RSS Feed" />
+
+
+
+        <link rel="stylesheet" type="text/css" href="https://scottberrevoets.com/theme/css/style.css" />
+</head>
+
+<body id="index" class="home">
+        <header id="banner" class="body">
+            <h1><a href="https://scottberrevoets.com/">Scott Berrevoets</a></h1>
+
+            <ul id="social">
+                <li><a href="https://github.com/sberrevoets"><img src="https://scottberrevoets.com/theme/images/github.svg"></a></li>
+                <li><a href="https://linkedin.com/in/sberrevoets"><img src="https://scottberrevoets.com/theme/images/linkedin.svg"></a></li>
+                <li><a href="https://hachyderm.io/@ScottBerrevoets"><img src="https://scottberrevoets.com/theme/images/mastodon.svg"></a></li>
+                <li><a href="mailto:hi@scottberrevoets.com"><img src="https://scottberrevoets.com/theme/images/mail.svg"></a></li>
+                <li><a href="/feeds/all.atom.xml"><img src="https://scottberrevoets.com/theme/images/rss.svg"></a></li>
+            </ul>
+        </header><!-- /#banner -->
+        <nav id="menu"><ul>
+            <li class="active"><a href="https://scottberrevoets.com/">Blog</a></li>
+            <li><a href="https://scottberrevoets.com/about.html">About</a></li>
+        </ul></nav><!-- /#menu -->
+<section id="content" class="body">
+  <header>
+      <h2 class="article-title">Outlets: strong! or weak?</h2>
+ 
+    <time class="published" datetime="2016-03-21T00:00:00-07:00">
+      March 21, 2016
+    </time>
+  </header>
+  <div class="article-content">
+    <p>There are a lot of styles out there when it comes to using Interface Builder outlets in Swift. Even Apple's documentation and sample code isn't always consistent. The most common one, the one Apple uses in its sample code, follows this pattern:</p>
+<p><code>@IBOutlet private weak var someLabel: UILabel!</code></p>
+<p>Let's break this down by keyword:</p>
+<ul>
+<li><code>@IBOutlet</code> makes Interface Builder recognize the outlet</li>
+<li><code>private</code> ensures the outlet isn't accessed outside the current class</li>
+<li><code>weak</code> is used because in most situations the owner of the outlet isn't the same as the owner of the view. For example, a view controller doesn't own <code>someLabel</code> - the view controller's <code>view</code> does.</li>
+<li><code>var</code> because outlets are, by definition, set <em>after</em> initialization</li>
+<li><code>someLabel: UILabel</code> is just an example, this applies to outlets of any kind</li>
+<li><code>!</code>, or the implicitly unwrapped optional, is convenient because you don't have to litter your code with <code>?</code> and <code>if let</code>s (or just <code>!</code>) everywhere</li>
+</ul>
+<p>While at first this seems like a solid approach, at Lyft we quickly realized we weren't fans of this one-size-fits-all way of defining outlets. Instead, the behavior and consequences of the different elements should define the outlet's exact syntax, just like any other variable.</p>
+<p>For example, if there is a code path that removes an outlet from its superview, or the outlet is (intentionally) not hooked up in the storyboard, it needs to be an optional because the outlet is not guaranteed to be there when it's accessed.</p>
+<p><code>@IBOutlet private var someLabel: UILabel?</code></p>
+<p>If there is no code path that re-adds the outlet to the view hierarchy, it would also be good to make it <code>weak</code> to not hold on to it unnecessarily when it gets removed:</p>
+<p><code>@IBOutlet private weak var someLabel: UILabel?</code></p>
+<p>This ensures that if the label is removed from the superview, it's not being kept in memory by the strong reference in the view controller. In the most common case, where there is an outlet that will always be there, a strong, implicitly unwrapped optional is appropriate:</p>
+<p><code>@IBOutlet private var someLabel: UILabel!</code></p>
+<p>The outlet isn't <code>weak</code> in case the code ever changes so that there <em>is</em> a code path that removes the view from the view hierarchy but you forget to update the optionality of the property. The object will stay in memory and using it won't crash your app.</p>
+<p>These examples all follow 3 simple rules:</p>
+<ol>
+<li><code>!</code> needs a guarantee that the view exists, so always use <code>strong</code> to provide that guarantee</li>
+<li>If it's possible the view isn't part of the view hierarchy, use <code>?</code> and appropriate optional-handling (optional binding/chaining) for safety</li>
+<li>If you don't need a view anymore after removing it from the view hierarchy, use <code>weak</code> so it gets removed from memory.</li>
+</ol>
+<p>Applying these three rules means you properly use the optional semantics. After all, using <code>!</code> for a view that may not exist is no different than defining any other property as an implicitly unwrapped optional that may not exist.</p>
+  </div><!-- /.entry-content -->
+</section>
+
+  <script data-goatcounter="https://sberrevoets.goatcounter.com/count"
+          async src="//gc.zgo.at/count.js"></script>
+</body>
+</html>
