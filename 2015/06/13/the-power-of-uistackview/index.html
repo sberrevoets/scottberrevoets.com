@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+          <title>The power of UIStackView - Scott Berrevoets</title>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <link rel="icon" type="image/png" href="https://scottberrevoets.com/theme/images/favicon.png">
+        <link rel="apple-touch-icon" type="image/png" sizes="any" href="https://scottberrevoets.com/theme/images/favicon.png">
+        <link href="https://scottberrevoets.com/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="Scott Berrevoets Full Atom Feed" />
+        <link href="https://scottberrevoets.com/feeds/all.rss.xml" type="application/rss+xml" rel="alternate" title="Scott Berrevoets Full RSS Feed" />
+        <link href="https://scottberrevoets.com/feeds/atom.xml" type="application/atom+xml" rel="alternate" title="Scott Berrevoets Atom Feed" />
+        <link href="https://scottberrevoets.com/feeds/rss.xml" type="application/rss+xml" rel="alternate" title="Scott Berrevoets RSS Feed" />
+
+    <meta name="description" content="Showing off some of the power that UIStackView, new in iOS 9, brings" />
+
+
+        <link rel="stylesheet" type="text/css" href="https://scottberrevoets.com/theme/css/style.css" />
+</head>
+
+<body id="index" class="home">
+        <header id="banner" class="body">
+            <h1><a href="https://scottberrevoets.com/">Scott Berrevoets</a></h1>
+
+            <ul id="social">
+                <li><a href="https://github.com/sberrevoets"><img src="https://scottberrevoets.com/theme/images/github.svg"></a></li>
+                <li><a href="https://linkedin.com/in/sberrevoets"><img src="https://scottberrevoets.com/theme/images/linkedin.svg"></a></li>
+                <li><a href="https://hachyderm.io/@ScottBerrevoets"><img src="https://scottberrevoets.com/theme/images/mastodon.svg"></a></li>
+                <li><a href="mailto:hi@scottberrevoets.com"><img src="https://scottberrevoets.com/theme/images/mail.svg"></a></li>
+                <li><a href="/feeds/all.atom.xml"><img src="https://scottberrevoets.com/theme/images/rss.svg"></a></li>
+            </ul>
+        </header><!-- /#banner -->
+        <nav id="menu"><ul>
+            <li class="active"><a href="https://scottberrevoets.com/">Blog</a></li>
+            <li><a href="https://scottberrevoets.com/about.html">About</a></li>
+        </ul></nav><!-- /#menu -->
+<section id="content" class="body">
+  <header>
+      <h2 class="article-title">The power of UIStackView</h2>
+ 
+    <time class="published" datetime="2015-06-13T00:00:00-07:00">
+      June 13, 2015
+    </time>
+  </header>
+  <div class="article-content">
+    <p>I was in the audience for "Implementing UI Designs in Interface Builder" at WWDC, where Apple touted <code>UIStackView</code> as a new, better way to lay out your views that in a lot of cases didn't require Auto Layout.</p>
+<p>While the presentation looked good, I wasn't quite sure this solved a real problem, as the required constraints weren't too complicated to build in the first pace. However, after I found some time to play around with <code>UIStackView</code>, I'm convinced. This view is very, very powerful and can make building common UIs a lot simpler. Take, for example, a number grid:</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span class="normal">1</span>
+<span class="normal">2</span>
+<span class="normal">3</span>
+<span class="normal">4</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">[1] [2] [3]</span>
+<span class="k">[4] [5] [6]</span>
+<span class="k">[7] [8] [9]</span>
+<span class="w">    </span><span class="k">[0]</span>
+</code></pre></div></td></tr></table></div>
+
+<p>It would take a while to build this kind of UI in Auto Layout. You would have to create constraints between individual labels, make the labels the same size everywhere, make the spacing between all the labels equal, and avoid hardcoding any numbers to keep the whole thing adaptive. This can be a tedious process in Interface Builder, but imagine you're building this in code. It would take forever, especially after debugging your UI.</p>
+<p>With <code>UIStackView</code>, doing all of this takes about 30 seconds. After dragging out all the labels, you just need to embed every row in its own stack view. Set the distribution (in code that's <code>UIStackViewDistribution</code>) for these stack views to "fill equally" (<code>.FillEqually</code>), then embed all four stack views in their own stack view.</p>
+<p><img alt="UIStackView example" src="/images/UIStackView.png"></p>
+<p>The top-level, vertical stack view should get top/leading/trailing/bottom space to its superview (or the layout guides), the 4 horizontal stack views an "equal width" constraint to their superview. Finally, center the text of the individual labels (you can select all labels at once and do this with 1 action). Done - that's it.</p>
+<p>But it gets better. Say you want to conditionally show or hide the <code>0</code> label at the bottom. I don't know why you would want that, but just go with it 😛</p>
+<p>To do this, all you have to is <strong>toggle the</strong> <code>hidden</code> <strong>property of that label</strong>. The containing stack view will automatically reposition its subviews. If you put that line in an animation block, it will reposition its subviews in an animated fashion.</p>
+<p>That last part is a very welcome feature for developers that work with a lot of dynamic views. Instead of creating redundant constraints with lower priorities, removing views from their view hierarchies, and re-adding the view and all its constraints if the new views needs to be re-shown, you can simply toggle <code>hidden</code> instead.</p>
+<p>As more people get their hands on <code>UIStackView</code> I'm sure it will show off more of its powers, but needless to say I'm sold. Too bad I can't use it for a while...</p>
+  </div><!-- /.entry-content -->
+</section>
+
+  <script data-goatcounter="https://sberrevoets.goatcounter.com/count"
+          async src="//gc.zgo.at/count.js"></script>
+</body>
+</html>
