@@ -146,14 +146,19 @@ div.pagination ul li.next {
 
 /*** About ***/
 
+.column-container {
+    display: flex;
+    gap: 2rem;
+}
+
 .left-column {
-    float: left;
-    min-width: 25%;
+    flex: 0 0 30%;
+    padding: 1rem;
 }
 
 .right-column {
-    float: left;
-    width: 75%;
+    flex: 0 0 70%
+    padding: 1rem;
 }
 
 img#me {
@@ -164,6 +169,32 @@ img#me {
     -moz-box-sizing: border-box;
     box-sizing: border-box;
     border: 0;
+    width: 200px;
+}
+
+@media (max-width: 500px) {
+    .column-container {
+        flex-direction: column;
+    }
+
+    .left-column, .right-column {
+        flex: 0 0 100%;
+        padding: 0 1rem;
+    }
+
+    img#me {
+        display: block;
+        margin: 0 auto;
+    }
+}
+
+ul#personal-info {
+    list-style-type: none;
+    padding: 0;
+}
+
+ul#personal-info li {
+    line-height: 2em;
 }
 
 /*** Archive ***/
