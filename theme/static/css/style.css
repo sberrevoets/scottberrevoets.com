@@ -146,6 +146,11 @@ nav#menu ul li.active a {
     color: var(--text-color);
 }
 
+#content {
+    max-width: 800px;
+    margin: 0 auto;
+}
+
 .note ol {
     margin-bottom: 0;
 }
