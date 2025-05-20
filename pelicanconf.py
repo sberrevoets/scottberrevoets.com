@@ -60,11 +60,11 @@ DATE_FORMATS = {"en": "%B %d, %Y"}
 # Social media
 DISPLAY_SOCIAL_MEDIA = True
 SOCIALMEDIAITEMS = [
-    ("github.svg", "https://github.com/sberrevoets"),
-    ("linkedin.svg", "https://linkedin.com/in/sberrevoets"),
-    ("mastodon.svg", "https://hachyderm.io/@ScottBerrevoets"),
-    ("mail.svg", "mailto:hi@scottberrevoets.com"),
-    ("rss.svg", "/feeds/all.atom.xml"),
+    ("github", "https://github.com/sberrevoets"),
+    ("linkedin", "https://linkedin.com/in/sberrevoets"),
+    ("mastodon", "https://hachyderm.io/@ScottBerrevoets"),
+    ("mail", "mailto:hi@scottberrevoets.com"),
+    ("rss", "/feeds/all.atom.xml"),
 ]
 
 # No feeds in development mode

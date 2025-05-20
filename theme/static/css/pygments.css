@@ -63,6 +63,22 @@ code {
     font-size: 0.9em;
 }
 
+@media (prefers-color-scheme: dark) {
+    pre code {
+        color: #bbb;
+    }
+
+    .highlighttable .code {
+        background-color: #343642;
+    }
+
+    :not(pre) > code {
+        background-color: #2a2a2d;
+        color: #ff7b93;
+        border: 1px solid #3a3a3d;
+    }
+}
+
 .highlighttable .highlight pre {
     color: #C1C2C3;
     padding-left: 10px;

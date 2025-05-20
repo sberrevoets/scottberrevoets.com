@@ -36,6 +36,7 @@
 </head>
 
 <body id="index" class="home">
+    {% include 'svg.html' %}
         <header id="banner" class="body">
             {% if SITESUBTITLE %}
             <h1><a href="{{ SITEURL }}/">{{ SITENAME }} <strong>{{ SITESUBTITLE }}</strong></a></h1>
@@ -46,7 +47,9 @@
             {% if DISPLAY_SOCIAL_MEDIA %}
             <ul id="social">
             {% for icon, link in SOCIALMEDIAITEMS %}
-                <li><a href="{{ link }}"><img src="{{ SITEURL }}/theme/images/{{ icon }}"></a></li>
+                <li><a href="{{ link }}">
+                    <svg class="icon"><use href="#{{ icon }}" /></svg>
+                </a></li>
             {% endfor %}
             </ul>
             {% endif %}
