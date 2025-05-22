@@ -1,0 +1,335 @@
+@import url("pygments.css");
+
+:root {
+    --accent-color: rgb(10, 57, 102);
+    --background-color: rgb(255, 255, 255);
+    --text-color: rgb(50, 50, 50);
+    --link-color: rgb(10, 57, 102);
+    --social-icon-color: rgb(0, 0, 0);
+    --menu-separator-color: rgb(204, 204, 204);
+    --menu-text-color: rgb(180, 180, 180);
+    --subtitle-color: rgb(170, 170, 170);
+    --quote-color: rgb(221, 221, 221);
+    --admonition-color: rgb(76, 175, 80);
+    --admonition-bg-color: rgb(249, 249, 249);
+    --admonition-shadow-color: rgba(0, 0, 0, 0.1);
+}
+
+@media (prefers-color-scheme: dark) {
+    :root {
+        --accent-color: rgb(95, 146, 200);
+        --background-color: rgb(30, 30, 46);
+        --text-color: rgb(230, 230, 230);
+        --link-color: rgb(130, 180, 240);
+        --social-icon-color: rgb(230, 230, 230);
+        --menu-separator-color: rgb(60, 60, 60);
+        --menu-text-color: rgb(150, 150, 150);
+        --subtitle-color: rgb(140, 140, 140);
+        --quote-color: rgb(60, 60, 60);
+        --admonition-color: rgb(144, 238, 144);
+        --admonition-bg-color: rgb(30, 30, 30);
+        --admonition-shadow-color: rgba(0, 0, 0, 0.4);
+    }
+}
+
+
+body {
+    color: var(--text-color);
+    background-color: var(--background-color);
+    margin: 0 auto;
+    width: 100%;
+    max-width: 900px;
+    padding: 0;
+    font-size: 1.15em;
+    line-height: 1.5em;
+}
+
+
+body > header {
+    margin: 0;
+    border-top: 5px solid var(--accent-color);
+}
+
+a {
+    color: inherit;
+}
+
+a:hover {
+   color: var(--link-color);
+}
+
+
+ul#social {
+    display: table;
+    margin: 10px auto;
+    width: 200px;
+    -webkit-padding-start: 0;
+}
+
+ul#social li {
+    list-style-type: none;
+    display: table-cell;
+    text-align: center;
+}
+
+ul#social li a .icon {
+    width: 24px;
+    height: 24px;
+    color: var(--social-icon-color);
+}
+
+h1, h2 {
+    font-family: -apple-system-headline, 'SFProDisplay-Bold', -apple-system, system-ui, BlinkMacSystemFont;
+}
+
+h1 {
+    text-align: center;
+    margin-top: 40px;
+}
+
+h1 a {
+   color: var(--link-color);
+   text-decoration: none;
+   font-size: 2em;
+}
+
+
+@media only screen and (max-width: 500px) {
+    h1 a {
+        font-size: 1.2em;
+    }
+
+    /* Fix code block font sizes */
+    /* https://stackoverflow.com/a/34284777 */
+    body {
+        -webkit-text-size-adjust: 100%;
+    }
+}
+
+nav#menu {
+    font-family: 'SFProText-Bold', -apple-system, system-ui, BlinkMacSystemFont;
+    border-top: 1px solid var(--menu-separator-color);
+    border-bottom: 1px solid var(--menu-separator-color);
+    width: 70%;
+    min-width: 300px;
+    margin: 0 auto;
+}
+
+nav#menu:after {
+    content: "";
+    clear: both;
+    display: table;
+}
+
+nav#menu ul {
+    display: table;
+    table-layout: fixed;
+    width: 100%;
+    -webkit-padding-start: 0;
+}
+
+nav#menu ul li {
+    display: table-cell;
+    width: auto;
+    list-style-type: none;
+    text-align: center;
+}
+
+nav#menu ul li a {
+    text-transform: uppercase;
+    text-decoration: none;
+    font-weight: bold;
+    color: var(--menu-text-color);
+}
+
+nav#menu ul li.active a {
+    color: var(--text-color);
+}
+
+#content {
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.note ol {
+    margin-bottom: 0;
+}
+
+h2.article-title {
+    font-size: 2.5em;
+    padding: 0 10px;
+    line-height: 1em;
+    margin-bottom: 0;
+}
+
+div.article-content, div.page-content {
+    line-height: 1.6em;
+    font-family: -apple-system-body, -apple-system, system-ui, BlinkMacSystemFont;
+    padding: 10px;
+}
+
+div.pagination {
+    text-align: center;
+}
+
+div.pagination ul {
+    width: auto;
+    display: inline-block;
+    list-style-type: none;
+    -webkit-padding-start: 0;
+}
+
+div.pagination ul li {
+    display: inline;
+    font-family: -apple-system, system-ui, BlinkMacSystemFont;
+}
+
+div.pagination ul li.prev {
+    margin-right: 20px;
+}
+
+div.pagination ul li.next {
+    margin-left: 20px;
+}
+
+/*** About ***/
+
+.column-container {
+    display: flex;
+    gap: 2rem;
+}
+
+.left-column {
+    flex: 0 0 30%;
+    padding: 1rem;
+}
+
+.right-column {
+    flex: 0 0 70%
+    padding: 1rem;
+}
+
+img#me {
+    display: inline-block;
+    margin-right: 1.2em;
+    border-radius: 18px;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    border: 0;
+    width: 200px;
+}
+
+@media (max-width: 500px) {
+    .column-container {
+        flex-direction: column;
+    }
+
+    .left-column, .right-column {
+        flex: 0 0 100%;
+        padding: 0 1rem;
+    }
+
+    img#me {
+        display: block;
+        margin: 0 auto;
+    }
+}
+
+ul#personal-info {
+    list-style-type: none;
+    padding: 0;
+}
+
+ul#personal-info li {
+    line-height: 2em;
+}
+
+/*** Archive ***/
+
+dl#archive {
+    display: table;
+}
+
+dl#archive dt {
+    font-size: 1.3em;
+    color: var(--subtitle-color);
+}
+
+dl#archive dd {
+    margin: 20px 0 20px 40px;
+}
+
+@media only screen and (max-width: 320px) {
+    dl#archive dd {
+        margin-left: 0;
+    }
+}
+
+dl#archive dt + dd {
+    margin-top: 0;
+}
+
+dl#archive dd time {
+    text-transform: uppercase;
+    color: var(--subtitle-color);
+    font-weight: 600;
+    font-size: 0.9em;
+    vertical-align: text-top;
+    display: table-cell;
+    width: 100px;
+}
+
+dl#archive dd a {
+    font-size: 1.3em;
+    text-decoration: none;
+    line-height: 1.3em;
+    display: table-cell;
+}
+
+/*** Article ***/
+
+header time.published {
+    padding: 0 10px;
+    font-family: -apple-system-subheadline, 'SFProDisplay-Bold', -apple-system, system-ui, BlinkMacSystemFont;
+    color: var(--subtitle-color);
+}
+
+blockquote {
+    width: 85%;
+    margin: 30px auto;
+    padding-left: 1.5em;
+    border-left: 4px solid var(--quote-color);
+    color: #777;
+}
+
+.admonition {
+  border-left: 5px solid var(--admonition-color);
+  background-color: var(--admonition-bg-color);
+  padding: 15px;
+  margin: 20px 0;
+  margin-bottom: 50px;
+  border-radius: 8px;
+  box-shadow: 0 2px 5px var(--admonition-shadow-color);
+}
+
+.admonition-title {
+  font-weight: bold;
+  font-size: 1.1em;
+  margin-bottom: 10px;
+  color: var(--text-color);
+}
+
+.admonition p {
+  margin: 0;
+}
+
+img {
+    max-width: 100%;
+    height: auto;
+}
+
+div#disqus_thread {
+    margin-top: 50px;
+    padding: 10px;
+}
