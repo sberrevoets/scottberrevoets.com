@@ -23,7 +23,7 @@ PDF.
     plain text as markdown.
 
 In my case, I'm converting from markdown to HTML, injecting some CSS to make it
-look the way I want it to, and the converting that to PDF. LaTeX was another
+look the way I want it to, and then converting that to PDF. LaTeX was another
 option but I wasn't familiar with either LaTeX or ConTeXt and didn't want to
 bother learning it just for this exercise.
 
