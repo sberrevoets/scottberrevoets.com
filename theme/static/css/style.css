@@ -50,6 +50,24 @@ body > header {
     border-top: 5px solid var(--accent-color);
 }
 
+.header-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.header-top h1 {
+    margin: 40px 0 0 0;
+    text-align: left;
+    flex: 1;
+}
+
+.header-top #social {
+    margin: 0;
+    width: auto;
+}
+
 a {
     color: inherit;
 }
@@ -70,6 +88,7 @@ ul#social li {
     list-style-type: none;
     display: table-cell;
     text-align: center;
+    padding: 0 8px;
 }
 
 ul#social li a .icon {
@@ -93,10 +112,19 @@ h1 a {
    font-size: 2em;
 }
 
-
 @media only screen and (max-width: 500px) {
     h1 a {
         font-size: 1.2em;
+    }
+
+    .header-top {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .header-top h1 {
+        text-align: center;
+        margin-bottom: 10px;
     }
 
     /* Fix code block font sizes */
@@ -108,11 +136,9 @@ h1 a {
 
 nav#menu {
     font-family: 'SFProText-Bold', -apple-system, system-ui, BlinkMacSystemFont;
-    border-top: 1px solid var(--menu-separator-color);
-    border-bottom: 1px solid var(--menu-separator-color);
     width: 70%;
     min-width: 300px;
-    margin: 0 auto;
+    margin: 30px auto 0;
 }
 
 nav#menu:after {
@@ -122,15 +148,16 @@ nav#menu:after {
 }
 
 nav#menu ul {
-    display: table;
-    table-layout: fixed;
+    display: flex;
+    justify-content: center;
+    gap: 30px;
     width: 100%;
     -webkit-padding-start: 0;
+    margin: 0;
+    padding-bottom: 8px;
 }
 
 nav#menu ul li {
-    display: table-cell;
-    width: auto;
     list-style-type: none;
     text-align: center;
 }
@@ -140,10 +167,18 @@ nav#menu ul li a {
     text-decoration: none;
     font-weight: bold;
     color: var(--menu-text-color);
+    font-size: 0.9em;
+    letter-spacing: 0.5px;
+}
+
+nav#menu ul li a:hover {
+    color: var(--text-color);
 }
 
 nav#menu ul li.active a {
     color: var(--text-color);
+    border-bottom: 2px solid var(--accent-color);
+    padding-bottom: 6px;
 }
 
 #content {

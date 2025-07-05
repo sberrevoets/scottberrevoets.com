@@ -38,38 +38,41 @@
 <body id="index" class="home">
     {% include 'svg.html' %}
         <header id="banner" class="body">
-            {% if SITESUBTITLE %}
-            <h1><a href="{{ SITEURL }}/">{{ SITENAME }} <strong>{{ SITESUBTITLE }}</strong></a></h1>
-            {% else %}
-            <h1><a href="{{ SITEURL }}/">{{ SITENAME }}</a></h1>
-            {% endif %}
+            <div class="header-top">
+                {% if SITESUBTITLE %}
+                <h1><a href="{{ SITEURL }}/">{{ SITENAME }} <strong>{{ SITESUBTITLE }}</strong></a></h1>
+                {% else %}
+                <h1><a href="{{ SITEURL }}/">{{ SITENAME }}</a></h1>
+                {% endif %}
 
-            {% if DISPLAY_SOCIAL_MEDIA %}
-            <ul id="social">
-            {% for icon, link in SOCIALMEDIAITEMS %}
-                <li><a href="{{ link }}">
-                    <svg class="icon"><use href="#{{ icon }}" /></svg>
-                </a></li>
+                {% if DISPLAY_SOCIAL_MEDIA %}
+                <ul id="social">
+                {% for icon, link in SOCIALMEDIAITEMS %}
+                    <li><a href="{{ link }}">
+                        <svg class="icon"><use href="#{{ icon }}" /></svg>
+                    </a></li>
+                {% endfor %}
+                </ul>
+                {% endif %}
+            </div>
+
+            <nav id="menu"><ul>
+            {% for item, link in MENUITEMS %}
+                <li{% if output_file == link or (link == '' and output_file == 'index.html') %} class="active"{% endif %}><a href="{{ SITEURL }}/{{ link }}">{{ item }}</a></li>
             {% endfor %}
-            </ul>
+            {% if DISPLAY_PAGES_ON_MENU %}
+              {% for p in pages %}
+                <li{% if p == page %} class="active"{% endif %}><a href="{{ SITEURL }}/{{ p.url }}">{{ p.title }}</a></li>
+              {% endfor %}
+            {% else %}
+              {% if DISPLAY_CATEGORIES_ON_MENU %}
+                {% for cat, null in categories %}
+                  <li{% if cat == category %} class="active"{% endif %}><a href="{{ SITEURL }}/{{ cat.url }}">{{ cat }}</a></li>
+                {% endfor %}
+              {% endif %}
             {% endif %}
+            </ul></nav><!-- /#menu -->
         </header><!-- /#banner -->
-        <nav id="menu"><ul>
-        {% for item, link in MENUITEMS %}
-            <li{% if output_file == link or (link == '' and output_file == 'index.html') %} class="active"{% endif %}><a href="{{ SITEURL }}/{{ link }}">{{ item }}</a></li>
-        {% endfor %}
-        {% if DISPLAY_PAGES_ON_MENU %}
-          {% for p in pages %}
-            <li{% if p == page %} class="active"{% endif %}><a href="{{ SITEURL }}/{{ p.url }}">{{ p.title }}</a></li>
-          {% endfor %}
-        {% else %}
-          {% if DISPLAY_CATEGORIES_ON_MENU %}
-            {% for cat, null in categories %}
-              <li{% if cat == category %} class="active"{% endif %}><a href="{{ SITEURL }}/{{ cat.url }}">{{ cat }}</a></li>
-            {% endfor %}
-          {% endif %}
-        {% endif %}
-        </ul></nav><!-- /#menu -->
         {% block content %}
         {% endblock %}
     {% include 'goatcounter.html' %}
