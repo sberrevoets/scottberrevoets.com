@@ -3,19 +3,8 @@
 {% block content %}
 
 <div class="page-content">
-<dl id="archive">
-{% for article in dates %}
-    {% if dates[loop.index0 - 1].date.year != article.date.year %}
-    <dt>{{ article.date.year }}</dt>
-    {% endif %}
-    <dd>
-    <time datetime="{{ article.date.isoformat() }}">{{ article.date.strftime("%b %d") }}</time>
-    <a href="{{ SITEURL }}/{{ article.url }}"
-         title="{{ article.locale_date }}: {{ article.summary|striptags|escape }}">
-        {{ article.title }}
-      </a>
-    </dd>
+{% for p in pages %}
+        <div>{{ p.content }}</div>
 {% endfor %}
-</dl>
 </div>
 {% endblock %}

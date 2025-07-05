@@ -56,7 +56,7 @@
         </header><!-- /#banner -->
         <nav id="menu"><ul>
         {% for item, link in MENUITEMS %}
-            <li{% if page|default('', true) == link %} class="active"{% endif %}><a href="{{ SITEURL }}/{{ link }}">{{ item }}</a></li>
+            <li{% if output_file == link or (link == '' and output_file == 'index.html') %} class="active"{% endif %}><a href="{{ SITEURL }}/{{ link }}">{{ item }}</a></li>
         {% endfor %}
         {% if DISPLAY_PAGES_ON_MENU %}
           {% for p in pages %}

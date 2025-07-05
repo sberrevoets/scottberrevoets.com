@@ -33,6 +33,10 @@ ARTICLE_SAVE_AS = "{date:%Y}/{date:%m}/{date:%d}/{slug}/index.html"
 PAGE_URL = "{slug}.html"
 PAGE_SAVE_AS = "{slug}.html"
 
+# Don't generate the about page as a separate page since it's now the index
+DISPLAY_PAGES_ON_MENU = False
+DISPLAY_CATEGORIES_ON_MENU = False
+
 # Pagination
 DEFAULT_PAGINATION = 5
 PAGINATION_PATTERNS = (
@@ -41,8 +45,8 @@ PAGINATION_PATTERNS = (
 )
 
 # Create and link to index and archive
-DIRECT_TEMPLATES = [("index")]
-MENUITEMS = [("Blog", "")]
+DIRECT_TEMPLATES = [("index"), ("blog")]
+MENUITEMS = [("About", ""), ("Blog", "blog.html")]
 
 # Disable parsing HTML files
 READERS = {"html": None}
