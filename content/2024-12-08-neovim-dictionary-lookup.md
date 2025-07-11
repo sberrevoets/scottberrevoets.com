@@ -268,6 +268,6 @@ neovim](/images/dictionary-lookup-neovim.png)
 
 Dictionary lookup also still works in non-markdown files by directly invoking
 `:Dict`, which is a bit more typing but also much less common. That's all that
-was needed, now `⌘K` performs a dictionary lookup and shows it nicely formatted
+was needed, now `K` performs a dictionary lookup and shows it nicely formatted
 in-line and is automatically hidden when needed. This may be nice as a generic
 plugin as well so I might do that at some point in the future as well.
