@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+          <title>The power of UIStackView - Scott Berrevoets</title>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <link rel="icon" type="image/png" href="https://scottberrevoets.com/theme/images/favicon.png">
+        <link rel="apple-touch-icon" type="image/png" sizes="any" href="https://scottberrevoets.com/theme/images/favicon.png">
+        <link href="https://scottberrevoets.com/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="Scott Berrevoets Full Atom Feed" />
+        <link href="https://scottberrevoets.com/feeds/all.rss.xml" type="application/rss+xml" rel="alternate" title="Scott Berrevoets Full RSS Feed" />
+        <link href="https://scottberrevoets.com/feeds/atom.xml" type="application/atom+xml" rel="alternate" title="Scott Berrevoets Atom Feed" />
+        <link href="https://scottberrevoets.com/feeds/rss.xml" type="application/rss+xml" rel="alternate" title="Scott Berrevoets RSS Feed" />
+
+    <meta name="description" content="Showing off some of the power that UIStackView, new in iOS 9, brings" />
+
+
+        <link rel="stylesheet" type="text/css" href="https://scottberrevoets.com/theme/css/style.css" />
+</head>
+
+<body id="index" class="home">
+<svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
+  <symbol id="github" viewBox="0 0 24 24">
+    <path stroke="none" d="M0 0h24v24H0z" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+    <path d="M9 19c-4.3 1.4 -4.3 -2.5 -6 -3m12 5v-3.5c0 -1 .1 -1.4 -.5 -2c2.8 -.3 5.5 -1.4 5.5 -6a4.6 4.6 0 0 0 -1.3 -3.2a4.2 4.2 0 0 0 -.1 -3.2s-1.1 -.3 -3.5 1.3a12.3 12.3 0 0 0 -6.2 0c-2.4 -1.6 -3.5 -1.3 -3.5 -1.3a4.2 4.2 0 0 0 -.1 3.2a4.6 4.6 0 0 0 -1.3 3.2c0 4.6 2.7 5.7 5.5 6c-.6 .6 -.6 1.2 -.5 2v3.5" stroke="currentColor" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+  </symbol>
+  <symbol id="mastodon" viewBox="0 0 24 24">
+    <path stroke="none" d="M0 0h24v24H0z" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+    <path d="M18.648 15.254c-1.816 1.763 -6.648 1.626 -6.648 1.626a18.262 18.262 0 0 1 -3.288 -.256c1.127 1.985 4.12 2.81 8.982 2.475c-1.945 2.013 -13.598 5.257 -13.668 -7.636l-.026 -1.154c0 -3.036 .023 -4.115 1.352 -5.633c1.671 -1.91 6.648 -1.666 6.648 -1.666s4.977 -.243 6.648 1.667c1.329 1.518 1.352 2.597 1.352 5.633s-.456 4.074 -1.352 4.944z" stroke="currentColor" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+    <path d="M12 11.204v-2.926c0 -1.258 -.895 -2.278 -2 -2.278s-2 1.02 -2 2.278v4.722m4 -4.722c0 -1.258 .895 -2.278 2 -2.278s2 1.02 2 2.278v4.722" stroke="currentColor" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+  </symbol>
+  <symbol id="mail" viewBox="0 0 24 24">
+    <path stroke="none" d="M0 0h24v24H0z" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+    <path d="M3 7a2 2 0 0 1 2 -2h14a2 2 0 0 1 2 2v10a2 2 0 0 1 -2 2h-14a2 2 0 0 1 -2 -2v-10z" stroke="currentColor" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+    <path d="M3 7l9 6l9 -6" stroke="currentColor" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+  </symbol>
+  <symbol id="rss" viewBox="0 0 24 24">
+    <path stroke="none" d="M0 0h24v24H0z" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+    <path d="M5 19m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0" stroke="currentColor" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+    <path d="M4 4a16 16 0 0 1 16 16" stroke="currentColor" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+    <path d="M4 11a9 9 0 0 1 9 9" stroke="currentColor" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+  </symbol>
+  <symbol id="linkedin" viewBox="0 0 24 24">
+    <path stroke="none" d="M0 0h24v24H0z" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+    <path d="M4 4m0 2a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v12a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2z" stroke="currentColor" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+    <path d="M8 11l0 5" stroke="currentColor" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+    <path d="M8 8l0 .01" stroke="currentColor" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+    <path d="M12 16l0 -5" stroke="currentColor" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+    <path d="M16 16v-3a2 2 0 0 0 -4 0" stroke="currentColor" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+  </symbol>
+</svg>        <header id="banner" class="body">
+            <div class="header-top">
+                <h1><a href="https://scottberrevoets.com/">Scott Berrevoets</a></h1>
+
+                <ul id="social">
+                    <li><a href="https://github.com/sberrevoets">
+                        <svg class="icon"><use href="#github" /></svg>
+                    </a></li>
+                    <li><a href="https://linkedin.com/in/sberrevoets">
+                        <svg class="icon"><use href="#linkedin" /></svg>
+                    </a></li>
+                    <li><a href="https://hachyderm.io/@ScottBerrevoets">
+                        <svg class="icon"><use href="#mastodon" /></svg>
+                    </a></li>
+                    <li><a href="mailto:hi@scottberrevoets.com">
+                        <svg class="icon"><use href="#mail" /></svg>
+                    </a></li>
+                    <li><a href="/feeds/all.atom.xml">
+                        <svg class="icon"><use href="#rss" /></svg>
+                    </a></li>
+                </ul>
+            </div>
+
+            <nav id="menu"><ul>
+                <li><a href="https://scottberrevoets.com/">About</a></li>
+                <li><a href="https://scottberrevoets.com/blog.html">Blog</a></li>
+            </ul></nav><!-- /#menu -->
+        </header><!-- /#banner -->
+<section id="content" class="body">
+  <header>
+      <h2 class="article-title">The power of UIStackView</h2>
+ 
+    <time class="published subheader" datetime="2015-06-13T00:00:00-07:00">
+      June 13, 2015
+    </time>
+        <span class="subheader">&bullet; 2 min read</span>
+  </header>
+  <div class="article-content">
+    <p>I was in the audience for "Implementing UI Designs in Interface Builder" at WWDC, where Apple touted <code>UIStackView</code> as a new, better way to lay out your views that in a lot of cases didn't require Auto Layout.</p>
+<p>While the presentation looked good, I wasn't quite sure this solved a real problem, as the required constraints weren't too complicated to build in the first pace. However, after I found some time to play around with <code>UIStackView</code>, I'm convinced. This view is very, very powerful and can make building common UIs a lot simpler. Take, for example, a number grid:</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span class="normal">1</span>
+<span class="normal">2</span>
+<span class="normal">3</span>
+<span class="normal">4</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">[1] [2] [3]</span>
+<span class="k">[4] [5] [6]</span>
+<span class="k">[7] [8] [9]</span>
+<span class="w">    </span><span class="k">[0]</span>
+</code></pre></div></td></tr></table></div>
+
+<p>It would take a while to build this kind of UI in Auto Layout. You would have to create constraints between individual labels, make the labels the same size everywhere, make the spacing between all the labels equal, and avoid hardcoding any numbers to keep the whole thing adaptive. This can be a tedious process in Interface Builder, but imagine you're building this in code. It would take forever, especially after debugging your UI.</p>
+<p>With <code>UIStackView</code>, doing all of this takes about 30 seconds. After dragging out all the labels, you just need to embed every row in its own stack view. Set the distribution (in code that's <code>UIStackViewDistribution</code>) for these stack views to "fill equally" (<code>.FillEqually</code>), then embed all four stack views in their own stack view.</p>
+<p><img alt="UIStackView example" src="/images/UIStackView.png"></p>
+<p>The top-level, vertical stack view should get top/leading/trailing/bottom space to its superview (or the layout guides), the 4 horizontal stack views an "equal width" constraint to their superview. Finally, center the text of the individual labels (you can select all labels at once and do this with 1 action). Done - that's it.</p>
+<p>But it gets better. Say you want to conditionally show or hide the <code>0</code> label at the bottom. I don't know why you would want that, but just go with it 😛</p>
+<p>To do this, all you have to is <strong>toggle the</strong> <code>hidden</code> <strong>property of that label</strong>. The containing stack view will automatically reposition its subviews. If you put that line in an animation block, it will reposition its subviews in an animated fashion.</p>
+<p>That last part is a very welcome feature for developers that work with a lot of dynamic views. Instead of creating redundant constraints with lower priorities, removing views from their view hierarchies, and re-adding the view and all its constraints if the new views needs to be re-shown, you can simply toggle <code>hidden</code> instead.</p>
+<p>As more people get their hands on <code>UIStackView</code> I'm sure it will show off more of its powers, but needless to say I'm sold. Too bad I can't use it for a while...</p>
+  </div><!-- /.entry-content -->
+</section>
+
+  <script data-goatcounter="https://sberrevoets.goatcounter.com/count"
+          async src="//gc.zgo.at/count.js"></script>
+</body>
+</html>

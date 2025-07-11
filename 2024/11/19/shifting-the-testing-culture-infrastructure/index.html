@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+          <title>Shifting the testing culture: Infrastructure - Scott Berrevoets</title>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <link rel="icon" type="image/png" href="https://scottberrevoets.com/theme/images/favicon.png">
+        <link rel="apple-touch-icon" type="image/png" sizes="any" href="https://scottberrevoets.com/theme/images/favicon.png">
+        <link href="https://scottberrevoets.com/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="Scott Berrevoets Full Atom Feed" />
+        <link href="https://scottberrevoets.com/feeds/all.rss.xml" type="application/rss+xml" rel="alternate" title="Scott Berrevoets Full RSS Feed" />
+        <link href="https://scottberrevoets.com/feeds/atom.xml" type="application/atom+xml" rel="alternate" title="Scott Berrevoets Atom Feed" />
+        <link href="https://scottberrevoets.com/feeds/rss.xml" type="application/rss+xml" rel="alternate" title="Scott Berrevoets RSS Feed" />
+
+
+
+        <link rel="stylesheet" type="text/css" href="https://scottberrevoets.com/theme/css/style.css" />
+</head>
+
+<body id="index" class="home">
+<svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
+  <symbol id="github" viewBox="0 0 24 24">
+    <path stroke="none" d="M0 0h24v24H0z" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+    <path d="M9 19c-4.3 1.4 -4.3 -2.5 -6 -3m12 5v-3.5c0 -1 .1 -1.4 -.5 -2c2.8 -.3 5.5 -1.4 5.5 -6a4.6 4.6 0 0 0 -1.3 -3.2a4.2 4.2 0 0 0 -.1 -3.2s-1.1 -.3 -3.5 1.3a12.3 12.3 0 0 0 -6.2 0c-2.4 -1.6 -3.5 -1.3 -3.5 -1.3a4.2 4.2 0 0 0 -.1 3.2a4.6 4.6 0 0 0 -1.3 3.2c0 4.6 2.7 5.7 5.5 6c-.6 .6 -.6 1.2 -.5 2v3.5" stroke="currentColor" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+  </symbol>
+  <symbol id="mastodon" viewBox="0 0 24 24">
+    <path stroke="none" d="M0 0h24v24H0z" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+    <path d="M18.648 15.254c-1.816 1.763 -6.648 1.626 -6.648 1.626a18.262 18.262 0 0 1 -3.288 -.256c1.127 1.985 4.12 2.81 8.982 2.475c-1.945 2.013 -13.598 5.257 -13.668 -7.636l-.026 -1.154c0 -3.036 .023 -4.115 1.352 -5.633c1.671 -1.91 6.648 -1.666 6.648 -1.666s4.977 -.243 6.648 1.667c1.329 1.518 1.352 2.597 1.352 5.633s-.456 4.074 -1.352 4.944z" stroke="currentColor" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+    <path d="M12 11.204v-2.926c0 -1.258 -.895 -2.278 -2 -2.278s-2 1.02 -2 2.278v4.722m4 -4.722c0 -1.258 .895 -2.278 2 -2.278s2 1.02 2 2.278v4.722" stroke="currentColor" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+  </symbol>
+  <symbol id="mail" viewBox="0 0 24 24">
+    <path stroke="none" d="M0 0h24v24H0z" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+    <path d="M3 7a2 2 0 0 1 2 -2h14a2 2 0 0 1 2 2v10a2 2 0 0 1 -2 2h-14a2 2 0 0 1 -2 -2v-10z" stroke="currentColor" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+    <path d="M3 7l9 6l9 -6" stroke="currentColor" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+  </symbol>
+  <symbol id="rss" viewBox="0 0 24 24">
+    <path stroke="none" d="M0 0h24v24H0z" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+    <path d="M5 19m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0" stroke="currentColor" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+    <path d="M4 4a16 16 0 0 1 16 16" stroke="currentColor" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+    <path d="M4 11a9 9 0 0 1 9 9" stroke="currentColor" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+  </symbol>
+  <symbol id="linkedin" viewBox="0 0 24 24">
+    <path stroke="none" d="M0 0h24v24H0z" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+    <path d="M4 4m0 2a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v12a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2z" stroke="currentColor" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+    <path d="M8 11l0 5" stroke="currentColor" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+    <path d="M8 8l0 .01" stroke="currentColor" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+    <path d="M12 16l0 -5" stroke="currentColor" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+    <path d="M16 16v-3a2 2 0 0 0 -4 0" stroke="currentColor" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+  </symbol>
+</svg>        <header id="banner" class="body">
+            <div class="header-top">
+                <h1><a href="https://scottberrevoets.com/">Scott Berrevoets</a></h1>
+
+                <ul id="social">
+                    <li><a href="https://github.com/sberrevoets">
+                        <svg class="icon"><use href="#github" /></svg>
+                    </a></li>
+                    <li><a href="https://linkedin.com/in/sberrevoets">
+                        <svg class="icon"><use href="#linkedin" /></svg>
+                    </a></li>
+                    <li><a href="https://hachyderm.io/@ScottBerrevoets">
+                        <svg class="icon"><use href="#mastodon" /></svg>
+                    </a></li>
+                    <li><a href="mailto:hi@scottberrevoets.com">
+                        <svg class="icon"><use href="#mail" /></svg>
+                    </a></li>
+                    <li><a href="/feeds/all.atom.xml">
+                        <svg class="icon"><use href="#rss" /></svg>
+                    </a></li>
+                </ul>
+            </div>
+
+            <nav id="menu"><ul>
+                <li><a href="https://scottberrevoets.com/">About</a></li>
+                <li><a href="https://scottberrevoets.com/blog.html">Blog</a></li>
+            </ul></nav><!-- /#menu -->
+        </header><!-- /#banner -->
+<section id="content" class="body">
+  <header>
+      <h2 class="article-title">Shifting the testing culture: Infrastructure</h2>
+ 
+    <time class="published subheader" datetime="2024-11-19T00:00:00-08:00">
+      November 19, 2024
+    </time>
+        <span class="subheader">&bullet; 7 min read</span>
+  </header>
+  <div class="article-content">
+    <div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>This is the second post in a series on shifting our testing culture.</p>
+<ol>
+<li><a href="https://scottberrevoets.com/2024/11/18/shifting-the-testing-culture-motivation/">Motivation</a></li>
+<li>Infrastructure</li>
+<li><a href="https://scottberrevoets.com/2024/11/20/shifting-the-testing-culture-code-coverage/">Code coverage</a></li>
+</ol>
+</div>
+<p>This second article goes a bit deeper into the testing infrastructure we built
+over the years to optimize the ergonomics and developer experience as much as
+possible.</p>
+<p>Our initial test suites only had basic tests for some foundational code in
+shared modules. Initially these were written in <a href="https://github.com/Quick/Quick">Quick and Nimble</a>, but we moved
+to the default <code>XCTest</code> to reduce the learning curve. When we started
+writing UI tests, we immediately used <code>XCUITest</code> and still use that today.</p>
+<p>(<code>swift-testing</code> looks very nice and we're exploring how we can start using this
+in our own codebase.)</p>
+<h2 id="modules">Modules</h2>
+<p>When we modularized the codebase (which I wrote a little bit about <a href="https://scottberrevoets.com/2021/10/14/ios-architecture-at-lyft/#modules">before</a>), we
+did so specifically with testing in mind. All modules got their own test bundle
+to test that module's code.</p>
+<p>Later on, we also specialized each module to the type of code it contained. A
+module with primarily UI code in it is a <code>UI</code> module, and a module with
+core business logic is a <code>logic</code> module. This approach has three (testing)
+benefits:</p>
+<ol>
+<li>It separates business logic from UI logic at a higher level</li>
+<li>You can now establish the level of testing that's expected per module type
+   (e.g. higher for <code>logic</code> modules than for <code>UI</code> modules)</li>
+<li>The module type defines what type of tests should be written for that module
+   (e.g. snapshot tests for <code>UI</code> modules, unit tests for <code>logic</code> modules)</li>
+</ol>
+<p>Since each module is owned and maintained by a specific team, that team is now
+fully in control over the tests they want to write for their own features. For
+example, a UI-heavy feature is more likely to have snapshot tests than unit
+tests. Complicated flows might have both or use UI tests for integration-like
+tests.</p>
+<h2 id="avoiding-flakiness">Avoiding flakiness</h2>
+<p>Test flakiness, tests that sometimes pass and sometimes fail, became more common
+as we grew the number tests. This is a problem for multiple reasons:</p>
+<ul>
+<li>people lose confidence in the system if tests fail when they shouldn't</li>
+<li>it slows engineers down</li>
+<li>it's disruptive when tests that have been around for months suddenly start
+  failing</li>
+</ul>
+<p>The source of flakiness was generally an infrastructure problem, a test problem,
+or a code problem. Infrastructure problems were usually not actionable by
+product engineers and was something related to CI, Xcode, the test runner, the
+simulator, or the intersection between any of these.</p>
+<p>If the code was flaky that may have actually been a bug (yay tests!). Often this
+meant some globally mutable state was involved, and was different than what the
+tests expected for some reason.</p>
+<p>If the test itself was flaky, it wasn't always obvious why and how that could be
+avoided. The code is hard to debug because the issue doesn't always reproduce
+(sometimes only on CI) and if there didn't seem to be any bugs people would
+understandably give up on that test if tracking the issue down took too long.</p>
+<p>On the infrastructure side we've made many improvements over the years to reduce
+flakiness to a minimum:</p>
+<ul>
+<li>retry a failing test to reduce the impact of infrastructure failures</li>
+<li>disable a test that failed multiple times in a row and report it to the
+  maintainer of the module that has the failing test</li>
+<li>increase the timeouts for test suites to run to avoid timing out slow-running,
+  but passing, tests</li>
+<li>keep track of common errors out of our control (e.g. bugs in Xcode) and
+  explicitly ignore them, try again, or work around them</li>
+<li>ensure tests always ran in the same environment: iOS version, device simulator,
+  locale, etc.</li>
+</ul>
+<p>Infrastructure flakiness still happens on rare occasion, but the sytems are much
+more robust and forgiving of intermittent issues than when we first started.</p>
+<h2 id="making-simple-things-simple">Making simple things simple</h2>
+<blockquote>
+<p><em>Simple things should be simple, complex things should be possible.</em></p>
+<p>- Alan Kay</p>
+</blockquote>
+<p>Further architecture improvements led us to standardize on a Unidirectional
+Data Flow using RxSwift. These patterns are very testable, but required quite a
+bit of boilerplate and significant knowledge of best testing practices within
+those systems.</p>
+<p>With a more RxSwift-centric architecture, more asynchronousness code patterns
+emerged as well. Initially we used <code>XCTestExpectation</code>s to deal with that since
+that's what Apple recommended, but regularly having to increase the timeout on
+these expectations felt bad and we figured there had to be better ways.</p>
+<p>We first adopted RxBlocking, but later realized RxTest was where the real money
+was for us. Having two extra libraries just for testing felt heavy-handed at the
+time, but have become invaluable for us.</p>
+<p>Because the new standard for features was that they were all written using
+in-house architectural components without too much deviation, we could also
+standardize the test-writing part through a thin glaze of syntax sugar. Testing
+a single action's outcome in a reducer now looks like this:</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span class="normal">1</span>
+<span class="normal">2</span>
+<span class="normal">3</span>
+<span class="normal">4</span>
+<span class="normal">5</span>
+<span class="normal">6</span>
+<span class="normal">7</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="kd">func</span> <span class="nf">testAcknowledgingError</span><span class="p">()</span> <span class="p">{</span>
+    <span class="kc">self</span><span class="p">.</span><span class="n">reducer</span><span class="p">.</span><span class="bp">assert</span><span class="p">(</span>
+        <span class="n">state</span><span class="p">:</span> <span class="p">.</span><span class="kd">init</span><span class="p">(</span><span class="n">error</span><span class="p">:</span> <span class="p">.</span><span class="n">mock</span><span class="p">()),</span> <span class="c1">// easy error state setup with mock data</span>
+        <span class="n">action</span><span class="p">:</span> <span class="p">.</span><span class="n">acknowledgeError</span><span class="p">,</span> <span class="c1">// acknowledge the error</span>
+        <span class="n">result</span><span class="p">:</span> <span class="p">{</span> <span class="nv">$0</span><span class="p">.</span><span class="n">activeError</span> <span class="p">=</span> <span class="kc">nil</span> <span class="p">}</span> <span class="c1">// error has been acknowledged</span>
+    <span class="p">)</span>
+<span class="p">}</span>
+</code></pre></div></td></tr></table></div>
+
+<p>With many conveniences like these in place, many tests are easy to read and take
+just a few lines of code. I'm optimistic that once we adopt <code>swift-testing</code>'s
+parameterized testing we can probably reduce this even more.</p>
+<h2 id="mocking">Mocking</h2>
+<p>Our <a href="https://scottberrevoets.com/2021/10/14/ios-architecture-at-lyft/#dependency-injection">dependency injection system</a> enables mocking with protocols which carries a
+bit more boilerplate than I'd prefer but isn't too bad overall. We've also built
+"automock" tooling: a pre-compile tool that generates mock classes for all
+protocols it found in a module. That looks something like this:</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span class="normal"> 1</span>
+<span class="normal"> 2</span>
+<span class="normal"> 3</span>
+<span class="normal"> 4</span>
+<span class="normal"> 5</span>
+<span class="normal"> 6</span>
+<span class="normal"> 7</span>
+<span class="normal"> 8</span>
+<span class="normal"> 9</span>
+<span class="normal">10</span>
+<span class="normal">11</span>
+<span class="normal">12</span>
+<span class="normal">13</span>
+<span class="normal">14</span>
+<span class="normal">15</span>
+<span class="normal">16</span>
+<span class="normal">17</span>
+<span class="normal">18</span>
+<span class="normal">19</span>
+<span class="normal">20</span>
+<span class="normal">21</span>
+<span class="normal">22</span>
+<span class="normal">23</span>
+<span class="normal">24</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="c1">// handwritten by a developer:</span>
+
+<span class="kd">protocol</span> <span class="nc">MyAPI</span> <span class="p">{</span>
+    <span class="kd">func</span> <span class="nf">getDataFromServer</span><span class="p">()</span> <span class="p">-&gt;</span> <span class="p">[</span><span class="nb">String</span><span class="p">:</span> <span class="nb">Any</span><span class="p">]</span> <span class="c1">// json</span>
+    <span class="kd">func</span> <span class="nf">postDataToServer</span><span class="p">(</span><span class="n">param</span><span class="p">:</span> <span class="nb">Bool</span><span class="p">)</span>
+<span class="p">}</span>
+
+<span class="c1">// autogenerated by automock:</span>
+
+<span class="n">open</span> <span class="kd">class</span> <span class="nc">MyAPIMock</span><span class="p">:</span> <span class="n">MyAPI</span> <span class="p">{</span>
+    <span class="kd">public</span> <span class="kd">var</span> <span class="nv">getDataFromServerReturn</span><span class="p">:</span> <span class="p">[</span><span class="nb">String</span><span class="p">:</span> <span class="nb">Any</span><span class="p">]</span> <span class="p">=</span> <span class="p">[:]</span>
+
+    <span class="kd">public</span> <span class="n">getDataFromServerCalls</span><span class="p">:</span> <span class="p">[</span><span class="nb">Int</span><span class="p">]</span> <span class="p">=</span> <span class="p">[]</span>
+    <span class="kd">public</span> <span class="kr">get</span> <span class="n">postDataToServerParams</span><span class="p">:</span> <span class="p">[</span><span class="nb">Bool</span><span class="p">]</span> <span class="p">=</span> <span class="p">[]</span>
+
+    <span class="kd">func</span> <span class="nf">getDataFromServer</span><span class="p">()</span> <span class="p">-&gt;</span> <span class="p">[</span><span class="nb">String</span><span class="p">:</span> <span class="nb">Any</span><span class="p">]</span> <span class="p">{</span>
+        <span class="n">getDataFromServerCalls</span> <span class="o">+=</span> <span class="mi">1</span>
+        <span class="k">return</span> <span class="n">getDataFromServerReturn</span>
+    <span class="p">}</span>
+
+    <span class="kd">func</span> <span class="nf">postDataToServer</span><span class="p">(</span><span class="n">param</span><span class="p">:</span> <span class="nb">Bool</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">postDataToServerParams</span><span class="p">.</span><span class="n">append</span><span class="p">(</span><span class="n">param</span><span class="p">)</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></td></tr></table></div>
+
+<p><code>MyAPIMock</code> can be used in tests to verify that the right methods are called at
+the right time, and with the right parameters.</p>
+<p>Automock supports more complicated use cases like closures, and more complex
+parameter and return types as well. This saves developer time writing mock
+classes and promotes consistency in naming and mocking usage.</p>
+<p>It even works for model data, but it's less used and I'm more interested in a
+macro approach that looks something like this:</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span class="normal"> 1</span>
+<span class="normal"> 2</span>
+<span class="normal"> 3</span>
+<span class="normal"> 4</span>
+<span class="normal"> 5</span>
+<span class="normal"> 6</span>
+<span class="normal"> 7</span>
+<span class="normal"> 8</span>
+<span class="normal"> 9</span>
+<span class="normal">10</span>
+<span class="normal">11</span>
+<span class="normal">12</span>
+<span class="normal">13</span>
+<span class="normal">14</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="p">@</span><span class="n">Mock</span>
+<span class="kd">struct</span> <span class="nc">User</span> <span class="p">{</span>
+    <span class="kd">let</span> <span class="nv">name</span><span class="p">:</span> <span class="nb">String</span>
+    <span class="kd">let</span> <span class="nv">age</span><span class="p">:</span> <span class="nb">Int</span><span class="p">?</span>
+    <span class="kd">let</span> <span class="nv">active</span><span class="p">:</span> <span class="nb">Bool</span>
+<span class="p">}</span>
+
+<span class="c1">// @Mock expands to:</span>
+
+<span class="kd">extension</span> <span class="nc">User</span> <span class="p">{</span>
+    <span class="kd">static</span> <span class="kd">func</span> <span class="nf">mock</span><span class="p">(</span><span class="n">name</span><span class="p">:</span> <span class="nb">String</span> <span class="p">=</span> <span class="s">&quot;&quot;</span><span class="p">,</span> <span class="n">age</span><span class="p">:</span> <span class="nb">Int</span><span class="p">?</span> <span class="p">=</span> <span class="kc">nil</span><span class="p">,</span> <span class="n">active</span><span class="p">:</span> <span class="nb">Bool</span> <span class="p">=</span> <span class="kc">true</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">User</span><span class="p">(</span><span class="n">name</span><span class="p">:</span> <span class="n">name</span><span class="p">,</span> <span class="n">age</span><span class="p">:</span> <span class="n">age</span><span class="p">,</span> <span class="n">active</span><span class="p">:</span> <span class="n">active</span><span class="p">)</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></td></tr></table></div>
+
+<p>Generating mock data is now as simple as <code>User.mock()</code> (or even <code>.mock()</code> if the
+type can be inferred) while still having the ability to set parameters manually
+if needed.</p>
+<h2 id="other-improvements">Other improvements</h2>
+<p>We've made a plethora of other improvements as well: sharding to parallelize
+tests, only running test bundles for changed modules, a <code>TestKit</code> module to
+remove common <code>setUp()</code> boilerplate, and a bunch of small things I'm probably
+forgetting right now.</p>
+<p>But the most meaningful and impactful improvements have been related to how we
+handle code coverage. So much so that I thought it deserved a whole separate
+post.</p>
+  </div><!-- /.entry-content -->
+</section>
+
+  <script data-goatcounter="https://sberrevoets.goatcounter.com/count"
+          async src="//gc.zgo.at/count.js"></script>
+</body>
+</html>

@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+          <title>Silencing NSLog - Scott Berrevoets</title>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <link rel="icon" type="image/png" href="https://scottberrevoets.com/theme/images/favicon.png">
+        <link rel="apple-touch-icon" type="image/png" sizes="any" href="https://scottberrevoets.com/theme/images/favicon.png">
+        <link href="https://scottberrevoets.com/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="Scott Berrevoets Full Atom Feed" />
+        <link href="https://scottberrevoets.com/feeds/all.rss.xml" type="application/rss+xml" rel="alternate" title="Scott Berrevoets Full RSS Feed" />
+        <link href="https://scottberrevoets.com/feeds/atom.xml" type="application/atom+xml" rel="alternate" title="Scott Berrevoets Atom Feed" />
+        <link href="https://scottberrevoets.com/feeds/rss.xml" type="application/rss+xml" rel="alternate" title="Scott Berrevoets RSS Feed" />
+
+
+
+        <link rel="stylesheet" type="text/css" href="https://scottberrevoets.com/theme/css/style.css" />
+</head>
+
+<body id="index" class="home">
+<svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
+  <symbol id="github" viewBox="0 0 24 24">
+    <path stroke="none" d="M0 0h24v24H0z" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+    <path d="M9 19c-4.3 1.4 -4.3 -2.5 -6 -3m12 5v-3.5c0 -1 .1 -1.4 -.5 -2c2.8 -.3 5.5 -1.4 5.5 -6a4.6 4.6 0 0 0 -1.3 -3.2a4.2 4.2 0 0 0 -.1 -3.2s-1.1 -.3 -3.5 1.3a12.3 12.3 0 0 0 -6.2 0c-2.4 -1.6 -3.5 -1.3 -3.5 -1.3a4.2 4.2 0 0 0 -.1 3.2a4.6 4.6 0 0 0 -1.3 3.2c0 4.6 2.7 5.7 5.5 6c-.6 .6 -.6 1.2 -.5 2v3.5" stroke="currentColor" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+  </symbol>
+  <symbol id="mastodon" viewBox="0 0 24 24">
+    <path stroke="none" d="M0 0h24v24H0z" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+    <path d="M18.648 15.254c-1.816 1.763 -6.648 1.626 -6.648 1.626a18.262 18.262 0 0 1 -3.288 -.256c1.127 1.985 4.12 2.81 8.982 2.475c-1.945 2.013 -13.598 5.257 -13.668 -7.636l-.026 -1.154c0 -3.036 .023 -4.115 1.352 -5.633c1.671 -1.91 6.648 -1.666 6.648 -1.666s4.977 -.243 6.648 1.667c1.329 1.518 1.352 2.597 1.352 5.633s-.456 4.074 -1.352 4.944z" stroke="currentColor" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+    <path d="M12 11.204v-2.926c0 -1.258 -.895 -2.278 -2 -2.278s-2 1.02 -2 2.278v4.722m4 -4.722c0 -1.258 .895 -2.278 2 -2.278s2 1.02 2 2.278v4.722" stroke="currentColor" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+  </symbol>
+  <symbol id="mail" viewBox="0 0 24 24">
+    <path stroke="none" d="M0 0h24v24H0z" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+    <path d="M3 7a2 2 0 0 1 2 -2h14a2 2 0 0 1 2 2v10a2 2 0 0 1 -2 2h-14a2 2 0 0 1 -2 -2v-10z" stroke="currentColor" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+    <path d="M3 7l9 6l9 -6" stroke="currentColor" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+  </symbol>
+  <symbol id="rss" viewBox="0 0 24 24">
+    <path stroke="none" d="M0 0h24v24H0z" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+    <path d="M5 19m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0" stroke="currentColor" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+    <path d="M4 4a16 16 0 0 1 16 16" stroke="currentColor" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+    <path d="M4 11a9 9 0 0 1 9 9" stroke="currentColor" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+  </symbol>
+  <symbol id="linkedin" viewBox="0 0 24 24">
+    <path stroke="none" d="M0 0h24v24H0z" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+    <path d="M4 4m0 2a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v12a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2z" stroke="currentColor" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+    <path d="M8 11l0 5" stroke="currentColor" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+    <path d="M8 8l0 .01" stroke="currentColor" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+    <path d="M12 16l0 -5" stroke="currentColor" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+    <path d="M16 16v-3a2 2 0 0 0 -4 0" stroke="currentColor" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+  </symbol>
+</svg>        <header id="banner" class="body">
+            <div class="header-top">
+                <h1><a href="https://scottberrevoets.com/">Scott Berrevoets</a></h1>
+
+                <ul id="social">
+                    <li><a href="https://github.com/sberrevoets">
+                        <svg class="icon"><use href="#github" /></svg>
+                    </a></li>
+                    <li><a href="https://linkedin.com/in/sberrevoets">
+                        <svg class="icon"><use href="#linkedin" /></svg>
+                    </a></li>
+                    <li><a href="https://hachyderm.io/@ScottBerrevoets">
+                        <svg class="icon"><use href="#mastodon" /></svg>
+                    </a></li>
+                    <li><a href="mailto:hi@scottberrevoets.com">
+                        <svg class="icon"><use href="#mail" /></svg>
+                    </a></li>
+                    <li><a href="/feeds/all.atom.xml">
+                        <svg class="icon"><use href="#rss" /></svg>
+                    </a></li>
+                </ul>
+            </div>
+
+            <nav id="menu"><ul>
+                <li><a href="https://scottberrevoets.com/">About</a></li>
+                <li><a href="https://scottberrevoets.com/blog.html">Blog</a></li>
+            </ul></nav><!-- /#menu -->
+        </header><!-- /#banner -->
+<section id="content" class="body">
+  <header>
+      <h2 class="article-title">Silencing NSLog</h2>
+ 
+    <time class="published subheader" datetime="2016-08-01T00:00:00-07:00">
+      August 01, 2016
+    </time>
+        <span class="subheader">&bullet; 4 min read</span>
+  </header>
+  <div class="article-content">
+    <p>When your app has a lot of third-party dependencies, what often happens is that
+those libraries log a bunch of things to the Xcode console to help their own
+debugging. Unfortunately, a lot of these logs are useful only to the developers
+of the library, but not the developers of apps that integrate the library. For
+example, they log things like <code>&lt;SomeLibrary&gt; (version 1.2.3) initialized</code>, or
+<code>&lt;SomeLibrary&gt; started &lt;primary functionality&gt;</code>, sometimes with a long list of
+parameters or input sources that are irrelevant to you.</p>
+<p>Finding your own log statements in a jungle of other logs can then be
+very difficult and adds to the frustration of not being able to work the debugger
+as you would like to.</p>
+<p>If a library is open source you can suggest a change by removing the log or
+otherwise make it less obtrusive. However, if your change gets accepted at all,
+that doesn't solve the immediate problem of being able to debug your own code
+using the console.</p>
+<p>Meet <code>_NSSetLogCStringFunction()</code>. This C function has been around in Foundation
+for a long time, and while there is some
+<a href="https://support.apple.com/kb/TA45403?locale=en_US">documentation</a> on it, it's
+still a private method. However, that doesn't mean you can't use it in debug
+mode when your logs are the most valuable!</p>
+<p>In short, this function lets you set a function pointer that can log C strings,
+which <code>NSLog</code> then uses instead of the normal implementation. You can do this
+in two ways.</p>
+<p>The first one is by adding this to your Objective-C bridging header:</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span class="normal">1</span>
+<span class="normal">2</span>
+<span class="normal">3</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="cp">#if DEBUG</span>
+<span class="k">extern</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">_NSSetLogCStringFunction</span><span class="p">(</span><span class="kt">void</span><span class="p">(</span><span class="o">*</span><span class="p">)(</span><span class="k">const</span><span class="w"> </span><span class="kt">char</span><span class="o">*</span><span class="p">,</span><span class="w"> </span><span class="kt">unsigned</span><span class="p">,</span><span class="w"> </span><span class="kt">BOOL</span><span class="p">));</span>
+<span class="cp">#endif</span>
+</code></pre></div></td></tr></table></div>
+
+<p>and then use it like this:</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span class="normal">1</span>
+<span class="normal">2</span>
+<span class="normal">3</span>
+<span class="normal">4</span>
+<span class="normal">5</span>
+<span class="normal">6</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="kd">func</span> <span class="nf">disableNSLog</span><span class="p">()</span> <span class="p">{</span>
+<span class="cp">#if</span> <span class="cp">DEBUG</span>
+    <span class="n">_NSSetLogCStringFunction</span> <span class="p">{</span> <span class="n">message</span><span class="p">,</span> <span class="kc">_</span><span class="p">,</span> <span class="kc">_</span> <span class="k">in</span>
+        <span class="c1">// no actual logging, message just gets lost</span>
+    <span class="p">}</span>
+<span class="cp">#endif</span>
+</code></pre></div></td></tr></table></div>
+
+<p>If you want to stick to pure Swift, you can do so by adding this to your code
+somewhere:</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span class="normal">1</span>
+<span class="normal">2</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="p">@</span><span class="n">_silgen_name</span><span class="p">(</span><span class="s">&quot;_NSSetLogCStringFunction&quot;</span><span class="p">)</span>
+<span class="kd">func</span> <span class="nf">setNSLogFunction</span><span class="p">(</span><span class="kc">_</span><span class="p">:</span> <span class="p">@</span><span class="n">convention</span><span class="p">(</span><span class="n">c</span><span class="p">)</span> <span class="p">(</span><span class="nb">UnsafePointer</span><span class="p">&lt;</span><span class="nb">Int8</span><span class="p">&gt;,</span> <span class="nb">UInt32</span><span class="p">,</span> <span class="n">ObjCBool</span><span class="p">)</span> <span class="p">-&gt;</span> <span class="nb">Void</span><span class="p">)</span>
+</code></pre></div></td></tr></table></div>
+
+<p>and then use it like this:</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span class="normal">1</span>
+<span class="normal">2</span>
+<span class="normal">3</span>
+<span class="normal">4</span>
+<span class="normal">5</span>
+<span class="normal">6</span>
+<span class="normal">7</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="kd">func</span> <span class="nf">disableNSLog</span><span class="p">()</span> <span class="p">{</span>
+<span class="cp">#if</span> <span class="cp">DEBUG</span>
+    <span class="n">setNSLogFunction</span> <span class="p">{</span> <span class="n">message</span><span class="p">,</span> <span class="kc">_</span><span class="p">,</span> <span class="kc">_</span> <span class="k">in</span>
+        <span class="c1">// no actual logging, message just gets lost</span>
+    <span class="p">}</span>
+<span class="cp">#endif</span>
+<span class="p">}</span>
+</code></pre></div></td></tr></table></div>
+
+<p>Obviously, you can do anything you want inside the closure, including writing to
+a file, annotating the message with a date/time, passing it to your custom
+logging library, etc.</p>
+<p>One downside of this is that Apple's frameworks use <code>NSLog</code> extensively as well,
+so in the above case of completely disabling logging, helpful messages get lost
+as well. You won't be able to use <code>NSLog</code> yourself either anymore, so I suggest
+you use <code>print()</code> or a custom logging framework that's not <code>NSLog</code> based.</p>
+<p>If you're not afraid of doing (more) horrible things in your codebase, you can
+avoid losing Apple frameworks' messages by parsing the stack trace and looking
+at the framework that called this function and see if it's something you want to
+let through:</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span class="normal"> 1</span>
+<span class="normal"> 2</span>
+<span class="normal"> 3</span>
+<span class="normal"> 4</span>
+<span class="normal"> 5</span>
+<span class="normal"> 6</span>
+<span class="normal"> 7</span>
+<span class="normal"> 8</span>
+<span class="normal"> 9</span>
+<span class="normal">10</span>
+<span class="normal">11</span>
+<span class="normal">12</span>
+<span class="normal">13</span>
+<span class="normal">14</span>
+<span class="normal">15</span>
+<span class="normal">16</span>
+<span class="normal">17</span>
+<span class="normal">18</span>
+<span class="normal">19</span>
+<span class="normal">20</span>
+<span class="normal">21</span>
+<span class="normal">22</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="kd">func</span> <span class="nf">disableNSLog</span><span class="p">()</span> <span class="p">{</span>
+<span class="cp">#if</span> <span class="cp">DEBUG</span>
+    <span class="n">_NSSetLogCStringFunction</span> <span class="p">{</span> <span class="n">message</span><span class="p">,</span> <span class="kc">_</span><span class="p">,</span> <span class="kc">_</span> <span class="k">in</span>
+        <span class="c1">// message is of type UnsafePointer&lt;Int8&gt; so first see if we can get a</span>
+        <span class="c1">// normal String from that. Safety first!</span>
+
+        <span class="k">guard</span> <span class="kd">let</span> <span class="nv">message</span> <span class="p">=</span> <span class="nb">String</span><span class="p">.</span><span class="n">fromCString</span><span class="p">(</span><span class="n">message</span><span class="p">)</span> <span class="k">else</span> <span class="p">{</span>
+            <span class="k">return</span>
+        <span class="p">}</span>
+
+        <span class="kd">let</span> <span class="nv">callStack</span> <span class="p">=</span> <span class="bp">NSThread</span><span class="p">.</span><span class="n">callStackSymbols</span><span class="p">()</span>
+        <span class="kd">let</span> <span class="nv">sourceString</span> <span class="p">=</span> <span class="n">callStack</span><span class="p">[</span><span class="mi">6</span><span class="p">]</span>
+        <span class="kd">let</span> <span class="nv">separatorSet</span> <span class="p">=</span> <span class="bp">NSCharacterSet</span><span class="p">(</span><span class="n">charactersInString</span><span class="p">:</span> <span class="s">&quot; -[]+?.,&quot;</span><span class="p">)</span>
+        <span class="kd">let</span> <span class="nv">stackFrame</span> <span class="p">=</span> <span class="n">sourceString</span><span class="p">.</span><span class="n">componentsSeparatedByCharactersInSet</span><span class="p">(</span><span class="n">separatorSet</span><span class="p">)</span>
+        <span class="kd">let</span> <span class="nv">frameworkName</span> <span class="p">=</span> <span class="n">stackFrame</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span>
+
+        <span class="k">if</span> <span class="n">frameworkName</span> <span class="p">==</span> <span class="s">&quot;UIKit&quot;</span> <span class="o">||</span> <span class="n">frameworkName</span> <span class="p">==</span> <span class="s">&quot;Foundation&quot;</span> <span class="p">{</span>
+            <span class="n">MyCustomLogger</span><span class="p">.</span><span class="n">log</span><span class="p">(</span><span class="n">message</span><span class="p">)</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+<span class="cp">#endif</span>
+<span class="p">}</span>
+</code></pre></div></td></tr></table></div>
+
+<p>This discards all logs, except if they're coming from <code>UIKit</code> or <code>Foundation</code>.
+The stack trace parsing is by no means safe (its format could change, for
+example), but since it's wrapped in <code>#if DEBUG</code> directives it won't mess with
+anything in the App Store build.</p>
+<p>Note that static libraries are part of your main app's target, which means you
+have to filter out logs from your own target to hide those.</p>
+<p>You could even go a bit farther and check the message for keywords you like or
+don't like and make a decision on whether you want to log or not. Keep in mind,
+though, that any work you do here needs to be fast as you don't always know just
+how much is being logged.</p>
+  </div><!-- /.entry-content -->
+</section>
+
+  <script data-goatcounter="https://sberrevoets.goatcounter.com/count"
+          async src="//gc.zgo.at/count.js"></script>
+</body>
+</html>
