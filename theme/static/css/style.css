@@ -32,7 +32,6 @@
     }
 }
 
-
 body {
     color: var(--text-color);
     background-color: var(--background-color);
@@ -43,7 +42,6 @@ body {
     font-size: 1.15em;
     line-height: 1.5em;
 }
-
 
 body > header {
     margin: 0;
@@ -75,7 +73,6 @@ a {
 a:hover {
    color: var(--link-color);
 }
-
 
 ul#social {
     display: table;
@@ -186,9 +183,6 @@ nav#menu ul li.active a {
     margin: 0 auto;
 }
 
-.note ol {
-    margin-bottom: 0;
-}
 
 h2.article-title {
     font-size: 2.5em;
@@ -201,30 +195,6 @@ div.article-content, div.page-content {
     line-height: 1.6em;
     font-family: -apple-system-body, -apple-system, system-ui, BlinkMacSystemFont;
     padding: 10px;
-}
-
-div.pagination {
-    text-align: center;
-}
-
-div.pagination ul {
-    width: auto;
-    display: inline-block;
-    list-style-type: none;
-    -webkit-padding-start: 0;
-}
-
-div.pagination ul li {
-    display: inline;
-    font-family: -apple-system, system-ui, BlinkMacSystemFont;
-}
-
-div.pagination ul li.prev {
-    margin-right: 20px;
-}
-
-div.pagination ul li.next {
-    margin-left: 20px;
 }
 
 /*** About ***/
@@ -362,9 +332,4 @@ blockquote {
 img {
     max-width: 100%;
     height: auto;
-}
-
-div#disqus_thread {
-    margin-top: 50px;
-    padding: 10px;
 }
