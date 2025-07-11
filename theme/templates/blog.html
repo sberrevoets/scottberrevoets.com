@@ -3,19 +3,34 @@
 {% block content %}
 
 <div class="page-content">
-<dl id="archive">
-{% for article in dates %}
-    {% if dates[loop.index0 - 1].date.year != article.date.year %}
-    <dt>{{ article.date.year }}</dt>
+    {% for article in dates %}
+        {% if loop.index == 1 or article.date.year != dates[loop.index0 - 1].date.year %}
+            {% if loop.index != 1 %}
+                </div>
+            </div>
+            {% endif %}
+            <div class="year-section">
+                <h2 class="year-header">{{ article.date.year }}</h2>
+                <div class="articles-list">
+        {% endif %}
+        <article class="archive-item">
+            <div class="archive-date">
+                <time datetime="{{ article.date.isoformat() }}">
+                    {{ article.date.strftime("%b %d") }}
+                </time>
+            </div>
+            <div class="archive-content">
+                <h3 class="archive-title">
+                    <a href="{{ SITEURL }}/{{ article.url }}" title="{{ article.summary|striptags|escape }}">
+                        {{ article.title }}
+                    </a>
+                </h3>
+            </div>
+        </article>
+    {% endfor %}
+    {% if dates %}
+        </div>
+    </div>
     {% endif %}
-    <dd>
-    <time datetime="{{ article.date.isoformat() }}">{{ article.date.strftime("%b %d") }}</time>
-    <a href="{{ SITEURL }}/{{ article.url }}"
-         title="{{ article.locale_date }}: {{ article.summary|striptags|escape }}">
-        {{ article.title }}
-      </a>
-    </dd>
-{% endfor %}
-</dl>
 </div>
 {% endblock %}
