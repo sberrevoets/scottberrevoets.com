@@ -71,6 +71,11 @@ SOCIALMEDIAITEMS = [
     ("rss", "/feeds/all.atom.xml"),
 ]
 
+PLUGINS = [
+    "readtime",
+]
+READTIME_WPM = 200
+
 # No feeds in development mode
 FEED_DOMAIN = SITEURL
 

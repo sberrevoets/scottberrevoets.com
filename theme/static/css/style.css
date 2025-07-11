@@ -183,14 +183,6 @@ nav#menu ul li.active a {
     margin: 0 auto;
 }
 
-
-h2.article-title {
-    font-size: 2.5em;
-    padding: 0 10px;
-    line-height: 1em;
-    margin-bottom: 0;
-}
-
 div.article-content, div.page-content {
     line-height: 1.6em;
     font-family: -apple-system-body, -apple-system, system-ui, BlinkMacSystemFont;
@@ -328,9 +320,19 @@ ul#personal-info li {
 
 /*** Article ***/
 
+h2.article-title {
+    font-size: 2.5em;
+    padding: 10px 0 15px 10px;
+    margin: 0;
+    line-height: 1em;
+}
+
 header time.published {
-    padding: 0 10px;
-    font-family: -apple-system-subheadline, 'SFProDisplay-Bold', -apple-system, system-ui, BlinkMacSystemFont;
+    padding-left: 10px;
+}
+
+header .subheader {
+    font-family: monospace,-apple-system-subheadline, 'SFProDisplay-Bold', -apple-system, system-ui, BlinkMacSystemFont;
     color: var(--subtitle-color);
 }
 
