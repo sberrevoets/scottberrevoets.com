@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>Scott Berrevoets</title>
+  <style>
+    html {
+      color: #1a1a1a;
+      background-color: #fdfdfd;
+    }
+    body {
+      margin: 0 auto;
+      max-width: 36em;
+      padding-left: 50px;
+      padding-right: 50px;
+      padding-top: 50px;
+      padding-bottom: 50px;
+      hyphens: auto;
+      overflow-wrap: break-word;
+      text-rendering: optimizeLegibility;
+      font-kerning: normal;
+    }
+    @media (max-width: 600px) {
+      body {
+        font-size: 0.9em;
+        padding: 12px;
+      }
+      h1 {
+        font-size: 1.8em;
+      }
+    }
+    @media print {
+      html {
+        background-color: white;
+      }
+      body {
+        background-color: transparent;
+        color: black;
+        font-size: 12pt;
+      }
+      p, h2, h3 {
+        orphans: 3;
+        widows: 3;
+      }
+      h2, h3, h4 {
+        page-break-after: avoid;
+      }
+    }
+    p {
+      margin: 1em 0;
+    }
+    a {
+      color: #1a1a1a;
+    }
+    a:visited {
+      color: #1a1a1a;
+    }
+    img {
+      max-width: 100%;
+    }
+    svg {
+      height: auto;
+      max-width: 100%;
+    }
+    h1, h2, h3, h4, h5, h6 {
+      margin-top: 1.4em;
+    }
+    h5, h6 {
+      font-size: 1em;
+      font-style: italic;
+    }
+    h6 {
+      font-weight: normal;
+    }
+    ol, ul {
+      padding-left: 1.7em;
+      margin-top: 1em;
+    }
+    li > ol, li > ul {
+      margin-top: 0;
+    }
+    blockquote {
+      margin: 1em 0 1em 1.7em;
+      padding-left: 1em;
+      border-left: 2px solid #e6e6e6;
+      color: #606060;
+    }
+    code {
+      font-family: Menlo, Monaco, Consolas, 'Lucida Console', monospace;
+      font-size: 85%;
+      margin: 0;
+      hyphens: manual;
+    }
+    pre {
+      margin: 1em 0;
+      overflow: auto;
+    }
+    pre code {
+      padding: 0;
+      overflow: visible;
+      overflow-wrap: normal;
+    }
+    .sourceCode {
+     background-color: transparent;
+     overflow: visible;
+    }
+    hr {
+      background-color: #1a1a1a;
+      border: none;
+      height: 1px;
+      margin: 1em 0;
+    }
+    table {
+      margin: 1em 0;
+      border-collapse: collapse;
+      width: 100%;
+      overflow-x: auto;
+      display: block;
+      font-variant-numeric: lining-nums tabular-nums;
+    }
+    table caption {
+      margin-bottom: 0.75em;
+    }
+    tbody {
+      margin-top: 0.5em;
+      border-top: 1px solid #1a1a1a;
+      border-bottom: 1px solid #1a1a1a;
+    }
+    th {
+      border-top: 1px solid #1a1a1a;
+      padding: 0.25em 0.5em 0.25em 0.5em;
+    }
+    td {
+      padding: 0.125em 0.5em 0.25em 0.5em;
+    }
+    header {
+      margin-bottom: 4em;
+      text-align: center;
+    }
+    #TOC li {
+      list-style: none;
+    }
+    #TOC ul {
+      padding-left: 1.3em;
+    }
+    #TOC > ul {
+      padding-left: 0;
+    }
+    #TOC a:not(:hover) {
+      text-decoration: none;
+    }
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+    div.column{flex: auto; overflow-x: auto;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    /* The extra [class] is a hack that increases specificity enough to
+       override a similar rule in reveal.js */
+    ul.task-list[class]{list-style: none;}
+    ul.task-list li input[type="checkbox"] {
+      font-size: inherit;
+      width: 0.8em;
+      margin: 0 0.8em 0.2em -1.6em;
+      vertical-align: middle;
+    }
+    .display.math{display: block; text-align: center; margin: 0.5rem auto;}
+  </style>
+  <style type="text/css">
+  body {
+      color: rgb(50, 50, 50);
+      margin: 0 auto;
+      width: 100%;
+      max-width: 800px;
+      padding: 0;
+      line-height: 1.15em;
+      font-family: 'Avenir Next';
+      font-size: 12pt;
+      word-break: keep-all;
+  }
+
+  @print {
+      body {
+          width: 100%;
+          max-width: 8.5in;
+          font-size: 11pt;
+          margin: 3in;
+      }
+  }
+
+  hr {
+      height: 1px;
+      border: 0;
+      background-color: rgb(100, 100, 100);
+      margin: 5px;
+  }
+
+  header, h1, h2, h3, h4, h5, h6, ul {
+      margin: 0;
+  }
+
+  ul {
+      margin-bottom: 10px;
+  }
+
+  table {
+      width: 100%;
+      margin: 0;
+  }
+
+  tbody {
+      width: 99%; /* odd text cutoff in PDF files when set to 100% */
+      display: table;
+      border: none;
+  }
+
+  td {
+      padding-left:  0.5em;
+  }
+
+  .title {
+      text-align: center;
+      font-size: 33pt;
+      line-height: 1em;
+      margin: 0;
+      margin-top: 15px;
+      margin-bottom: 5px;
+      font-weight: bold;
+  }
+
+  .subtitle {
+      text-align: center;
+      font-size: 0.9em;
+      margin: 0;
+      padding: 0;
+      font-weight: normal;
+  }
+
+  h2 {
+      color: rgb(72, 161, 213);
+      margin-bottom: 15px;
+      margin-top: 15px;
+  }
+
+  tr > td:nth-child(2) {
+      color: rgb(150, 150, 150);
+      margin: 0;
+      padding: 0;
+  }
+
+  #experience ~ ul {
+      padding-left: 2.5em;
+  }
+
+  #experience ~ p {
+      padding-left: 0.5em;
+      margin-top: 0;
+  }
+
+  #skills ~ ul, #education + table td, #education ~ p {
+      padding-left: 0;
+  }
+
+  #education + table tbody {
+      margin: 0;
+  }
+
+  #skills + ul {
+      list-style-type: none;
+      padding-left: 0;
+      line-height: 1.5em;
+  }
+  </style>
+</head>
+<body>
+<header id="title-block-header">
+<h1 class="title">Scott Berrevoets</h1>
+<p class="subtitle">me@scottberrevoets.com •
+https://linkedin.com/in/sberrevoets • San Francisco, CA</p>
+</header>
+<hr />
+<h2 id="experience">Experience</h2>
+<h3 id="lyft-inc.">Lyft, Inc.</h3>
+<table>
+<tbody>
+<tr>
+<td><strong>Senior Staff Engineer</strong></td>
+<td style="text-align: right;"><em>March 2020 – Present</em></td>
+</tr>
+</tbody>
+</table>
+<p>Tech lead for the Mobile Infrastructure team (15-20 engineers) and
+the broader Mobile organization (150 engineers).</p>
+<ul>
+<li>Set the company up for the next 5 years of growth through a major
+overhaul of the iOS architecture, which greatly improved developer
+velocity and code quality</li>
+<li>Designed and drove 100% adoption of a custom module structure to
+simplify dependency management, testing patterns, and APIs, leading to a
+highly modular (2000+ modules) and testing-optimized infrastructure for
+all iOS engineers</li>
+<li>Learned React to build an internal web portal to visualize Mobile
+tech debt trends, a major factor in achieving a 90%+ completion rate of
+major code migrations and significant codebase health improvements</li>
+<li>Started and led a committee of 12 cross-company Mobile Tech Leads
+that drove the high-level culture, direction, and processes of the
+150-engineer Mobile organization in 10 dedicated, long-running
+workstreams</li>
+<li>Defined and rolled out a multi-faceted Mobile testing strategy,
+leading to an increased Mobile code coverage from 10% to 60% across all
+teams</li>
+<li>Mentored and upleveled senior and staff engineers across the company
+through code reviews, pair programming, and 1:1s, many of whom were
+promoted to (Senior) Staff Engineer down the line</li>
+</ul>
+<table>
+<tbody>
+<tr>
+<td><strong>Staff iOS Engineer</strong></td>
+<td style="text-align: right;"><em>March 2018 – March 2020</em></td>
+</tr>
+</tbody>
+</table>
+<p>Tech lead of the iOS architecture team which built and maintained
+proprietary architectural frameworks, libraries, and tools for the iOS
+codebase.</p>
+<ul>
+<li>Founded the iOS Architecture team and established Lyft’s first-ever
+iOS architecture, which was fully adopted by the broader iOS team and
+scaled to 80+ engineers</li>
+<li>Distributed the iOS codebase into dozens of modules initially, and
+then socialized the build time and code reusability benefits to the
+broader iOS team to scale the codebase to hundreds of modules</li>
+<li>Built up teams and engineers through extensive code and tech spec
+reviews, mentorships, and interviewing/hiring</li>
+</ul>
+<table>
+<tbody>
+<tr>
+<td><strong>Senior iOS Engineer</strong></td>
+<td style="text-align: right;"><em>June 2014 – March 2018</em></td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>Contributed in rewriting the legacy Objective-C codebase to 20k
+lines of Swift code initially, and then scale the codebase to 300k lines
+of code and the team from 5 to 40+ iOS engineers</li>
+<li>Led the cross-functional (engineering, product, marketing) effort to
+split the singular Lyft app into dedicated Passenger and Driver apps,
+enabling better scalability of engineers and products</li>
+<li>Implemented core features like multi-passenger pickup, scheduled
+rides, and PayPal integration</li>
+</ul>
+<h3 id="qmotion-inc.">QMotion, Inc.</h3>
+<table>
+<tbody>
+<tr>
+<td><strong>iOS Developer</strong></td>
+<td style="text-align: right;"><em>May 2012 – June 2014</em></td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>Designed and developed the company’s iPhone and iPad apps to let
+users control their window shades from their iOS devices</li>
+</ul>
+<h2 id="skills">Skills</h2>
+<ul>
+<li><strong>Languages &amp; Frameworks:</strong> Swift, Objective-C,
+SwiftUI, UIKit</li>
+<li><strong>Design &amp; Architecture:</strong> The Composable
+Architecture, RxSwift, MVVM, modularization, dependency injection</li>
+<li><strong>Developer Tools:</strong> Xcode, XCTest, XCUITest, Git &amp;
+GitHub, CLI, SwiftPM, SwiftLint</li>
+<li><strong>Deployment &amp; QA:</strong> TestFlight, App Store Connect,
+performance profiling, crash reporting</li>
+</ul>
+<h2 id="education">Education</h2>
+<table>
+<tbody>
+<tr>
+<td><strong>University of West Florida</strong></td>
+<td style="text-align: right;"><em>2010 – 2013</em></td>
+</tr>
+</tbody>
+</table>
+<p>Bachelor of Science, Information Technology</p>
+</body>
+</html>

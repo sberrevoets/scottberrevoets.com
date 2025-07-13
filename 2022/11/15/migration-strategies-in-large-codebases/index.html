@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+          <title>Migration strategies in large codebases - Scott Berrevoets</title>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <link rel="icon" type="image/png" href="https://scottberrevoets.com/theme/images/favicon.png">
+        <link rel="apple-touch-icon" type="image/png" sizes="any" href="https://scottberrevoets.com/theme/images/favicon.png">
+        <link href="https://scottberrevoets.com/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="Scott Berrevoets Full Atom Feed" />
+        <link href="https://scottberrevoets.com/feeds/all.rss.xml" type="application/rss+xml" rel="alternate" title="Scott Berrevoets Full RSS Feed" />
+        <link href="https://scottberrevoets.com/feeds/atom.xml" type="application/atom+xml" rel="alternate" title="Scott Berrevoets Atom Feed" />
+        <link href="https://scottberrevoets.com/feeds/rss.xml" type="application/rss+xml" rel="alternate" title="Scott Berrevoets RSS Feed" />
+
+
+
+        <link rel="stylesheet" type="text/css" href="https://scottberrevoets.com/theme/css/style.css" />
+</head>
+
+<body id="index" class="home">
+<svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
+  <symbol id="github" viewBox="0 0 24 24">
+    <path stroke="none" d="M0 0h24v24H0z" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+    <path d="M9 19c-4.3 1.4 -4.3 -2.5 -6 -3m12 5v-3.5c0 -1 .1 -1.4 -.5 -2c2.8 -.3 5.5 -1.4 5.5 -6a4.6 4.6 0 0 0 -1.3 -3.2a4.2 4.2 0 0 0 -.1 -3.2s-1.1 -.3 -3.5 1.3a12.3 12.3 0 0 0 -6.2 0c-2.4 -1.6 -3.5 -1.3 -3.5 -1.3a4.2 4.2 0 0 0 -.1 3.2a4.6 4.6 0 0 0 -1.3 3.2c0 4.6 2.7 5.7 5.5 6c-.6 .6 -.6 1.2 -.5 2v3.5" stroke="currentColor" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+  </symbol>
+  <symbol id="mastodon" viewBox="0 0 24 24">
+    <path stroke="none" d="M0 0h24v24H0z" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+    <path d="M18.648 15.254c-1.816 1.763 -6.648 1.626 -6.648 1.626a18.262 18.262 0 0 1 -3.288 -.256c1.127 1.985 4.12 2.81 8.982 2.475c-1.945 2.013 -13.598 5.257 -13.668 -7.636l-.026 -1.154c0 -3.036 .023 -4.115 1.352 -5.633c1.671 -1.91 6.648 -1.666 6.648 -1.666s4.977 -.243 6.648 1.667c1.329 1.518 1.352 2.597 1.352 5.633s-.456 4.074 -1.352 4.944z" stroke="currentColor" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+    <path d="M12 11.204v-2.926c0 -1.258 -.895 -2.278 -2 -2.278s-2 1.02 -2 2.278v4.722m4 -4.722c0 -1.258 .895 -2.278 2 -2.278s2 1.02 2 2.278v4.722" stroke="currentColor" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+  </symbol>
+  <symbol id="mail" viewBox="0 0 24 24">
+    <path stroke="none" d="M0 0h24v24H0z" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+    <path d="M3 7a2 2 0 0 1 2 -2h14a2 2 0 0 1 2 2v10a2 2 0 0 1 -2 2h-14a2 2 0 0 1 -2 -2v-10z" stroke="currentColor" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+    <path d="M3 7l9 6l9 -6" stroke="currentColor" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+  </symbol>
+  <symbol id="rss" viewBox="0 0 24 24">
+    <path stroke="none" d="M0 0h24v24H0z" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+    <path d="M5 19m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0" stroke="currentColor" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+    <path d="M4 4a16 16 0 0 1 16 16" stroke="currentColor" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+    <path d="M4 11a9 9 0 0 1 9 9" stroke="currentColor" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+  </symbol>
+  <symbol id="linkedin" viewBox="0 0 24 24">
+    <path stroke="none" d="M0 0h24v24H0z" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+    <path d="M4 4m0 2a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v12a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2z" stroke="currentColor" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+    <path d="M8 11l0 5" stroke="currentColor" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+    <path d="M8 8l0 .01" stroke="currentColor" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+    <path d="M12 16l0 -5" stroke="currentColor" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+    <path d="M16 16v-3a2 2 0 0 0 -4 0" stroke="currentColor" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+  </symbol>
+</svg>        <header id="banner" class="body">
+            <div class="header-top">
+                <h1><a href="https://scottberrevoets.com/">Scott Berrevoets</a></h1>
+
+                <ul id="social">
+                    <li><a href="https://github.com/sberrevoets">
+                        <svg class="icon"><use href="#github" /></svg>
+                    </a></li>
+                    <li><a href="https://linkedin.com/in/sberrevoets">
+                        <svg class="icon"><use href="#linkedin" /></svg>
+                    </a></li>
+                    <li><a href="https://hachyderm.io/@ScottBerrevoets">
+                        <svg class="icon"><use href="#mastodon" /></svg>
+                    </a></li>
+                    <li><a href="mailto:hi@scottberrevoets.com">
+                        <svg class="icon"><use href="#mail" /></svg>
+                    </a></li>
+                    <li><a href="/feeds/all.atom.xml">
+                        <svg class="icon"><use href="#rss" /></svg>
+                    </a></li>
+                </ul>
+            </div>
+
+            <nav id="menu"><ul>
+                <li><a href="https://scottberrevoets.com/">About</a></li>
+                <li><a href="https://scottberrevoets.com/blog.html">Blog</a></li>
+            </ul></nav><!-- /#menu -->
+        </header><!-- /#banner -->
+<section id="content" class="body">
+  <header>
+      <h2 class="article-title">Migration strategies in large codebases</h2>
+ 
+    <time class="published subheader" datetime="2022-11-15T00:00:00-08:00">
+      November 15, 2022
+    </time>
+        <span class="subheader">&bullet; 7 min read</span>
+  </header>
+  <div class="article-content">
+    <p>Code migrations are a fact of life for large codebases. New technologies pop up,
+platforms see improvements, and programming languages get new features you might
+want to adopt. Not performing these migrations and keeping up with the times is
+simply not an option in most cases. While some migrations are easy 1 for 1
+replacements that can/should be scripted, that’s not true for the more
+“semantic” migrations—the new code accomplishes the same but in an entirely
+different manner.</p>
+<p>We’ve done a number of these semantic migrations in Lyft’s mobile codebases and
+while we’ve learned something from every one of them (and applied the learnings
+the next time), they only get harder as time goes on.</p>
+<p>What makes migrations so difficult? This generally comes down to how development
+works in large codebases: there is no 1 mobile team, but rather a lot of
+vertical teams (e.g. payments, new user experience, etc.) that all build their
+own features, using shared foundational code and architectural patterns. The
+coordination of dozens of teams on the progress of a migration is what makes
+this difficult:</p>
+<ul>
+<li>Codebases tend to grow ad infinitum, so there is simply more code to migrate
+  each time and there are more “weird” cases that make automating a migration
+  difficult.</li>
+<li>Getting (and keeping) buy-in and commitment. Teams all have their own plans
+  and priorities, and migrating code from pattern A to pattern B is often not
+  high on the priority list. If it is, that could change before the migration is
+  completed.</li>
+<li>Senior engineers on those teams tend to have good judgment on the importance
+  of reducing tech debt and can weigh it against other priorities coming from
+  product managers and designers. Junior engineers that get pulled in 4
+  different directions are less likely to push back against their direct
+  teammates, so tech debt tickets are moved to an ever-expanding Jira backlog.</li>
+<li>Teams are not static. You might inherit code written years ago that still
+  works and is in use, but you didn’t even know it existed until last week. And
+  now it needs to be migrated? Or it’s that one feature that is somehow mission
+  critical but no one knows how to even get in the state to show it, let alone
+  test new code in it.</li>
+</ul>
+<p>So how do we get these migrations done anyway? There is no silver bullet, but we
+have started using a number of strategies to make these migrations less
+painful—and almost all of them have to do with improving the communication and
+expectations everyone involved has.</p>
+<h2 id="migration-tracker">Migration tracker</h2>
+<p>The biggest leap forward for us was the rollout of an in-house web dashboard
+that shows progress on all ongoing migrations in our iOS and Android codebases.
+It shows all the important information anyone could want to know: the start
+date, (projected) completion date, links to documentation and support channels,
+relative priority (more on that below), etc.</p>
+<p>But the real win is automatic progress tracking. Every migration is defined as
+the presence of a certain pattern in the codebase we want to get rid of. A cron
+job records all instances of that pattern on the main branch once a day, so we
+know exactly how much code has been migrated and how much is left.</p>
+<p>Furthermore, our codebase is heavily modularized, and through CODEOWNERS every
+module is required to define what team owns it. This data is shared with the
+Migration Tracker, so it can give a detailed breakdown by module <em>and by team</em>
+of how much unmigrated code is left. This is extremely helpful in understanding
+which teams might need extra time, help, or nudging in getting everything done.</p>
+<h2 id="timeline">Timeline</h2>
+<p>The “deadline” of a migration needs to be carefully chosen. Not giving people
+enough time makes them not do the work at all, giving them too much time means
+people will procrastinate and needlessly extend the migration time. If it looks
+like teams are not going to make the deadline (as projected by the Migration
+Tracker), we ask them when they <em>can</em> get it done. We usually accept whatever
+answer the team gives, but hold them accountable to that since they themselves
+picked that timeframe.</p>
+<h2 id="priorities">Priorities</h2>
+<p>Teams that are far behind in code modernization might have to migrate their code
+in multiple ways. We give each migration a priority (P0/P1/P2/P3) to give teams
+a sense of where to focus their tech debt energy first.</p>
+<p>A P0 migration is a “must-do-or-else” (externally mandated changes, tight
+deadlines, extremely high impact on overall trajectory of the codebase or
+product, etc.), a P1 is high impact but not as urgent, P2 is a nice to have, and
+P3 is almost more of an FYI.</p>
+<p>This helps everyone understand where they should focus their energy, instead of
+seeing a potentially long list of items that are all seemingly equally important
+migrations.</p>
+<h2 id="incremental-value">Incremental value</h2>
+<p>Where possible (which is most cases), we try to bring incremental value as a
+migration is being performed. For example, if we set out to replace all uses of
+class A with class B because class B performs better, the places where class B
+is used should see that performance increase before the rest of the code has
+been migrated. This has a few benefits:</p>
+<ul>
+<li>It rewards teams that have done their part of the overall migration</li>
+<li>It’s easier to convince people doing their part has value since they
+  themselves immediately see that value</li>
+<li>It de-risks long-running migrations—if it gets to 95% completion we realize
+  95% of the benefits and not 0%</li>
+</ul>
+<h2 id="only-invest-in-the-new">Only invest in the new</h2>
+<p>The initial value (like performance improvements in the example above) teams get
+from migrating their own code might not be enough to convince them to do it. But
+as more and more improvements are made to “class B” (e.g. API ergonomics,
+integrated analytics, compatibility with other systems) that “class A” doesn’t
+have, the value proposition for the migration changes with time. We no longer
+update A, which means there's some amount of bit rot and it becomes more
+cumbersome to use.</p>
+<p>In extreme cases we could even remove features of class A that would necessitate
+a migration, but we haven’t done that so far and would like to avoid it to avoid
+losing goodwill with teams.</p>
+<h2 id="develop-great-partnerships">Develop great partnerships</h2>
+<p>Getting adoption of a new pattern or tool is difficult even if it doesn’t
+involve a new migration, because there is no precedent. Early adopters will hit
+all the rough edges and have often incomplete documentation and no sample code.
+The developer experience isn’t great (yet), so we make ourselves very available
+to their needs. We take their feedback seriously and address it promptly, sit
+down with them to help solve their issues, and generally spend a lot of time
+with them working out the kinks. We do this 1) to build more confidence that
+what we built is production-ready and 2) to recognize/reward people that want to
+try new things by reducing as much of the growing pains as possible.</p>
+<p>Of course, good developer experience is important for all teams and not just
+early adopters, but piloting teams can help us get the ball rolling with other
+teams as well. Positive reviews from users of Great New Thing is different than
+hearing it from the developers of Great New Thing.</p>
+<h2 id="avoid-new-uses">Avoid new uses</h2>
+<p>To avoid creating a moving target, as soon as we start a new migration we lock
+down the uses of that pattern to only the current ones and no longer accept new
+uses of this pattern. Depending on the situation we have a few different ways of
+accomplishing this:</p>
+<ul>
+<li>We add a linter rule or sometimes entirely new type of (custom) linter and
+  introduce exceptions to all existing use cases</li>
+<li>We rename a class or method by prepending the current name with <code>DEPRECATED</code>.
+  This isn’t particularly elegant, but it alerts the author and PR reviewers
+  that new legacy code is being introduced, which usually has them dig deeper
+  and figure out what to do instead.</li>
+<li>If an entire module is being deprecated, we don’t easily let new modules
+  depend on it. Exceptions are always possible, but engineers have to talk to us
+  first so we can guide them in the right direction.</li>
+</ul>
+<p>These measures are just to generate awareness that a pattern is outdated, it
+doesn’t always communicate why it’s being deprecated and what’s replacing it.
+But if people come to us asking for an exception we can explain it or link to
+docs, an opportunity we wouldn’t have had if we didn’t do any of the things
+above.</p>
+<h2 id="support-support-support">Support, support, support</h2>
+<p>And that brings me to the most critical and time-consuming piece: support. This
+means helping people with questions, plugging gaps new patterns have compared to
+the old ones, checking in with people on progress, celebrating the completion of
+major (or all!) migrations with everyone that helped contribute, assisting teams
+that are having difficulty prioritizing the work, and anything else that gets
+the work done.</p>
+<p>Migrations are a very specific type of codebase maintenance due to the large
+footprint they often have in a lot of the codebase. It’s an all-hands on deck
+situation and requires proper coordination and communication, sometimes for
+years on end. It’s hard to get them right and we’re still fine-tuning our
+strategies but applying the learnings I described here have made us become
+better at them. I can only hope one day refactoring tools become smart enough to
+automate the work for us.</p>
+  </div><!-- /.entry-content -->
+</section>
+
+  <script data-goatcounter="https://sberrevoets.goatcounter.com/count"
+          async src="//gc.zgo.at/count.js"></script>
+</body>
+</html>
