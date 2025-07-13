@@ -45,7 +45,7 @@ PAGINATION_PATTERNS = (
 )
 
 # Create and link to index and archive
-DIRECT_TEMPLATES = [("index"), ("blog")]
+DIRECT_TEMPLATES = ["index"]
 MENUITEMS = [("About", ""), ("Blog", "blog.html")]
 
 # Disable parsing HTML files
