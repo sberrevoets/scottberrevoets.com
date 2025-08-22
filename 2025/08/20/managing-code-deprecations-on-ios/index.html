@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+          <title>Managing code deprecations on iOS - Scott Berrevoets</title>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <link rel="icon" type="image/png" href="https://scottberrevoets.com/theme/images/favicon.png">
+        <link rel="apple-touch-icon" type="image/png" sizes="any" href="https://scottberrevoets.com/theme/images/favicon.png">
+        <link href="https://scottberrevoets.com/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="Scott Berrevoets Full Atom Feed" />
+        <link href="https://scottberrevoets.com/feeds/all.rss.xml" type="application/rss+xml" rel="alternate" title="Scott Berrevoets Full RSS Feed" />
+        <link href="https://scottberrevoets.com/feeds/atom.xml" type="application/atom+xml" rel="alternate" title="Scott Berrevoets Atom Feed" />
+        <link href="https://scottberrevoets.com/feeds/rss.xml" type="application/rss+xml" rel="alternate" title="Scott Berrevoets RSS Feed" />
+
+    <meta name="description" content="Explanation of the problems with internal and external code deprecations" />
+
+
+        <link rel="stylesheet" type="text/css" href="https://scottberrevoets.com/theme/css/style.css" />
+</head>
+
+<body id="index" class="home">
+<svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
+  <symbol id="github" viewBox="0 0 24 24">
+    <path stroke="none" d="M0 0h24v24H0z" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+    <path d="M9 19c-4.3 1.4 -4.3 -2.5 -6 -3m12 5v-3.5c0 -1 .1 -1.4 -.5 -2c2.8 -.3 5.5 -1.4 5.5 -6a4.6 4.6 0 0 0 -1.3 -3.2a4.2 4.2 0 0 0 -.1 -3.2s-1.1 -.3 -3.5 1.3a12.3 12.3 0 0 0 -6.2 0c-2.4 -1.6 -3.5 -1.3 -3.5 -1.3a4.2 4.2 0 0 0 -.1 3.2a4.6 4.6 0 0 0 -1.3 3.2c0 4.6 2.7 5.7 5.5 6c-.6 .6 -.6 1.2 -.5 2v3.5" stroke="currentColor" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+  </symbol>
+  <symbol id="mastodon" viewBox="0 0 24 24">
+    <path stroke="none" d="M0 0h24v24H0z" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+    <path d="M18.648 15.254c-1.816 1.763 -6.648 1.626 -6.648 1.626a18.262 18.262 0 0 1 -3.288 -.256c1.127 1.985 4.12 2.81 8.982 2.475c-1.945 2.013 -13.598 5.257 -13.668 -7.636l-.026 -1.154c0 -3.036 .023 -4.115 1.352 -5.633c1.671 -1.91 6.648 -1.666 6.648 -1.666s4.977 -.243 6.648 1.667c1.329 1.518 1.352 2.597 1.352 5.633s-.456 4.074 -1.352 4.944z" stroke="currentColor" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+    <path d="M12 11.204v-2.926c0 -1.258 -.895 -2.278 -2 -2.278s-2 1.02 -2 2.278v4.722m4 -4.722c0 -1.258 .895 -2.278 2 -2.278s2 1.02 2 2.278v4.722" stroke="currentColor" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+  </symbol>
+  <symbol id="mail" viewBox="0 0 24 24">
+    <path stroke="none" d="M0 0h24v24H0z" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+    <path d="M3 7a2 2 0 0 1 2 -2h14a2 2 0 0 1 2 2v10a2 2 0 0 1 -2 2h-14a2 2 0 0 1 -2 -2v-10z" stroke="currentColor" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+    <path d="M3 7l9 6l9 -6" stroke="currentColor" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+  </symbol>
+  <symbol id="rss" viewBox="0 0 24 24">
+    <path stroke="none" d="M0 0h24v24H0z" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+    <path d="M5 19m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0" stroke="currentColor" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+    <path d="M4 4a16 16 0 0 1 16 16" stroke="currentColor" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+    <path d="M4 11a9 9 0 0 1 9 9" stroke="currentColor" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+  </symbol>
+  <symbol id="linkedin" viewBox="0 0 24 24">
+    <path stroke="none" d="M0 0h24v24H0z" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+    <path d="M4 4m0 2a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v12a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2z" stroke="currentColor" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+    <path d="M8 11l0 5" stroke="currentColor" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+    <path d="M8 8l0 .01" stroke="currentColor" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+    <path d="M12 16l0 -5" stroke="currentColor" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+    <path d="M16 16v-3a2 2 0 0 0 -4 0" stroke="currentColor" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+  </symbol>
+</svg>        <header id="banner" class="body">
+            <div class="header-top">
+                <h1><a href="https://scottberrevoets.com/">Scott Berrevoets</a></h1>
+
+                <ul id="social">
+                    <li><a href="https://github.com/sberrevoets">
+                        <svg class="icon"><use href="#github" /></svg>
+                    </a></li>
+                    <li><a href="https://linkedin.com/in/sberrevoets">
+                        <svg class="icon"><use href="#linkedin" /></svg>
+                    </a></li>
+                    <li><a href="https://hachyderm.io/@ScottBerrevoets">
+                        <svg class="icon"><use href="#mastodon" /></svg>
+                    </a></li>
+                    <li><a href="mailto:hi@scottberrevoets.com">
+                        <svg class="icon"><use href="#mail" /></svg>
+                    </a></li>
+                    <li><a href="/feeds/all.atom.xml">
+                        <svg class="icon"><use href="#rss" /></svg>
+                    </a></li>
+                </ul>
+            </div>
+
+            <nav id="menu"><ul>
+                <li><a href="https://scottberrevoets.com/">About</a></li>
+                <li><a href="https://scottberrevoets.com/blog.html">Blog</a></li>
+            </ul></nav><!-- /#menu -->
+        </header><!-- /#banner -->
+<section id="content" class="body">
+  <header>
+      <h2 class="article-title">Managing code deprecations on iOS</h2>
+ 
+    <time class="published subheader" datetime="2025-08-20T00:00:00-07:00">
+      August 20, 2025
+    </time>
+        <span class="subheader">&bullet; 4 min read</span>
+  </header>
+  <div class="article-content">
+    <p>A great manager I once worked with had been at Google for a while and poked fun
+at an aspect of its engineering culture: any given service was either deprecated
+or not yet ready for adoption. I spend a lot of my time working on mobile
+platform development and over the years have been exposed to both sides of this:
+needing to get rid of code that's deprecated in new OS versions, and deprecating
+technologies many internal teams depend on.</p>
+<ul>
+<li><strong>Vendor deprecations</strong> usually involve the platform vendor releasing new APIs
+  or technologies that replace older ones and they want their developer base to
+  put in the work to use this new tech</li>
+<li><strong>Internal deprecations</strong> come with a lot of non-technical work and a long
+  migration path, often in the order of quarters or years, on top of the
+  technical challenge and often ugly tradeoffs in making the old and systems
+  compatible during the transition period</li>
+</ul>
+<p>Both types of deprecations are a way of life for platform engineering, and yet
+on Apple platforms we have very little tooling available to make these easier.
+In fact, the only real tool we have is <code>@available()</code> to mark a type as having
+been deprecated:</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span class="normal">1</span>
+<span class="normal">2</span>
+<span class="normal">3</span>
+<span class="normal">4</span>
+<span class="normal">5</span>
+<span class="normal">6</span>
+<span class="normal">7</span>
+<span class="normal">8</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="p">@</span><span class="n">available</span><span class="p">(</span><span class="o">*</span><span class="p">,</span> <span class="n">deprecated</span><span class="p">,</span> <span class="n">renamed</span><span class="p">:</span> <span class="s">&quot;myNewFunction()&quot;</span><span class="p">)</span>
+<span class="kd">func</span> <span class="nf">myFunction</span><span class="p">()</span> <span class="p">{}</span> <span class="c1">// deprecated and renamed to myNewFunction</span>
+
+<span class="p">@</span><span class="n">available</span><span class="p">(</span><span class="n">iOS</span><span class="p">,</span> <span class="n">deprecated</span><span class="p">:</span> <span class="mf">26.0</span><span class="p">)</span>
+<span class="kd">func</span> <span class="nf">myFunction</span><span class="p">()</span> <span class="p">{}</span> <span class="c1">// deprecated starting in iOS 26</span>
+
+<span class="p">@</span><span class="n">available</span><span class="p">(</span><span class="o">*</span><span class="p">,</span> <span class="n">deprecated</span><span class="p">,</span> <span class="n">message</span><span class="p">:</span> <span class="s">&quot;Please use myOtherNewFunction instead&quot;</span><span class="p">)</span>
+<span class="kd">func</span> <span class="nf">myOtherFunction</span><span class="p">()</span> <span class="p">{}</span> <span class="c1">// deprecated with a custom warning message</span>
+</code></pre></div></td></tr></table></div>
+
+<p>Apple uses this pattern extensively throughout their frameworks and every new OS
+version introduces more deprecation annotations exactly like the examples above.
+This makes raising the deployment target in a sufficiently large project a much
+bigger initiative than it might seem at first, because suddenly you're facing a
+large number of deprecation warnings.</p>
+<p>Handling the deprecation of a single class can in extreme cases be a project on
+its own. If you're looking to raise the deployment target to use the latest
+SwiftUI APIs, it can be a bummer to first have to spend a bunch of time
+resolving deprecation warnings, especially when <code>warnings-as-errors</code> is on and
+the app doesn't even build.</p>
+<p>Since <code>@available</code>'s only real logic is gating on OS and Swift versions, it
+isn't helpful for internal deprecations. If I write a new database class that
+replaces an old one that's used in 50+ places, I don't know what OS version to
+specify because it's not related to OS-specific system APIs. It's more important
+to think about how to manage the existing call sites, which in most cases means
+accepting the 50+ instances, ensuring it doesn't grow any further, and working
+with the team to migrate them over time.</p>
+<p>Annotating the old class with <code>@available(*, deprecated)</code> would immediately
+cause build errors, so that's not an option. At Lyft we often resorted to the
+ugly workaround of renaming the old class to <code>DeprecatedDatabase</code> or even
+<code>DEPRECATEDDatabase</code>. This worked surprisingly well, but it also very clearly
+highlights a gap in tooling.</p>
+<p><a href="https://github.com/swiftlang/swift-evolution/blob/main/proposals/0443-warning-control-flags.md">SE-0443: Precise Control Flags over Compiler Warnings</a> gives developers more
+granular control over compiler warnings, even mentioning the deprecation use
+case specifically. In short, there are now build settings that enable upgrading
+and downgrading warnings of a specific type to and from errors. The proposal
+gives this example to turn warnings-as-errors on except for deprecations:
+<code>-warnings-as-errors -Wwarning Deprecated</code>. This leaves <code>warnings-as-errors</code> on
+for everything except deprecations.</p>
+<p>It's an OK first step, but not really sufficient:</p>
+<ol>
+<li>There might be multiple deprecations happening at once, but you can only
+   specify whether to enable or disable deprecation warnings as a whole, not per
+   type</li>
+<li>Even if per-type warning disables were available, that still means it's too
+   easy to accidentally or unknowingly introduce new call sites of a deprecated
+   type</li>
+</ol>
+<p>The most ideal solution is bringing back a relic from the Objective-C past: C
+compiler directives. In C-based languages, <code>#pragma</code> blocks could be used to
+ignore specific instances of a warning:</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span class="normal">1</span>
+<span class="normal">2</span>
+<span class="normal">3</span>
+<span class="normal">4</span>
+<span class="normal">5</span>
+<span class="normal">6</span>
+<span class="normal">7</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="cp">#pragma GCC diagnostic ignored &quot;-Wdeprecated-declarations&quot;</span>
+
+<span class="n">myDeprecatedFunction</span><span class="p">()</span><span class="w"> </span><span class="c1">// no warning</span>
+
+<span class="cp">#pragma GCC diagnostic pop</span>
+
+<span class="n">myDeprecatedFunction</span><span class="p">()</span><span class="w"> </span><span class="c1">// warning: myDeprecatedFunction is deprecated</span>
+</code></pre></div></td></tr></table></div>
+
+<p>Although the syntax is clearly not very "2025", the idea is still good and
+exactly what should happen to improve this bit of API tooling. The deprecation
+warning on the call site that's "wrapped" in the <code>diagnostic</code> directive would be
+ignored, and introducing a new caller of <code>myDeprecatedFunction</code> generates a
+warning (or more ideally, a build error). You can choose to wrap that new call
+in the same <code>#pragma</code> block, but then it's an explicit choice and not something
+the developer was just unaware of.</p>
+<p>Incidentally, having multiple levels of granularity is also exactly how e.g.
+SwiftLint and linters on other platforms work: you can disable rules entirely,
+per-file, per code-section, per-line, etc. It's too bad SE-443 didn't go that
+far, but discussions in the <a href="https://forums.swift.org/t/se-0443-precise-control-flags-over-compiler-warnings/74116">developer forums</a> have pointed out these same
+problems so hopefully those will be considered in future improvements.</p>
+  </div><!-- /.entry-content -->
+</section>
+
+  <script data-goatcounter="https://sberrevoets.goatcounter.com/count"
+          async src="//gc.zgo.at/count.js"></script>
+</body>
+</html>
