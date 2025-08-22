@@ -50,7 +50,7 @@ isn't helpful for internal deprecations. If I write a new database class that
 replaces an old one that's used in 50+ places, I don't know what OS version to
 specify because it's not related to OS-specific system APIs. It's more important
 to think about how to manage the existing call sites, which in most cases means
-I accepting the 50+ instances, ensuring it doesn't grow any further, and working
+accepting the 50+ instances, ensuring it doesn't grow any further, and working
 with the team to migrate them over time.
 
 Annotating the old class with `@available(*, deprecated)` would immediately
