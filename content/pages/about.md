@@ -19,8 +19,9 @@ Save_as: index.html
 
 <div class="right-column" markdown>
 👋 I'm Scott, a software engineer specialized in iOS development since 2011,
-currently over at [Speak] on the Platform team. Before that I was at Lyft for
-almost 11 years, building the mobile apps, teams, and community.
+currently over at [Speak] on the Platform team. Before that I was the first
+iOS hire at Lyft, where I spent 11 years building its apps and leading the mobile
+teams and community as the tech lead for Mobile Infrastructure.
 
 I live in San Francisco and am always happy to chat&mdash;feel free to reach
 out! For an overview of my work, check out my resume in
