@@ -1,4 +1,4 @@
-Title: Art of the State
+Title: Art of the state
 Date: 2025-06-02
 Description: Best practices in defining better state and data models
 

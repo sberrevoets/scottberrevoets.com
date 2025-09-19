@@ -1,4 +1,4 @@
-Title: Incremental Complexity in iOS Development
+Title: Incremental complexity in iOS development
 Date: 2025-02-03
 Summary: A suggestion for redefining what it means to be a senior iOS developer
 

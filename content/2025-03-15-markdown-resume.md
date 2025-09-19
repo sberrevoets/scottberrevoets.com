@@ -1,4 +1,4 @@
-Title: Composing a Resume in Markdown
+Title: Composing a resume in markdown
 Date: 2025-03-15
 Summary: Building a resume in markdown for improved maintainability and portability
 
