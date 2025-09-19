@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+          <title>Human factors in choosing technologies - Scott Berrevoets</title>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <link rel="icon" type="image/png" href="https://scottberrevoets.com/theme/images/favicon.png">
+        <link rel="apple-touch-icon" type="image/png" sizes="any" href="https://scottberrevoets.com/theme/images/favicon.png">
+        <link href="https://scottberrevoets.com/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="Scott Berrevoets Full Atom Feed" />
+        <link href="https://scottberrevoets.com/feeds/all.rss.xml" type="application/rss+xml" rel="alternate" title="Scott Berrevoets Full RSS Feed" />
+        <link href="https://scottberrevoets.com/feeds/atom.xml" type="application/atom+xml" rel="alternate" title="Scott Berrevoets Atom Feed" />
+        <link href="https://scottberrevoets.com/feeds/rss.xml" type="application/rss+xml" rel="alternate" title="Scott Berrevoets RSS Feed" />
+
+
+
+        <link rel="stylesheet" type="text/css" href="https://scottberrevoets.com/theme/css/style.css" />
+</head>
+
+<body id="index" class="home">
+<svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
+  <symbol id="github" viewBox="0 0 24 24">
+    <path stroke="none" d="M0 0h24v24H0z" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+    <path d="M9 19c-4.3 1.4 -4.3 -2.5 -6 -3m12 5v-3.5c0 -1 .1 -1.4 -.5 -2c2.8 -.3 5.5 -1.4 5.5 -6a4.6 4.6 0 0 0 -1.3 -3.2a4.2 4.2 0 0 0 -.1 -3.2s-1.1 -.3 -3.5 1.3a12.3 12.3 0 0 0 -6.2 0c-2.4 -1.6 -3.5 -1.3 -3.5 -1.3a4.2 4.2 0 0 0 -.1 3.2a4.6 4.6 0 0 0 -1.3 3.2c0 4.6 2.7 5.7 5.5 6c-.6 .6 -.6 1.2 -.5 2v3.5" stroke="currentColor" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+  </symbol>
+  <symbol id="mastodon" viewBox="0 0 24 24">
+    <path stroke="none" d="M0 0h24v24H0z" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+    <path d="M18.648 15.254c-1.816 1.763 -6.648 1.626 -6.648 1.626a18.262 18.262 0 0 1 -3.288 -.256c1.127 1.985 4.12 2.81 8.982 2.475c-1.945 2.013 -13.598 5.257 -13.668 -7.636l-.026 -1.154c0 -3.036 .023 -4.115 1.352 -5.633c1.671 -1.91 6.648 -1.666 6.648 -1.666s4.977 -.243 6.648 1.667c1.329 1.518 1.352 2.597 1.352 5.633s-.456 4.074 -1.352 4.944z" stroke="currentColor" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+    <path d="M12 11.204v-2.926c0 -1.258 -.895 -2.278 -2 -2.278s-2 1.02 -2 2.278v4.722m4 -4.722c0 -1.258 .895 -2.278 2 -2.278s2 1.02 2 2.278v4.722" stroke="currentColor" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+  </symbol>
+  <symbol id="mail" viewBox="0 0 24 24">
+    <path stroke="none" d="M0 0h24v24H0z" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+    <path d="M3 7a2 2 0 0 1 2 -2h14a2 2 0 0 1 2 2v10a2 2 0 0 1 -2 2h-14a2 2 0 0 1 -2 -2v-10z" stroke="currentColor" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+    <path d="M3 7l9 6l9 -6" stroke="currentColor" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+  </symbol>
+  <symbol id="rss" viewBox="0 0 24 24">
+    <path stroke="none" d="M0 0h24v24H0z" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+    <path d="M5 19m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0" stroke="currentColor" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+    <path d="M4 4a16 16 0 0 1 16 16" stroke="currentColor" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+    <path d="M4 11a9 9 0 0 1 9 9" stroke="currentColor" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+  </symbol>
+  <symbol id="linkedin" viewBox="0 0 24 24">
+    <path stroke="none" d="M0 0h24v24H0z" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+    <path d="M4 4m0 2a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v12a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2z" stroke="currentColor" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+    <path d="M8 11l0 5" stroke="currentColor" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+    <path d="M8 8l0 .01" stroke="currentColor" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+    <path d="M12 16l0 -5" stroke="currentColor" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+    <path d="M16 16v-3a2 2 0 0 0 -4 0" stroke="currentColor" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+  </symbol>
+</svg>        <header id="banner" class="body">
+            <div class="header-top">
+                <h1><a href="https://scottberrevoets.com/">Scott Berrevoets</a></h1>
+
+                <ul id="social">
+                    <li><a href="https://github.com/sberrevoets">
+                        <svg class="icon"><use href="#github" /></svg>
+                    </a></li>
+                    <li><a href="https://linkedin.com/in/sberrevoets">
+                        <svg class="icon"><use href="#linkedin" /></svg>
+                    </a></li>
+                    <li><a href="https://hachyderm.io/@ScottBerrevoets">
+                        <svg class="icon"><use href="#mastodon" /></svg>
+                    </a></li>
+                    <li><a href="mailto:hi@scottberrevoets.com">
+                        <svg class="icon"><use href="#mail" /></svg>
+                    </a></li>
+                    <li><a href="/feeds/all.atom.xml">
+                        <svg class="icon"><use href="#rss" /></svg>
+                    </a></li>
+                </ul>
+            </div>
+
+            <nav id="menu"><ul>
+                <li><a href="https://scottberrevoets.com/">About</a></li>
+                <li><a href="https://scottberrevoets.com/blog.html">Blog</a></li>
+            </ul></nav><!-- /#menu -->
+        </header><!-- /#banner -->
+<section id="content" class="body">
+  <header>
+      <h2 class="article-title">Human factors in choosing technologies</h2>
+ 
+    <time class="published subheader" datetime="2022-09-28T00:00:00-07:00">
+      September 28, 2022
+    </time>
+        <span class="subheader">&bullet; 5 min read</span>
+  </header>
+  <div class="article-content">
+    <p>I recently saw a thread where someone wanted to introduce a more capable
+architecture pattern than what most apps start out with in a small team, but
+received some pushback from teammates and was looking for help in countering
+their arguments.</p>
+<p>The thread for the most part focused on the technical benefits of the proposed
+pattern, such as testability, separation of concerns, modularity, etc. These are
+all valid trade-offs to consider: we’ve done the same at Lyft when figuring out
+what architectures would suit us best. This is also not unique to architectures,
+any big technology that influences the overall direction of the codebase:
+SwiftUI vs. UIKit, RxSwift vs. Combine vs. async/await, etc.</p>
+<p>But over time I’ve realized that even with a technically “perfect” solution (a
+real oxymoron!), there is an entirely different yet equally important factor to
+consider: who are the people using it—now and in the future? The success of a
+particular technology is highly dependent on the answer to that question, and it
+plays a huge role at different stages of the development of that technology.</p>
+<p>In the thread I mentioned above there was very little focus on the human aspect
+of the proposal, so I wanted to list a number of things that I personally ask
+myself and our teams before considering moving forward:</p>
+<p><strong>How much is the onboarding/ramp-up cost?</strong> While I generally think short-term
+pain is worth long-term gain, onboarding is often a continuous cost. New people
+join, you might have interns, non-mobile engineers wanting to make quick
+contributions, etc. If those people first need a lot of time to ramp up, it’s
+worth wondering if the benefits are worth it, or how to reduce that burden. For
+example, while we currently aren't using any SwiftUI at Lyft, we have a layer of
+<a href="http://www.scottberrevoets.com/2021/10/14/ios-architecture-at-lyft/#declarative-ui">sugar syntax on top of UIKit</a> that enables us to use SwiftUI-like syntax anyway.
+This makes it easier for both new people that join and already know SwiftUI and
+for everybody to move over to SwiftUI if/when we're ready for that.</p>
+<p><strong>How easy is it to undo?</strong> Or: what is the cost of mistakes? If things don’t
+pan out the way we want them to, how easily could we switch to something else?
+The more difficult switching back is, the higher the commitment level and the
+more we need to be sure it’s worth it. This applies both to the internals of the
+framework and how the code that uses the framework is structured.</p>
+<p><strong>Is it easy to do the right thing?</strong> This one is straightforward: if it’s easy
+to do the right thing it’s more likely people will do the right thing and
+achieve the architecture’s potential more. Conversely, if it’s easy to do the
+wrong thing, the benefits aren’t realized as much. Especially considering my
+previous point, if it’s hard to undo bad usage it’s maybe worth going back to
+the drawing board.</p>
+<p><strong>How much support is available?</strong> Popular technologies have a lot of online
+material available for support in the form of Stack Overflow questions and
+answers, blog posts, videos, open source code + discussions on GitHub, etc. A
+home-built solution means this knowledge only lives in-house which increases the
+bus factor. The same is true for very opinionated third-party libraries like
+RxSwift or The Composable Architecture. I’m a fan of both, but without fully
+understanding how they’re implemented you’re at the mercy of the developers and
+contributors of these libraries for years to come.</p>
+<p><strong>How much institutional knowledge does it require?</strong> Good architectures hide
+domain complexity for its consumers, and incur the complexity internally. To
+some extent that’s fine, but if the internals become so complicated that few
+people know how it works there is again a high bus factor. It can absolutely be
+worth putting some complexity/boilerplate burden onto feature owners to avoid
+making complex abstractions that are hard to change in the future once it’s used
+everywhere and the original developers have left.</p>
+<p><strong>How much effort does it take to see 100% adoption?</strong> Depending on the size of
+the existing code base, it could take a long time to get 100% adoption. That can
+be OK if this is the codebase’s first serious architecture, but if it’s version
+5 and some parts of the codebase still use version 1 through 3, it’s probably
+worth removing those first and reducing <a href="http://mikehadlow.blogspot.com/2014/12/the-lava-layer-anti-pattern.html">lava layers</a>. Even if the change
+from version 10 to 11 is small and easy, the fragmentation of the codebase
+inhibits developer productivity. The quicker the migration the better, and if
+the codebase can safely be migrated through automation that’s the best case
+outcome.</p>
+<p>But the most important one of all: <strong>do people actually like the architecture?</strong>
+No one likes working in a codebase where everything is a hassle, the underlying
+concepts never seem to make sense, abstractions are leaky, and you seem to
+always have to do work for it instead of it working for you. Those codebases
+diminish the team’s motivation levels and will affect many of the other points
+from above.</p>
+<p>On the flip side, if people like the proposed patterns, they will put in a lot
+more work in to use them correctly, try harder to do the right thing, are
+willing to help others, etc. If not, forcing patterns people don’t like could
+lead to developer unhappiness and attrition. We have more than a few examples of
+this at Lyft, where a slightly inferior technical solution is overall much more
+beneficial because the pattern is a bit simpler to use than the alternative.</p>
+<p>Going back to why I started writing this in the first place: in my opinion the
+question “what counterarguments can I use” is not a great first question to ask
+when it comes to convincing people your solution is the best one out there.
+Understanding <em>why</em> people are resistant is key. Sure, some people just don’t
+like change, but papering over any of the concerns above with a technically
+superior solution is a recipe for a bunch of barely-adopted technologies in a
+codebase that’s often worse off than if nothing had been done in the first
+place.</p>
+  </div><!-- /.entry-content -->
+</section>
+
+  <script data-goatcounter="https://sberrevoets.goatcounter.com/count"
+          async src="//gc.zgo.at/count.js"></script>
+</body>
+</html>

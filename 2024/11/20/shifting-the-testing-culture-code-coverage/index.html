@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+          <title>Shifting the testing culture: Code coverage - Scott Berrevoets</title>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <link rel="icon" type="image/png" href="https://scottberrevoets.com/theme/images/favicon.png">
+        <link rel="apple-touch-icon" type="image/png" sizes="any" href="https://scottberrevoets.com/theme/images/favicon.png">
+        <link href="https://scottberrevoets.com/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="Scott Berrevoets Full Atom Feed" />
+        <link href="https://scottberrevoets.com/feeds/all.rss.xml" type="application/rss+xml" rel="alternate" title="Scott Berrevoets Full RSS Feed" />
+        <link href="https://scottberrevoets.com/feeds/atom.xml" type="application/atom+xml" rel="alternate" title="Scott Berrevoets Atom Feed" />
+        <link href="https://scottberrevoets.com/feeds/rss.xml" type="application/rss+xml" rel="alternate" title="Scott Berrevoets RSS Feed" />
+
+
+
+        <link rel="stylesheet" type="text/css" href="https://scottberrevoets.com/theme/css/style.css" />
+</head>
+
+<body id="index" class="home">
+<svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
+  <symbol id="github" viewBox="0 0 24 24">
+    <path stroke="none" d="M0 0h24v24H0z" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+    <path d="M9 19c-4.3 1.4 -4.3 -2.5 -6 -3m12 5v-3.5c0 -1 .1 -1.4 -.5 -2c2.8 -.3 5.5 -1.4 5.5 -6a4.6 4.6 0 0 0 -1.3 -3.2a4.2 4.2 0 0 0 -.1 -3.2s-1.1 -.3 -3.5 1.3a12.3 12.3 0 0 0 -6.2 0c-2.4 -1.6 -3.5 -1.3 -3.5 -1.3a4.2 4.2 0 0 0 -.1 3.2a4.6 4.6 0 0 0 -1.3 3.2c0 4.6 2.7 5.7 5.5 6c-.6 .6 -.6 1.2 -.5 2v3.5" stroke="currentColor" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+  </symbol>
+  <symbol id="mastodon" viewBox="0 0 24 24">
+    <path stroke="none" d="M0 0h24v24H0z" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+    <path d="M18.648 15.254c-1.816 1.763 -6.648 1.626 -6.648 1.626a18.262 18.262 0 0 1 -3.288 -.256c1.127 1.985 4.12 2.81 8.982 2.475c-1.945 2.013 -13.598 5.257 -13.668 -7.636l-.026 -1.154c0 -3.036 .023 -4.115 1.352 -5.633c1.671 -1.91 6.648 -1.666 6.648 -1.666s4.977 -.243 6.648 1.667c1.329 1.518 1.352 2.597 1.352 5.633s-.456 4.074 -1.352 4.944z" stroke="currentColor" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+    <path d="M12 11.204v-2.926c0 -1.258 -.895 -2.278 -2 -2.278s-2 1.02 -2 2.278v4.722m4 -4.722c0 -1.258 .895 -2.278 2 -2.278s2 1.02 2 2.278v4.722" stroke="currentColor" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+  </symbol>
+  <symbol id="mail" viewBox="0 0 24 24">
+    <path stroke="none" d="M0 0h24v24H0z" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+    <path d="M3 7a2 2 0 0 1 2 -2h14a2 2 0 0 1 2 2v10a2 2 0 0 1 -2 2h-14a2 2 0 0 1 -2 -2v-10z" stroke="currentColor" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+    <path d="M3 7l9 6l9 -6" stroke="currentColor" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+  </symbol>
+  <symbol id="rss" viewBox="0 0 24 24">
+    <path stroke="none" d="M0 0h24v24H0z" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+    <path d="M5 19m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0" stroke="currentColor" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+    <path d="M4 4a16 16 0 0 1 16 16" stroke="currentColor" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+    <path d="M4 11a9 9 0 0 1 9 9" stroke="currentColor" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+  </symbol>
+  <symbol id="linkedin" viewBox="0 0 24 24">
+    <path stroke="none" d="M0 0h24v24H0z" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+    <path d="M4 4m0 2a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v12a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2z" stroke="currentColor" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+    <path d="M8 11l0 5" stroke="currentColor" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+    <path d="M8 8l0 .01" stroke="currentColor" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+    <path d="M12 16l0 -5" stroke="currentColor" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+    <path d="M16 16v-3a2 2 0 0 0 -4 0" stroke="currentColor" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+  </symbol>
+</svg>        <header id="banner" class="body">
+            <div class="header-top">
+                <h1><a href="https://scottberrevoets.com/">Scott Berrevoets</a></h1>
+
+                <ul id="social">
+                    <li><a href="https://github.com/sberrevoets">
+                        <svg class="icon"><use href="#github" /></svg>
+                    </a></li>
+                    <li><a href="https://linkedin.com/in/sberrevoets">
+                        <svg class="icon"><use href="#linkedin" /></svg>
+                    </a></li>
+                    <li><a href="https://hachyderm.io/@ScottBerrevoets">
+                        <svg class="icon"><use href="#mastodon" /></svg>
+                    </a></li>
+                    <li><a href="mailto:hi@scottberrevoets.com">
+                        <svg class="icon"><use href="#mail" /></svg>
+                    </a></li>
+                    <li><a href="/feeds/all.atom.xml">
+                        <svg class="icon"><use href="#rss" /></svg>
+                    </a></li>
+                </ul>
+            </div>
+
+            <nav id="menu"><ul>
+                <li><a href="https://scottberrevoets.com/">About</a></li>
+                <li><a href="https://scottberrevoets.com/blog.html">Blog</a></li>
+            </ul></nav><!-- /#menu -->
+        </header><!-- /#banner -->
+<section id="content" class="body">
+  <header>
+      <h2 class="article-title">Shifting the testing culture: Code coverage</h2>
+ 
+    <time class="published subheader" datetime="2024-11-20T00:00:00-08:00">
+      November 20, 2024
+    </time>
+        <span class="subheader">&bullet; 6 min read</span>
+  </header>
+  <div class="article-content">
+    <div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>This is the third post in a series on shifting our testing culture.</p>
+<ol>
+<li><a href="https://scottberrevoets.com/2024/11/18/shifting-the-testing-culture-motivation/">Motivation</a></li>
+<li><a href="https://scottberrevoets.com/2024/11/19/shifting-the-testing-culture-infrastructure/">Infrastructure</a></li>
+<li>Code coverage</li>
+</ol>
+</div>
+<p>Most people will say that code coverage is a measure of how well-tested your
+code is. I prefer to say it's a measure of how <em>untested</em> a codebase is. Take
+this example:</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span class="normal"> 1</span>
+<span class="normal"> 2</span>
+<span class="normal"> 3</span>
+<span class="normal"> 4</span>
+<span class="normal"> 5</span>
+<span class="normal"> 6</span>
+<span class="normal"> 7</span>
+<span class="normal"> 8</span>
+<span class="normal"> 9</span>
+<span class="normal">10</span>
+<span class="normal">11</span>
+<span class="normal">12</span>
+<span class="normal">13</span>
+<span class="normal">14</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="kd">func</span> <span class="nf">myFunction</span><span class="p">(</span><span class="n">input</span><span class="p">:</span> <span class="nb">Int</span><span class="p">)</span> <span class="p">-&gt;</span> <span class="nb">String</span> <span class="p">{</span>
+    <span class="k">if</span> <span class="n">input</span> <span class="p">==</span> <span class="mi">0</span> <span class="p">{</span>
+        <span class="k">return</span> <span class="s">&quot;zero&quot;</span>
+    <span class="p">}</span> <span class="k">else</span> <span class="k">if</span> <span class="n">input</span> <span class="p">==</span> <span class="mi">1</span> <span class="p">{</span>
+        <span class="k">return</span> <span class="s">&quot;one&quot;</span>
+    <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+        <span class="k">return</span> <span class="s">&quot;other&quot;</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="kd">func</span> <span class="nf">testMyunction</span><span class="p">()</span> <span class="p">{</span>
+    <span class="kc">_</span> <span class="p">=</span> <span class="n">myFunction</span><span class="p">(</span><span class="n">input</span><span class="p">:</span> <span class="mi">1</span><span class="p">)</span>
+    <span class="kc">_</span> <span class="p">=</span> <span class="n">myFunction</span><span class="p">(</span><span class="n">input</span><span class="p">:</span> <span class="mi">2</span><span class="p">)</span>
+<span class="p">}</span>
+</code></pre></div></td></tr></table></div>
+
+<p>This yields 66.7% code coverage, but although the test passes, it doesn't
+validate any business logic because the test has no assertion. The example is a
+bit derived, but in a more realistic scenario where tools report you have 66.7%
+code coverage, you don't actually know if that code is actively tested or just
+happens to be executed while running tests. What you do know is that the other
+33.3% is <em>definitely not</em> tested.</p>
+<h2 id="llvm-cov"><code>llvm-cov</code></h2>
+<p>Pedantries aside, code coverage is still important even if the coverage level is
+already high and there isn't much untested code. That's because code coverage
+isn't just a number, it also comes with a detailed <strong>source overlay</strong>: the
+source code with highlights that indicate which lines, functions, and code
+branches were invoked while running tests, and how often:</p>
+<p><img alt="Source overlay as generated by llvm-cov" src="/images/source-overlay.png"></p>
+<p>It's clear that although this method has a test, the <code>input == 0</code> branch wasn't
+executed while running them. The <code>return "one"</code> and <code>return "other"</code> lines are
+executed once, and the rest of the method is executed twice. Getting full
+coverage of this function requires adding a test that calls it with <code>input ==
+0</code>.</p>
+<p>On iOS, Xcode has built-in support for reporting code coverage. It presumably
+uses <a href="https://llvm.org/docs/CommandGuide/llvm-cov.html">llvm-cov</a> for user friendliness, but invoking <code>llvm-cov</code> directly gives a
+ton of extra options, including exporting in different formats like JSON and
+HTML.</p>
+<p>Since <code>llvm-cov</code> operates on a test bundle and we have a test bundle for each of
+our modules, we can get detailed information about a module's code coverage:
+which file and which lines within a file, how many total lines are testable and
+how many are covered, etc.</p>
+<p>In the past we used the various output formats to integrate with <a href="https://codecov.io">codecov</a>, but
+eventually moved to an in-house web portal where this data is stored and easily
+accessible. We've also built tooling integration so developers can run a simple
+command on their own machine to get <code>llvm-cov</code>'s output generated for their
+modules, though viewing it in Xcode is often the better choice for local
+development. The only part that's missing is seeing the source overlays in
+GitHub so you can immediately tell which code changes require more tests.</p>
+<h2 id="tracking-coverage">Tracking coverage</h2>
+<p>Every time a module's source code or tests change, we capture the new coverage
+metrics in a database to keep track of a full history of each module's code
+coverage. We aggregate the data by team and for the codebase as a whole, and
+display it on the web portal. This gives anyone immediate access to answer
+common questions about their team's testing progress.</p>
+<p>Developers are often interested in more than just the raw code coverage numbers
+- they also want to understand what code isn't tested so they can add more
+coverage. To make this easier, the web portal also displays the source overlays
+for all source files in a module for easy viewing without having to open Xcode
+for it.</p>
+<h2 id="minimum-coverage">Minimum coverage</h2>
+<blockquote>
+<p><em>When a measure becomes a target, it ceases to be a good measure</em></p>
+<p>- Goodhart's law</p>
+</blockquote>
+<p>Many companies enforce a minimum coverage level all code has to hit. Although it
+sounds enticing, it could also turn into exactly what Goodhart's law warns
+about. Developers will likely work around it if they feel they need to, or write
+low-quality tests just to hit the minimum. It's also not clear what number to
+pick and what to base that on. </p>
+<p>So instead we took a slightly different approach: each module gets to set <em>its
+own minimum coverage percentage</em> in the <code>BUILD</code> file, and that percentage is
+then enforced by our CI system. It's a good balance between establishing a
+minimum while giving developers enough control to not make it feel overbearing.</p>
+<p>Developers are free to set that minimum to any percentage they want through a
+pull request, but lowering it too drastically requires a good justification and
+comes with social friction. Increases are often celebrated as a job well done.</p>
+<p>We also bump the minimum for a given module automatically if it's too low
+compared to its actual coverage. A module whose minimum coverage is set to 10%
+but actually has 50% coverage, would get its minimum increased to 45%. This
+makes it harder to accidentally drop coverage.</p>
+<p>Other ideas we've played around with but haven't implemented:</p>
+<ul>
+<li>not allowing decreases in minimum coverage below a certain threshold</li>
+<li>enabling a global minimum but setting it very low (e.g. 20%), in hopes of
+  having to write <em>some</em> tests will lead to writing more</li>
+<li>higher minimum coverage for code that uses highly testable architectural
+  components (as opposed to legacy code that's harder to test)</li>
+<li>tech lead approval for dropping a module's minimum coverage</li>
+<li>requiring adding/updating tests on PRs (changing code without needing to
+  change tests generally means the code is not tested)</li>
+</ul>
+<h2 id="raising-the-bar">Raising the bar</h2>
+<p>Having a long history of coverage data available has been a big factor in
+raising the quality bar. During biannual planning, teams get a clear overview of
+their average coverage and can quickly see which of their modules have the most
+room for improvement, and attach a measurable goal to it.</p>
+<p>We look at overall trends and average coverage levels per module type, and set
+goals for them for as guidance for other teams. Nothing big, just a couple
+percent points per quarter, but it makes testing a talking point. When we
+introduce a new tool, e.g. snapshot tests, we can see how that affects the trend
+(spoiler alert: our developers strongly prefer snapshot tests) and whether to
+invest more time/effort.</p>
+<p>Developers ask for more or better tests during code review. There has been a
+noticeable uptick in code changes that just introduce a bunch more tests for
+existing code. More refactors start out with ensuring code coverage is solid
+or by closing any testing gaps. If an incident happens, the fix is asked to
+include a test, and the post-mortem documents the code coverage of the code
+that was at fault, with an action item to increase coverage if it's too low.</p>
+<p>Just like a more testable architecture and better tooling, having insightful
+code coverage data played a big role in the gradual shift of our iOS testing
+culture. We started with near 0% coverage, and all the improvements over the
+years have gotten us to an overall code coverage of 60% and climbing.</p>
+<p>To me it's one of the most fascinating leaps in maturity I've seen in my time at
+Lyft with a ton of learnings along the way.</p>
+  </div><!-- /.entry-content -->
+</section>
+
+  <script data-goatcounter="https://sberrevoets.goatcounter.com/count"
+          async src="//gc.zgo.at/count.js"></script>
+</body>
+</html>

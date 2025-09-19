@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+          <title>Third-party libraries are no party at all - Scott Berrevoets</title>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <link rel="icon" type="image/png" href="https://scottberrevoets.com/theme/images/favicon.png">
+        <link rel="apple-touch-icon" type="image/png" sizes="any" href="https://scottberrevoets.com/theme/images/favicon.png">
+        <link href="https://scottberrevoets.com/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="Scott Berrevoets Full Atom Feed" />
+        <link href="https://scottberrevoets.com/feeds/all.rss.xml" type="application/rss+xml" rel="alternate" title="Scott Berrevoets Full RSS Feed" />
+        <link href="https://scottberrevoets.com/feeds/atom.xml" type="application/atom+xml" rel="alternate" title="Scott Berrevoets Atom Feed" />
+        <link href="https://scottberrevoets.com/feeds/rss.xml" type="application/rss+xml" rel="alternate" title="Scott Berrevoets RSS Feed" />
+
+
+
+        <link rel="stylesheet" type="text/css" href="https://scottberrevoets.com/theme/css/style.css" />
+</head>
+
+<body id="index" class="home">
+<svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
+  <symbol id="github" viewBox="0 0 24 24">
+    <path stroke="none" d="M0 0h24v24H0z" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+    <path d="M9 19c-4.3 1.4 -4.3 -2.5 -6 -3m12 5v-3.5c0 -1 .1 -1.4 -.5 -2c2.8 -.3 5.5 -1.4 5.5 -6a4.6 4.6 0 0 0 -1.3 -3.2a4.2 4.2 0 0 0 -.1 -3.2s-1.1 -.3 -3.5 1.3a12.3 12.3 0 0 0 -6.2 0c-2.4 -1.6 -3.5 -1.3 -3.5 -1.3a4.2 4.2 0 0 0 -.1 3.2a4.6 4.6 0 0 0 -1.3 3.2c0 4.6 2.7 5.7 5.5 6c-.6 .6 -.6 1.2 -.5 2v3.5" stroke="currentColor" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+  </symbol>
+  <symbol id="mastodon" viewBox="0 0 24 24">
+    <path stroke="none" d="M0 0h24v24H0z" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+    <path d="M18.648 15.254c-1.816 1.763 -6.648 1.626 -6.648 1.626a18.262 18.262 0 0 1 -3.288 -.256c1.127 1.985 4.12 2.81 8.982 2.475c-1.945 2.013 -13.598 5.257 -13.668 -7.636l-.026 -1.154c0 -3.036 .023 -4.115 1.352 -5.633c1.671 -1.91 6.648 -1.666 6.648 -1.666s4.977 -.243 6.648 1.667c1.329 1.518 1.352 2.597 1.352 5.633s-.456 4.074 -1.352 4.944z" stroke="currentColor" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+    <path d="M12 11.204v-2.926c0 -1.258 -.895 -2.278 -2 -2.278s-2 1.02 -2 2.278v4.722m4 -4.722c0 -1.258 .895 -2.278 2 -2.278s2 1.02 2 2.278v4.722" stroke="currentColor" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+  </symbol>
+  <symbol id="mail" viewBox="0 0 24 24">
+    <path stroke="none" d="M0 0h24v24H0z" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+    <path d="M3 7a2 2 0 0 1 2 -2h14a2 2 0 0 1 2 2v10a2 2 0 0 1 -2 2h-14a2 2 0 0 1 -2 -2v-10z" stroke="currentColor" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+    <path d="M3 7l9 6l9 -6" stroke="currentColor" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+  </symbol>
+  <symbol id="rss" viewBox="0 0 24 24">
+    <path stroke="none" d="M0 0h24v24H0z" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+    <path d="M5 19m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0" stroke="currentColor" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+    <path d="M4 4a16 16 0 0 1 16 16" stroke="currentColor" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+    <path d="M4 11a9 9 0 0 1 9 9" stroke="currentColor" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+  </symbol>
+  <symbol id="linkedin" viewBox="0 0 24 24">
+    <path stroke="none" d="M0 0h24v24H0z" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+    <path d="M4 4m0 2a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v12a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2z" stroke="currentColor" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+    <path d="M8 11l0 5" stroke="currentColor" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+    <path d="M8 8l0 .01" stroke="currentColor" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+    <path d="M12 16l0 -5" stroke="currentColor" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+    <path d="M16 16v-3a2 2 0 0 0 -4 0" stroke="currentColor" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+  </symbol>
+</svg>        <header id="banner" class="body">
+            <div class="header-top">
+                <h1><a href="https://scottberrevoets.com/">Scott Berrevoets</a></h1>
+
+                <ul id="social">
+                    <li><a href="https://github.com/sberrevoets">
+                        <svg class="icon"><use href="#github" /></svg>
+                    </a></li>
+                    <li><a href="https://linkedin.com/in/sberrevoets">
+                        <svg class="icon"><use href="#linkedin" /></svg>
+                    </a></li>
+                    <li><a href="https://hachyderm.io/@ScottBerrevoets">
+                        <svg class="icon"><use href="#mastodon" /></svg>
+                    </a></li>
+                    <li><a href="mailto:hi@scottberrevoets.com">
+                        <svg class="icon"><use href="#mail" /></svg>
+                    </a></li>
+                    <li><a href="/feeds/all.atom.xml">
+                        <svg class="icon"><use href="#rss" /></svg>
+                    </a></li>
+                </ul>
+            </div>
+
+            <nav id="menu"><ul>
+                <li><a href="https://scottberrevoets.com/">About</a></li>
+                <li><a href="https://scottberrevoets.com/blog.html">Blog</a></li>
+            </ul></nav><!-- /#menu -->
+        </header><!-- /#banner -->
+<section id="content" class="body">
+  <header>
+      <h2 class="article-title">Third-party libraries are no party at all</h2>
+ 
+    <time class="published subheader" datetime="2022-07-15T00:00:00-07:00">
+      July 15, 2022
+    </time>
+        <span class="subheader">&bullet; 8 min read</span>
+  </header>
+  <div class="article-content">
+    <p><em>What better way to end the week than with a hot take?</em></p>
+<p>In my 8 years at Lyft, product managers or engineers have often wanted to add
+third-party libraries to one of our apps. Sometimes it’s necessary to integrate
+with a specific vendor (like PayPal), sometimes it’s to avoid having to build
+something complicated, and sometimes it’s simply to not reinvent the wheel.</p>
+<p>While these are generally reasonable considerations, the risks and associated
+costs of using a third-party library are often overlooked or misunderstood. In
+some cases the risk is worth it, but to be able to determine that you first need
+to be able to define that risk accurately. To make that risk assessment more
+transparent and consistent, we defined a process of things we look at to
+determine how much risk we're incurring by integrating it and shipping it in one
+or more production apps.</p>
+<h2 id="risks">Risks</h2>
+<p>Most larger organizations, including ours, have some form of code review as part
+of their development practices. For those teams, adding a third-party library is
+equivalent to adding a bunch of unreviewed code written by someone who doesn't
+work on the team, subverting the standards upheld during code review and
+shipping code of unknown quality. This introduces risk in how the app runs,
+long-term development of the app, and, for larger teams, overall business risk.</p>
+<h3 id="runtime-risks">Runtime risks</h3>
+<p>Library code generally has the same level of access to system resources as
+general app code, but they don't necessarily apply the best practices the
+team put in place for managing these resources. This means they have access
+to the disk, network, memory, CPU, etc. without any restrictions or
+limitations, so they can (over)write files to disk, be memory or CPU hogs
+with unoptimized code, cause dead locks or main thread delays, download (and
+upload!) tons of data, etc. Worse, they can cause crashes or even <a href="https://www.theverge.com/2020/5/7/21250689/facebook-sdk-bug-ios-app-crash-apple-spotify-venmo-tiktok-tinder">crash
+loops</a>. <a href="https://github.com/facebook/facebook-ios-sdk/issues/1427">Twice</a>.</p>
+<p>Many of these situations aren't discovered until the app is already available to
+customers, at which point fixing it requires creating a new build and going
+through the review process which is often time intensive and costly. The risk
+can be somewhat mitigated by invoking the library behind a feature flag, but
+that isn't a silver bullet either (see below).</p>
+<h3 id="development-risks">Development risks</h3>
+<p>To quote a coworker: "every line of code is a liability", and this is even more
+true for code you didn't write yourself. Libraries could be slow in adopting new
+technologies or APIs holding the codebase back, or too fast causing a deployment
+target that's too high. When Apple and Google introduce new OS versions each
+year, they often require developers update their code based on changes in their
+SDKs, and library developers have to follow suit. This requires coordinated
+efforts, alignment in priorities, and the ability to get the work done in a
+timely manner.</p>
+<p>As the mobile platforms are ever-changing this becomes a continuous, ongoing
+risk, compounded by the problem that teams and organizations aren't static
+either. When a library that was integrated by a team that no longer exists needs
+to be updated, it takes a long time to figure out who should do so. It has
+proven extremely rare and extremely difficult to remove a library once it's
+there, so we treat it as a long-term maintenance cost.</p>
+<h3 id="business-risks">Business risks</h3>
+<p>As I mentioned above, modern OSes make no distinction between app code and
+library code, so in addition to system resources they also have access to user
+information. As app developers we're responsible for using that information
+properly, and any libraries are part of that responsibility.</p>
+<p>If the user grants location access to the Lyft app, any third-party library
+automatically gets access too. They could then upload that data to their own
+servers, competitors' servers, or who knows where else. This is even more
+problematic when a library needs a <em>new</em> permission we didn't already have.</p>
+<p>Similarly, a system is as secure as its weakest link but if you include
+unreviewed, unknown code you have no idea how secure it really is. Your
+well-designed secure coding practices could all be undone by one misbehaving
+library. The same goes for any policies Apple and Google put in place like "you
+are not allowed to fingerprint the user".</p>
+<h2 id="mitigating-the-risk">Mitigating the risk</h2>
+<p>When evaluating a library for production usage, we ask a few questions to
+understand the need for the library in the first place.</p>
+<p><strong>Can we build this functionality in-house?</strong></p>
+<p>In some cases we were able to simply copy/paste the parts of a library we really
+needed. In more complex scenarios, where a library talked to a custom backend we
+reverse-engineered that API and built a mini-SDK ourselves (again, only the
+parts we needed). This is the preferred option 90% of the time, but isn't always
+feasible when integrating with very specific vendors or requirements.</p>
+<p><strong>How many customers benefit from this library?</strong></p>
+<p>In one scenario, we were considering adding a very risky library (according to
+the criteria below) intended for a tiny subset of users while still exposing all
+of our users to the library. We ran the risk of something going wrong for all
+our customers in all our markets for a small group of customers we thought would
+benefit from it.</p>
+<p><strong>What transitive dependencies does this library have?</strong></p>
+<p>We'll want to evaluate the criteria below for all dependencies of the library as
+well.</p>
+<p><strong>What are the exit criteria?</strong></p>
+<p>If integration is successful, is there a path to moving it in-house? If it isn't
+successful, is there a path to removal?</p>
+<h2 id="evaluation-criteria">Evaluation criteria</h2>
+<p>If at this point the team still wants to integrate the library, we ask them to
+“score” the library according to a standard set of criteria. The list below is
+not comprehensive but should give a good indication of the things we look at.</p>
+<h3 id="blocking-criteria">Blocking criteria</h3>
+<p>These criteria will prevent us from including the library altogether, either
+technically or by company policy, and need to be resolved before we can move
+forward:</p>
+<ul>
+<li><strong>Too high deployment target/target SDKs</strong>. We support major OSes going back
+  at least 4 years so third-party libraries have to support at least that many
+  too.</li>
+<li><strong>Improper/missing LICENSE</strong>. We bundle license files with the apps to make
+  sure we can legally use the code and attribute it to the license holders.</li>
+<li><strong>No conflicting transitive dependencies</strong>. A library can't have a transitive
+  dependency we already include but at a different version.</li>
+<li><strong>Does not display its own UI</strong>. We put great care in making our products look
+  as uniform as possible, custom UIs are a detriment to that.</li>
+<li><strong>Does not use private APIs</strong>. We are not willing to risk app rejection over
+  the use of private APIs.</li>
+</ul>
+<h3 id="major-concerns">Major concerns</h3>
+<ul>
+<li><strong>Closed source</strong>. Access to the source means we can pick and choose which
+  parts of a library we want to include and how to bundle that source with the
+  rest of the app. A closed source, binary distribution is much more difficult
+  for us to integrate.</li>
+<li><strong>Builds with warnings</strong>. We have "warnings as errors" enabled, and a library
+  with build warnings is a decent indication of the overall quality of the
+  library.</li>
+<li><strong>Poor documentation</strong>. We look for high quality inline docstrings, external
+  "how to use" documentation, and meaningful change logs.</li>
+<li><strong>Binary size impact</strong>. How big is this library? Some libraries provide a lot
+  of functionality of which we only need a fraction. Especially without source
+  access it's often an all-or-nothing situation.</li>
+<li><strong>External network traffic</strong>. A library that communicates with upstream
+  servers/endpoints we have no control over could take the entire app down when
+  the server is down, bad data is sent back, etc. This also has the same privacy
+  implications I mentioned above.</li>
+<li><strong>Technical support</strong>. When things don't work as they should we need to be
+  able to report/escalate issues and get them fixed in a reasonable amount of
+  time. Open source projects are often run by volunteers and usually can't
+  commit to timelines, but at least we could make changes ourselves. This is
+  impossible without source access.</li>
+<li><strong>Inability to disable</strong>. While most libraries specifically require us to
+  initialize it, some are more "proactive" in their instantiation and will
+  perform work themselves without us ever calling into it. This means when the
+  library causes issues we have no option to turn it off through feature flags
+  or other mechanisms.</li>
+</ul>
+<p>We assign point values to all these (and a few others) criteria and ask
+engineers to tally those up for the library they want to include. While low
+scores aren't hard-rejected by default, we often ask for more justification to
+move forward.</p>
+<h2 id="final-notes">Final notes</h2>
+<p>While this process may seem very strict and the potential risk hypothetical in
+many cases, we have actual, real examples of every scenario I described in this
+blog post. Having the evaluations written down and publicly available also helps
+in conveying relative risk to people unfamiliar with how mobile platforms works
+and demonstrating we're not arbitrarily evaluating the risks.</p>
+<p>Also, I don't want to claim every third-party library is inherently bad. We
+actually use quite a few at Lyft: RxSwift and RxJava, Bugsnag's SDK, Google
+Maps, Tensorflow, and a few smaller ones for very specific use cases. But all of
+these are either well-vetted, or we've decided the risk is worth the benefit
+while actually having a clear idea of what those risks and benefits really are.</p>
+<p>Lastly, as a developer pro-tip: always create your own abstractions on top of
+the library's APIs and never call their APIs directly. This makes it much easier
+to swap (or remove) underlying libraries in the future, again mitigating some
+risk associated with long-term development.</p>
+  </div><!-- /.entry-content -->
+</section>
+
+  <script data-goatcounter="https://sberrevoets.goatcounter.com/count"
+          async src="//gc.zgo.at/count.js"></script>
+</body>
+</html>

@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+          <title>Shifting the testing culture: Motivation - Scott Berrevoets</title>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <link rel="icon" type="image/png" href="https://scottberrevoets.com/theme/images/favicon.png">
+        <link rel="apple-touch-icon" type="image/png" sizes="any" href="https://scottberrevoets.com/theme/images/favicon.png">
+        <link href="https://scottberrevoets.com/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="Scott Berrevoets Full Atom Feed" />
+        <link href="https://scottberrevoets.com/feeds/all.rss.xml" type="application/rss+xml" rel="alternate" title="Scott Berrevoets Full RSS Feed" />
+        <link href="https://scottberrevoets.com/feeds/atom.xml" type="application/atom+xml" rel="alternate" title="Scott Berrevoets Atom Feed" />
+        <link href="https://scottberrevoets.com/feeds/rss.xml" type="application/rss+xml" rel="alternate" title="Scott Berrevoets RSS Feed" />
+
+
+
+        <link rel="stylesheet" type="text/css" href="https://scottberrevoets.com/theme/css/style.css" />
+</head>
+
+<body id="index" class="home">
+<svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
+  <symbol id="github" viewBox="0 0 24 24">
+    <path stroke="none" d="M0 0h24v24H0z" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+    <path d="M9 19c-4.3 1.4 -4.3 -2.5 -6 -3m12 5v-3.5c0 -1 .1 -1.4 -.5 -2c2.8 -.3 5.5 -1.4 5.5 -6a4.6 4.6 0 0 0 -1.3 -3.2a4.2 4.2 0 0 0 -.1 -3.2s-1.1 -.3 -3.5 1.3a12.3 12.3 0 0 0 -6.2 0c-2.4 -1.6 -3.5 -1.3 -3.5 -1.3a4.2 4.2 0 0 0 -.1 3.2a4.6 4.6 0 0 0 -1.3 3.2c0 4.6 2.7 5.7 5.5 6c-.6 .6 -.6 1.2 -.5 2v3.5" stroke="currentColor" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+  </symbol>
+  <symbol id="mastodon" viewBox="0 0 24 24">
+    <path stroke="none" d="M0 0h24v24H0z" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+    <path d="M18.648 15.254c-1.816 1.763 -6.648 1.626 -6.648 1.626a18.262 18.262 0 0 1 -3.288 -.256c1.127 1.985 4.12 2.81 8.982 2.475c-1.945 2.013 -13.598 5.257 -13.668 -7.636l-.026 -1.154c0 -3.036 .023 -4.115 1.352 -5.633c1.671 -1.91 6.648 -1.666 6.648 -1.666s4.977 -.243 6.648 1.667c1.329 1.518 1.352 2.597 1.352 5.633s-.456 4.074 -1.352 4.944z" stroke="currentColor" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+    <path d="M12 11.204v-2.926c0 -1.258 -.895 -2.278 -2 -2.278s-2 1.02 -2 2.278v4.722m4 -4.722c0 -1.258 .895 -2.278 2 -2.278s2 1.02 2 2.278v4.722" stroke="currentColor" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+  </symbol>
+  <symbol id="mail" viewBox="0 0 24 24">
+    <path stroke="none" d="M0 0h24v24H0z" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+    <path d="M3 7a2 2 0 0 1 2 -2h14a2 2 0 0 1 2 2v10a2 2 0 0 1 -2 2h-14a2 2 0 0 1 -2 -2v-10z" stroke="currentColor" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+    <path d="M3 7l9 6l9 -6" stroke="currentColor" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+  </symbol>
+  <symbol id="rss" viewBox="0 0 24 24">
+    <path stroke="none" d="M0 0h24v24H0z" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+    <path d="M5 19m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0" stroke="currentColor" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+    <path d="M4 4a16 16 0 0 1 16 16" stroke="currentColor" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+    <path d="M4 11a9 9 0 0 1 9 9" stroke="currentColor" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+  </symbol>
+  <symbol id="linkedin" viewBox="0 0 24 24">
+    <path stroke="none" d="M0 0h24v24H0z" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+    <path d="M4 4m0 2a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v12a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2z" stroke="currentColor" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+    <path d="M8 11l0 5" stroke="currentColor" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+    <path d="M8 8l0 .01" stroke="currentColor" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+    <path d="M12 16l0 -5" stroke="currentColor" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+    <path d="M16 16v-3a2 2 0 0 0 -4 0" stroke="currentColor" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+  </symbol>
+</svg>        <header id="banner" class="body">
+            <div class="header-top">
+                <h1><a href="https://scottberrevoets.com/">Scott Berrevoets</a></h1>
+
+                <ul id="social">
+                    <li><a href="https://github.com/sberrevoets">
+                        <svg class="icon"><use href="#github" /></svg>
+                    </a></li>
+                    <li><a href="https://linkedin.com/in/sberrevoets">
+                        <svg class="icon"><use href="#linkedin" /></svg>
+                    </a></li>
+                    <li><a href="https://hachyderm.io/@ScottBerrevoets">
+                        <svg class="icon"><use href="#mastodon" /></svg>
+                    </a></li>
+                    <li><a href="mailto:hi@scottberrevoets.com">
+                        <svg class="icon"><use href="#mail" /></svg>
+                    </a></li>
+                    <li><a href="/feeds/all.atom.xml">
+                        <svg class="icon"><use href="#rss" /></svg>
+                    </a></li>
+                </ul>
+            </div>
+
+            <nav id="menu"><ul>
+                <li><a href="https://scottberrevoets.com/">About</a></li>
+                <li><a href="https://scottberrevoets.com/blog.html">Blog</a></li>
+            </ul></nav><!-- /#menu -->
+        </header><!-- /#banner -->
+<section id="content" class="body">
+  <header>
+      <h2 class="article-title">Shifting the testing culture: Motivation</h2>
+ 
+    <time class="published subheader" datetime="2024-11-18T00:00:00-08:00">
+      November 18, 2024
+    </time>
+        <span class="subheader">&bullet; 5 min read</span>
+  </header>
+  <div class="article-content">
+    <p>Five years ago I began promoting automated testing heavily within Lyft even
+though I didn't have any real experience in writing big test suites myself. Many
+hands make light work, so I found a few people who shared this thinking and we
+started on what turned out a multi-year testing journey. What did we do?</p>
+<ol>
+<li>We optimized the architecture in a much more profound way than just "you can
+   write tests more easily"</li>
+<li>We built a ton of tooling to improve the developer experience and to hold
+   ourselves more accountable</li>
+<li>We started measuring and reporting progress on our efforts regularly</li>
+<li>We included testing in company-wide processes like incident review and
+   biannual planning</li>
+</ol>
+<p>The end result of all the major efforts, minor quality-of-life improvements, and
+fixing tiny paper cuts has led to test-writing now being a huge part of our
+engineering culture. That's not to say we're there—there is definitely still
+more work to be done. But the progress is pretty remarkable and I wanted to
+share more about it.</p>
+<p>I'll do this in a series of blog posts, this being the first one:</p>
+<ol>
+<li><strong>Motivation</strong>: why we thought this was an important area to invest in</li>
+<li><strong><a href="https://scottberrevoets.com/2024/11/19/shifting-the-testing-culture-infrastructure/">Infrastructure</a></strong>: how we upgraded our infrastructure to optimize for
+   testability</li>
+<li><strong><a href="https://scottberrevoets.com/2024/11/20/shifting-the-testing-culture-code-coverage/">Code coverage</a></strong>: how we measure, report, and act on our code coverage</li>
+</ol>
+<h2 id="motivation">Motivation</h2>
+<p>After experiencing the hypergrowth of both our team and codebase in 2017-2019,
+it became clear that the only way to maintain code and product quality was
+through automated testing. Prior to that, a lot of testing would happen through
+knowledgeable developers, QA processes, and dogfooding, but that wasn't going to
+hold up indefinitely for a few reasons:</p>
+<ul>
+<li>QA time is costly because a human hour is much more expensive than a computer
+  hour. Writing a unit test means you can now validate any code change with that
+  test in a fraction of a second, but a QA engineer needs to spend that time
+  again and again.</li>
+<li>QA processes themselves are expensive: test plan management and maintenance
+  costs time and money and the process itself needs to be developed, documented,
+  and updated</li>
+<li>People leave, and with them institutional knowledge leaves as well. It takes a
+  long time for new people to build that knowledge, if they ever get there.</li>
+</ul>
+<p>In short, computers can handle 80-90% of this work faster and more accurately
+than developers can. As with all infrastructure, it takes some time to set it up
+in an effective way, but since that's a one-time effort it should pay itself off
+over time.</p>
+<h2 id="testing-methodologies">Testing methodologies</h2>
+<p>Unit testing, acceptance testing, integration testing, system testing,
+regression testing, UI testing... fanatics will tell you they're all important.
+I don't necessarily disagree, but how hard you go also depends on how you need
+to balance quality and velocity. Aviation software leans much more toward
+quality, a rideshare app comparably more toward velocity.</p>
+<p>So we initially focused on two types of testing: unit testing and UI testing.
+After snapshot testing became popular on both iOS and Android we added that to
+our arsenal as well.</p>
+<p>Unit and snapshot tests are written by mobile developers for their own code, UI
+tests cover larger flows and are written by SETs. (In my opinion UI tests, if
+you choose to invest in them, should also be written by the developers that
+wrote the original code, but that is not the setup we have today.)</p>
+<h2 id="benefits">Benefits</h2>
+<p>It feels a bit weird to be writing these articles pretending it's some novel
+idea that writing tests benefits an engineering organization like that isn't
+already common knowledge. However, testing culture in the iOS community, and I
+suspect all "frontend" disciplines (web, mobile, TVs, etc.), is weak compared to
+that in other communities. For one because UI is hard to test, but also because
+Apple itself doesn't promote it much as a best practice.</p>
+<p>To not just speak in hypotheticals, the benefits we've experienced firsthand
+are:</p>
+<ul>
+<li><strong>Behavior validation</strong>: The most obvious benefit is that tests validate how
+  code behaves. Bug fixes will see fewer regressions, refactors are safer, and
+  the app is generally of higher quality because every bug happens only once (in
+  theory) and many are prevented from happening at all.</li>
+<li><strong>Behavior documentation</strong>: Code becomes more self-documenting as a lot of the
+  behavior is prescribed in tests. You can skim test names/descriptions to
+  understand how a class is supposed to behave, with little risk of the
+  documentation becoming outdated because the tests will fail if they don't
+  match the actual behavior.</li>
+<li><strong>Code readability</strong>: in order to write reasonable tests, code has to be
+  structured reasonably well too. Test setup is hard with spaghetti code, so
+  there's an incentive to write cleaner code. (Unfortunately, the opposite is
+  true too: poorly written code can often lead to poorly written or no tests.)</li>
+<li><strong>Engineering satisfaction</strong>: a well-tested codebase is more satisfying to
+  work in because developers have higher confidence in the correctness of their
+  code. It "feels" easier to make changes because you can rely on the tests to
+  catch any mistakes.</li>
+</ul>
+<h2 id="drawbacks">Drawbacks</h2>
+<p>I don't really like writing these articles without also mentioning the
+drawbacks. The main ones we've experienced are:</p>
+<ul>
+<li><strong>Time cost</strong>: it simply takes time to write tests, and there's strong
+  correlation between a codebase that <em>desperately needs tests</em> and the time it
+  takes to write those tests</li>
+<li><strong>False sense of security</strong>: it's easy to become overly confident in the test
+  suite and assume a passing test suite means there are no bugs, when in reality
+  the test suite might be incomplete or of low quality</li>
+<li><strong>Learning curve</strong>: there's a learning curve involved, especially in a large
+  codebase, and not everyone is interested in learning this</li>
+<li><strong>More code to maintain</strong>: code requires maintenance and test code is no
+  different</li>
+</ul>
+<p>Over time we've tried to minimize these drawbacks as best as we could, but most
+of them will likely always be a factor. In the next articles I'll go in a
+bit more depth on the mitigation strategies we've used and how effective they've
+been.</p>
+  </div><!-- /.entry-content -->
+</section>
+
+  <script data-goatcounter="https://sberrevoets.goatcounter.com/count"
+          async src="//gc.zgo.at/count.js"></script>
+</body>
+</html>

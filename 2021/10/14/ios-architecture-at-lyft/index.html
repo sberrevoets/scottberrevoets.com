@@ -1,0 +1,480 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+          <title>iOS Architecture at Lyft - Scott Berrevoets</title>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <link rel="icon" type="image/png" href="https://scottberrevoets.com/theme/images/favicon.png">
+        <link rel="apple-touch-icon" type="image/png" sizes="any" href="https://scottberrevoets.com/theme/images/favicon.png">
+        <link href="https://scottberrevoets.com/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="Scott Berrevoets Full Atom Feed" />
+        <link href="https://scottberrevoets.com/feeds/all.rss.xml" type="application/rss+xml" rel="alternate" title="Scott Berrevoets Full RSS Feed" />
+        <link href="https://scottberrevoets.com/feeds/atom.xml" type="application/atom+xml" rel="alternate" title="Scott Berrevoets Atom Feed" />
+        <link href="https://scottberrevoets.com/feeds/rss.xml" type="application/rss+xml" rel="alternate" title="Scott Berrevoets RSS Feed" />
+
+
+
+        <link rel="stylesheet" type="text/css" href="https://scottberrevoets.com/theme/css/style.css" />
+</head>
+
+<body id="index" class="home">
+<svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
+  <symbol id="github" viewBox="0 0 24 24">
+    <path stroke="none" d="M0 0h24v24H0z" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+    <path d="M9 19c-4.3 1.4 -4.3 -2.5 -6 -3m12 5v-3.5c0 -1 .1 -1.4 -.5 -2c2.8 -.3 5.5 -1.4 5.5 -6a4.6 4.6 0 0 0 -1.3 -3.2a4.2 4.2 0 0 0 -.1 -3.2s-1.1 -.3 -3.5 1.3a12.3 12.3 0 0 0 -6.2 0c-2.4 -1.6 -3.5 -1.3 -3.5 -1.3a4.2 4.2 0 0 0 -.1 3.2a4.6 4.6 0 0 0 -1.3 3.2c0 4.6 2.7 5.7 5.5 6c-.6 .6 -.6 1.2 -.5 2v3.5" stroke="currentColor" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+  </symbol>
+  <symbol id="mastodon" viewBox="0 0 24 24">
+    <path stroke="none" d="M0 0h24v24H0z" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+    <path d="M18.648 15.254c-1.816 1.763 -6.648 1.626 -6.648 1.626a18.262 18.262 0 0 1 -3.288 -.256c1.127 1.985 4.12 2.81 8.982 2.475c-1.945 2.013 -13.598 5.257 -13.668 -7.636l-.026 -1.154c0 -3.036 .023 -4.115 1.352 -5.633c1.671 -1.91 6.648 -1.666 6.648 -1.666s4.977 -.243 6.648 1.667c1.329 1.518 1.352 2.597 1.352 5.633s-.456 4.074 -1.352 4.944z" stroke="currentColor" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+    <path d="M12 11.204v-2.926c0 -1.258 -.895 -2.278 -2 -2.278s-2 1.02 -2 2.278v4.722m4 -4.722c0 -1.258 .895 -2.278 2 -2.278s2 1.02 2 2.278v4.722" stroke="currentColor" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+  </symbol>
+  <symbol id="mail" viewBox="0 0 24 24">
+    <path stroke="none" d="M0 0h24v24H0z" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+    <path d="M3 7a2 2 0 0 1 2 -2h14a2 2 0 0 1 2 2v10a2 2 0 0 1 -2 2h-14a2 2 0 0 1 -2 -2v-10z" stroke="currentColor" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+    <path d="M3 7l9 6l9 -6" stroke="currentColor" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+  </symbol>
+  <symbol id="rss" viewBox="0 0 24 24">
+    <path stroke="none" d="M0 0h24v24H0z" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+    <path d="M5 19m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0" stroke="currentColor" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+    <path d="M4 4a16 16 0 0 1 16 16" stroke="currentColor" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+    <path d="M4 11a9 9 0 0 1 9 9" stroke="currentColor" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+  </symbol>
+  <symbol id="linkedin" viewBox="0 0 24 24">
+    <path stroke="none" d="M0 0h24v24H0z" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+    <path d="M4 4m0 2a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v12a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2z" stroke="currentColor" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+    <path d="M8 11l0 5" stroke="currentColor" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+    <path d="M8 8l0 .01" stroke="currentColor" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+    <path d="M12 16l0 -5" stroke="currentColor" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+    <path d="M16 16v-3a2 2 0 0 0 -4 0" stroke="currentColor" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+  </symbol>
+</svg>        <header id="banner" class="body">
+            <div class="header-top">
+                <h1><a href="https://scottberrevoets.com/">Scott Berrevoets</a></h1>
+
+                <ul id="social">
+                    <li><a href="https://github.com/sberrevoets">
+                        <svg class="icon"><use href="#github" /></svg>
+                    </a></li>
+                    <li><a href="https://linkedin.com/in/sberrevoets">
+                        <svg class="icon"><use href="#linkedin" /></svg>
+                    </a></li>
+                    <li><a href="https://hachyderm.io/@ScottBerrevoets">
+                        <svg class="icon"><use href="#mastodon" /></svg>
+                    </a></li>
+                    <li><a href="mailto:hi@scottberrevoets.com">
+                        <svg class="icon"><use href="#mail" /></svg>
+                    </a></li>
+                    <li><a href="/feeds/all.atom.xml">
+                        <svg class="icon"><use href="#rss" /></svg>
+                    </a></li>
+                </ul>
+            </div>
+
+            <nav id="menu"><ul>
+                <li><a href="https://scottberrevoets.com/">About</a></li>
+                <li><a href="https://scottberrevoets.com/blog.html">Blog</a></li>
+            </ul></nav><!-- /#menu -->
+        </header><!-- /#banner -->
+<section id="content" class="body">
+  <header>
+      <h2 class="article-title">iOS Architecture at Lyft</h2>
+ 
+    <time class="published subheader" datetime="2021-10-14T00:00:00-07:00">
+      October 14, 2021
+    </time>
+        <span class="subheader">&bullet; 14 min read</span>
+  </header>
+  <div class="article-content">
+    <p>June 30, 2014 was my first day at Lyft as the first iOS hire on the ~3 person
+team. The app was written in Objective-C, and the architecture was a 5000-line
+nested switch statement.</p>
+<p>Since then, the team has grown to about 70 people and the codebase to 1.5M lines
+of code. This required some major changes to how we architect our code, and
+since it had been a while since we've given an update like this, now seems as
+good a time as any.</p>
+<h2 id="requirements">Requirements</h2>
+<p>The effort to overhaul and modernize the architecture began around mid-2017.
+We started to reach the limits of the patterns we established in the 2015
+rewrite of the app, and it was clear the codebase and the team would continue to
+grow and probably more rapidly than it had in the past.</p>
+<p>The primary problems that the lack of a more mature architecture presented and
+that we wanted to solve were:</p>
+<ul>
+<li><strong>Isolation</strong>: Features were heavily intertwined, which made it difficult to
+  safely make changes</li>
+<li><strong>Testability</strong>: We were still mostly following MVC with view controllers being
+  the main source of business logic which made it difficult to test that logic</li>
+<li><strong>State management</strong>: The navigation in most of our app relied on local +
+  server state, which grew with the number of features. How and when state
+  changed then became too difficult to manage.</li>
+</ul>
+<p>There was not going to be one solution that would solve all of this inherently,
+but over the course of a few years we developed a number of processes and
+technical solutions to reduce these problems.</p>
+<h2 id="modules">Modules</h2>
+<p>First, to provide better feature separation, we introduced modules. Every
+feature had its own module, with its own test suite, that could be developed in
+isolation from other modules. This forced us to think more about public APIs and
+hiding implementation details behind them. Compile times improved, and it
+required much less collaboration with other teams to make changes.</p>
+<p>We also introduced an ownership model that ensured each module has at least one
+team that's responsible for that module's tech debt, documentation, etc.</p>
+<h3 id="module-types">Module types</h3>
+<p>After fully modularizing the app and having 700 modules worth of code, we took
+this a step further and introduced a number of <em>module types</em> that each module
+would follow.</p>
+<ul>
+<li><code>UI</code> modules only contain UI elements (views, view controllers)</li>
+<li><code>Flow</code> modules contain <a href="#flows">routing infrastructure</a></li>
+<li><code>Service</code> modules contain code to interact with endpoints related to the
+  feature's functionality</li>
+<li><code>Logic</code> modules contain pure business logic, data transformations, etc.</li>
+</ul>
+<p>Breaking modules down this way enabled us to implement dependency validators: we
+can validate that certain modules can't depend on others. For example, a logic
+module can't depend on a <code>UI</code> module, and a <code>Service</code> module can't import UIKit.</p>
+<p>This module structure also prevents complicated circular dependencies,
+e.g. a <code>Coupons</code> module depending on <code>Payments</code> and vice versa. Instead, the
+<code>Payments</code> module can now import <code>CouponsUI</code> without needing to import the full
+<code>Coupons</code> feature. It's led to micromodules in some areas, but we've generally
+been able to provide good tooling to make this easier to deal with.</p>
+<p>All in all we now have almost 2000 modules total for all Lyft apps.</p>
+<h2 id="dependency-injection">Dependency Injection</h2>
+<p>Module types solved many of our dependency tree problems at the module level,
+but we also needed something more scalable than singletons at the code level.</p>
+<p>For that we've built a lightweight dependency injection framework which we
+detailed in a <a href="https://www.youtube.com/watch?v=dA9rGQRwHGs">SLUG talk</a>. It resembles a service locator pattern, with a
+basic dictionary mapping protocols to instantiations:</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span class="normal">1</span>
+<span class="normal">2</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="kd">let</span> <span class="nv">getNetworkCommunicator</span><span class="p">:</span> <span class="n">NetworkCommunicating</span> <span class="p">=</span>
+    <span class="n">bind</span><span class="p">(</span><span class="n">NetworkCommunicating</span><span class="p">.</span><span class="kc">self</span><span class="p">,</span> <span class="n">to</span><span class="p">:</span> <span class="p">{</span> <span class="n">NetworkCommunicator</span><span class="p">()</span> <span class="p">})</span>
+</code></pre></div></td></tr></table></div>
+
+<p>The implementation of <code>bind()</code> doesn't immediately return <code>NetworkCommunicator</code>,
+but requires the object be mocked if we're in a testing environment:</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span class="normal"> 1</span>
+<span class="normal"> 2</span>
+<span class="normal"> 3</span>
+<span class="normal"> 4</span>
+<span class="normal"> 5</span>
+<span class="normal"> 6</span>
+<span class="normal"> 7</span>
+<span class="normal"> 8</span>
+<span class="normal"> 9</span>
+<span class="normal">10</span>
+<span class="normal">11</span>
+<span class="normal">12</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="kd">let</span> <span class="nv">productionInstantiators</span><span class="p">:</span> <span class="p">[</span><span class="nb">ObjectIdentifier</span><span class="p">:</span> <span class="p">()</span> <span class="p">-&gt;</span> <span class="nb">Any</span><span class="p">]</span> <span class="p">=</span> <span class="p">[:]</span>
+<span class="kd">let</span> <span class="nv">mockedInstantiators</span><span class="p">:</span> <span class="p">[</span><span class="nb">ObjectIdentifier</span><span class="p">:</span> <span class="p">()</span> <span class="p">-&gt;</span> <span class="nb">Any</span><span class="p">]</span> <span class="p">=</span> <span class="p">[:]</span>
+
+<span class="kd">func</span> <span class="nf">bind</span><span class="p">&lt;</span><span class="n">T</span><span class="p">&gt;(</span><span class="kd">protocol</span><span class="p">:</span> <span class="n">T</span><span class="p">.</span><span class="kr">Type</span><span class="p">,</span> <span class="n">instantiator</span><span class="p">:</span> <span class="p">()</span> <span class="p">-&gt;</span> <span class="n">T</span><span class="p">)</span> <span class="p">-&gt;</span> <span class="n">T</span> <span class="p">{</span>
+    <span class="kd">let</span> <span class="nv">identifier</span> <span class="p">=</span> <span class="nb">ObjectIdentifier</span><span class="p">(</span><span class="n">T</span><span class="p">.</span><span class="kc">self</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">NSClassFromString</span><span class="p">(</span><span class="s">&quot;XCTestCase&quot;</span><span class="p">)</span> <span class="p">==</span> <span class="kc">nil</span> <span class="p">{</span>
+        <span class="k">return</span> <span class="n">productionInstantiators</span><span class="p">[</span><span class="n">identifier</span><span class="p">]</span> <span class="p">??</span> <span class="n">instantiator</span><span class="p">()</span>
+    <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+        <span class="k">return</span> <span class="n">mockedInstantiators</span><span class="p">[</span><span class="n">identifier</span><span class="p">]</span><span class="o">!</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></td></tr></table></div>
+
+<p>In tests, the mock is required or the test will crash:</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span class="normal">1</span>
+<span class="normal">2</span>
+<span class="normal">3</span>
+<span class="normal">4</span>
+<span class="normal">5</span>
+<span class="normal">6</span>
+<span class="normal">7</span>
+<span class="normal">8</span>
+<span class="normal">9</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="kr">final</span> <span class="kd">class</span> <span class="nc">NetworkingTests</span><span class="p">:</span> <span class="n">XCTestCase</span> <span class="p">{</span>
+    <span class="kd">private</span> <span class="kd">var</span> <span class="nv">communicator</span> <span class="p">=</span> <span class="n">MockNetworkCommunicator</span><span class="p">()</span>
+
+    <span class="kd">func</span> <span class="nf">testNetworkCommunications</span><span class="p">()</span> <span class="p">{</span>
+        <span class="n">mock</span><span class="p">(</span><span class="n">NetworkCommunicating</span><span class="p">.</span><span class="kc">self</span><span class="p">)</span> <span class="p">{</span> <span class="kc">self</span><span class="p">.</span><span class="n">communicator</span> <span class="p">}</span>
+
+        <span class="c1">// ...</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></td></tr></table></div>
+
+<p>This brings two benefits:</p>
+<ol>
+<li>It forces developers to mock objects in tests, avoiding production side
+   effects like making network requests</li>
+<li>It provided a gradual adoption path rather than updating the entire app at
+   once through some more advanced system</li>
+</ol>
+<p>Although this framework has some of the same problems as other <a href="https://en.wikipedia.org/wiki/Service_locator_pattern">Service
+Locator</a> implementations, it works well enough for us and the limitations are
+generally acceptable.</p>
+<h2 id="flows">Flows</h2>
+<p>Flows, inspired by Square's <a href="https://square.github.io/workflow/">Workflow</a>, are the backbone of all Lyft apps.
+Flows define the navigation rules around a number of related screens the user
+can navigate to. The term <code>flow</code> was already common in everyday communications
+("after finishing the in-ride flow we present the user with the payments flow")
+so this terminology mapped nicely to familiar terminology.</p>
+<p>Flows rely on state-driven routers that can either show a screen, or route to
+other routers that driven by different state. This makes them easy to compose,
+which promoted the goal of feature isolation.</p>
+<p>At the core of flows lies the <code>Routable</code> protocol:</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span class="normal">1</span>
+<span class="normal">2</span>
+<span class="normal">3</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="kd">protocol</span> <span class="nc">Routable</span> <span class="p">{</span>
+    <span class="kd">let</span> <span class="nv">viewController</span><span class="p">:</span> <span class="bp">UIViewController</span>
+<span class="p">}</span>
+</code></pre></div></td></tr></table></div>
+
+<p>It just has to be able to produce a view controller. The (simplified) router
+part of a flow is implemented like this:</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span class="normal"> 1</span>
+<span class="normal"> 2</span>
+<span class="normal"> 3</span>
+<span class="normal"> 4</span>
+<span class="normal"> 5</span>
+<span class="normal"> 6</span>
+<span class="normal"> 7</span>
+<span class="normal"> 8</span>
+<span class="normal"> 9</span>
+<span class="normal">10</span>
+<span class="normal">11</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="kr">final</span> <span class="kd">class</span> <span class="nc">Router</span><span class="p">&lt;</span><span class="n">State</span><span class="p">&gt;</span> <span class="p">{</span>
+    <span class="kd">private</span> <span class="kd">let</span> <span class="nv">routes</span><span class="p">:</span> <span class="p">[(</span><span class="n">condition</span><span class="p">:</span> <span class="p">(</span><span class="n">State</span><span class="p">)</span> <span class="p">-&gt;</span> <span class="nb">Bool</span><span class="p">,</span> <span class="n">routable</span><span class="p">:</span> <span class="n">Routable</span><span class="p">?)]</span>
+
+    <span class="kd">func</span> <span class="nf">addRoute</span><span class="p">(</span><span class="n">routable</span><span class="p">:</span> <span class="n">Routable</span><span class="p">?,</span> <span class="kc">_</span> <span class="n">condition</span><span class="p">:</span> <span class="p">@</span><span class="n">escaping</span> <span class="p">(</span><span class="n">State</span><span class="p">)</span> <span class="p">-&gt;</span> <span class="nb">Bool</span><span class="p">)</span> <span class="p">{</span>
+        <span class="kc">self</span><span class="p">.</span><span class="n">routes</span><span class="p">.</span><span class="n">append</span><span class="p">((</span><span class="n">condition</span><span class="p">,</span> <span class="n">routable</span><span class="p">))</span>
+    <span class="p">}</span>
+
+    <span class="kd">func</span> <span class="nf">route</span><span class="p">(</span><span class="k">for</span> <span class="n">state</span><span class="p">:</span> <span class="n">State</span><span class="p">)</span> <span class="p">-&gt;</span> <span class="n">Routable</span><span class="p">?</span> <span class="p">{</span>
+        <span class="kc">self</span><span class="p">.</span><span class="n">routes</span><span class="p">.</span><span class="bp">first</span> <span class="p">{</span> <span class="nv">$0</span><span class="p">.</span><span class="n">condition</span><span class="p">(</span><span class="n">state</span><span class="p">)</span> <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></td></tr></table></div>
+
+<p>In other words: it takes a bunch of rules where if the condition is true
+(accepting the flow's state as input) it provides a <code>Routable</code>. Each flow defines
+its own possible routes and matches those to a <code>Routable</code>:</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span class="normal"> 1</span>
+<span class="normal"> 2</span>
+<span class="normal"> 3</span>
+<span class="normal"> 4</span>
+<span class="normal"> 5</span>
+<span class="normal"> 6</span>
+<span class="normal"> 7</span>
+<span class="normal"> 8</span>
+<span class="normal"> 9</span>
+<span class="normal">10</span>
+<span class="normal">11</span>
+<span class="normal">12</span>
+<span class="normal">13</span>
+<span class="normal">14</span>
+<span class="normal">15</span>
+<span class="normal">16</span>
+<span class="normal">17</span>
+<span class="normal">18</span>
+<span class="normal">19</span>
+<span class="normal">20</span>
+<span class="normal">21</span>
+<span class="normal">22</span>
+<span class="normal">23</span>
+<span class="normal">24</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="kd">struct</span> <span class="nc">OnboardingState</span> <span class="p">{</span>
+    <span class="kd">let</span> <span class="nv">phoneNumber</span><span class="p">:</span> <span class="nb">String</span><span class="p">?</span>
+    <span class="kd">let</span> <span class="nv">verificationCode</span><span class="p">:</span> <span class="nb">String</span><span class="p">?</span>
+    <span class="kd">let</span> <span class="nv">email</span><span class="p">:</span> <span class="nb">String</span><span class="p">?</span>
+<span class="p">}</span>
+
+<span class="kr">final</span> <span class="kd">class</span> <span class="nc">OnboardingFlow</span> <span class="p">{</span>
+    <span class="kd">private</span> <span class="kd">let</span> <span class="nv">router</span> <span class="p">=</span> <span class="n">Router</span><span class="p">&lt;</span><span class="n">OnboardingState</span><span class="p">&gt;</span>
+    <span class="kd">private</span> <span class="kd">let</span> <span class="nv">state</span> <span class="p">=</span> <span class="n">OnboardingState</span><span class="p">()</span>
+
+    <span class="kd">init</span><span class="p">()</span> <span class="p">{</span>
+        <span class="kc">self</span><span class="p">.</span><span class="n">router</span><span class="p">.</span><span class="n">addRoute</span><span class="p">({</span> <span class="nv">$0</span><span class="p">.</span><span class="n">phoneNumber</span> <span class="p">==</span> <span class="kc">nil</span> <span class="p">},</span> <span class="n">EnterPhoneNumberViewController</span><span class="p">())</span>
+        <span class="kc">self</span><span class="p">.</span><span class="n">router</span><span class="p">.</span><span class="n">addRoute</span><span class="p">({</span> <span class="nv">$0</span><span class="p">.</span><span class="n">verificationCode</span> <span class="p">==</span> <span class="kc">nil</span> <span class="p">},</span> <span class="n">VerifyPhoneViewController</span><span class="p">())</span>
+        <span class="kc">self</span><span class="p">.</span><span class="n">router</span><span class="p">.</span><span class="n">addRoute</span><span class="p">({</span> <span class="nv">$0</span><span class="p">.</span><span class="n">email</span> <span class="p">==</span> <span class="kc">nil</span> <span class="p">},</span> <span class="n">EnterEmailViewController</span><span class="p">())</span>
+
+        <span class="c1">// If all login details are provided, return  `nil` to indicate this flow has</span>
+        <span class="c1">// no (other) Routable to provide and should be exited</span>
+        <span class="kc">self</span><span class="p">.</span><span class="n">router</span><span class="p">.</span><span class="n">addRoute</span><span class="p">({</span> <span class="kc">_</span> <span class="k">in</span> <span class="p">},</span> <span class="kc">nil</span><span class="p">)</span>
+    <span class="p">}</span>
+
+    <span class="kd">func</span> <span class="nf">currentRoutable</span><span class="p">()</span> <span class="p">-&gt;</span> <span class="n">Routable</span> <span class="p">{</span>
+        <span class="k">return</span> <span class="kc">self</span><span class="p">.</span><span class="n">router</span><span class="p">.</span><span class="n">route</span><span class="p">(</span><span class="k">for</span><span class="p">:</span> <span class="n">state</span><span class="p">)</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></td></tr></table></div>
+
+<p>We're then composing flows by adding <code>Routable</code> conformance to each flow and
+have it provide a view controller, adding its current <code>Routable</code>s view
+controller as a child:</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span class="normal">1</span>
+<span class="normal">2</span>
+<span class="normal">3</span>
+<span class="normal">4</span>
+<span class="normal">5</span>
+<span class="normal">6</span>
+<span class="normal">7</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="kd">extension</span> <span class="nc">Flow</span><span class="p">:</span> <span class="n">Routable</span> <span class="p">{</span>
+    <span class="kd">var</span> <span class="nv">rootViewController</span><span class="p">:</span> <span class="bp">UIViewController</span> <span class="p">{</span>
+        <span class="kd">let</span> <span class="nv">parent</span> <span class="p">=</span> <span class="bp">UIViewController</span><span class="p">()</span>
+        <span class="n">parent</span><span class="p">.</span><span class="n">addChild</span><span class="p">(</span><span class="kc">self</span><span class="p">.</span><span class="n">currentRoutable</span><span class="p">().</span><span class="n">viewController</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">parent</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></td></tr></table></div>
+
+<p>Now a flow can also route to another flow by adding an entry to its router:</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span class="normal">1</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="kc">self</span><span class="p">.</span><span class="n">router</span><span class="p">.</span><span class="n">addRoute</span><span class="p">({</span> <span class="nv">$0</span><span class="p">.</span><span class="n">needsOnboarding</span> <span class="p">},</span> <span class="n">OnboardingFlow</span><span class="p">())</span>
+</code></pre></div></td></tr></table></div>
+
+<p>This pattern could let you build entire trees of flows:</p>
+<p><img alt="Simplified flow diagram" src="/images/flows.png"></p>
+<p>When we first conceptualized flows we imagined having a tree of about 20 flows
+total; today we have more than 80. Flows have become the "unit of development"
+of our apps: developers no longer need to care about the full application or a
+single module, but can build an ad-hoc app with just the flow they're working
+on.</p>
+<h2 id="plugins">Plugins</h2>
+<p>Although flows simplify state management and navigation, the logic of the
+individual screens within a flow could still be very intertwined. To mitigate
+that problem, we've introduced plugins. Plugins allow for attaching
+functionality to a flow without the flow even knowing that the plugin exists.</p>
+<p>For example, to add more screens to the OnboardingFlow from above, we can expose
+a method on it that would call into its router:</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span class="normal">1</span>
+<span class="normal">2</span>
+<span class="normal">3</span>
+<span class="normal">4</span>
+<span class="normal">5</span>
+<span class="normal">6</span>
+<span class="normal">7</span>
+<span class="normal">8</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="kd">extension</span> <span class="nc">OnboardingFlow</span> <span class="p">{</span>
+    <span class="kd">public</span> <span class="kd">func</span> <span class="nf">addRoutingPlugin</span><span class="p">(</span>
+        <span class="n">routable</span><span class="p">:</span> <span class="n">Routable</span><span class="p">?,</span>
+        <span class="kc">_</span> <span class="n">condition</span><span class="p">:</span> <span class="p">@</span><span class="n">escaping</span> <span class="p">(</span><span class="n">OnboardingState</span><span class="p">)</span> <span class="p">-&gt;</span> <span class="nb">Bool</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="kc">self</span><span class="p">.</span><span class="n">router</span><span class="p">.</span><span class="n">addRoute</span><span class="p">((</span><span class="n">condition</span><span class="p">,</span> <span class="n">routable</span><span class="p">))</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></td></tr></table></div>
+
+<p>Since this method is public, any plugin that imports it can add a new screen. The
+flow doesn't know anything about this plugin, so the entire dependency tree is
+inverted with plugins. Instead of a flow depending on all the functionalities of
+all of its plugins, it provides a simple interface that lets plugins extend this
+functionality in isolation by having them depend on the flow.</p>
+<p><img alt="Simplified plugin setup" src="/images/plugins.png"></p>
+<p>Since all Lyft apps operate on a tree of flows, the overall dependency graph
+changes from a tree shape to a "bubble" shape:</p>
+<p><img alt="Bubble dependency graph" src="/images/graph.png"></p>
+<p>This setup provides feature isolation at the compiler level which makes it much
+harder to accidentally intertwine features. Each plugin also has its own feature
+flag, making it very easy to disable a feature if necessary.</p>
+<p>In addition to routing plugins, we also provide interfaces to add additional
+views to any view controller, deep link plugins to deep link to any arbitrary
+part of the app, list plugins to build lists with custom content, and a few
+others very unique to Lyft's use cases.</p>
+<h2 id="unidirectional-data-flow">Unidirectional Data Flow</h2>
+<p>More recently we introduced a redux-like unidirectional data flow (UDF) for
+screens and views within flows. Flows were optimized for state management within
+a collection of screens, the UDF brings the same benefits we saw there to
+individual screens.</p>
+<p>A typical redux implementation has state flowing into the UI and actions that
+modify state coming out of the UI. Influenced by <a href="https://github.com/pointfreeco/swift-composable-architecture">The Composable
+Architecture</a>, our implementation of redux actions also includes executing
+side effects to interact with the environment (network, disk, notifications,
+etc.).</p>
+<h2 id="declarative-ui">Declarative UI</h2>
+<p>In 2018, we began building out our <a href="https://design.lyft.com/building-a-design-system-library-3a1f0d09088f">Design System</a>. At the time, it was a
+layer on top of UIKit, often with a slightly modernized API, that would provide
+UI elements with common defaults like fonts, colors, icons, dimensions, etc.</p>
+<p>When Apple introduced SwiftUI in mid-2019, it required a deployment target of
+iOS 13. At the time, we still supported iOS 10 and even today we still support
+iOS 12 so we still can't use it.</p>
+<p>However, we did write an internal library called <code>DeclarativeUI</code>, which provides
+the same declarative APIs that SwiftUI brings but leveraging the Design System
+we had already built. Even better, we've built <code>binding</code> conveniences into both
+DeclarativeUI and our UDF <code>Store</code> types to make them work together seamlessly: </p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span class="normal"> 1</span>
+<span class="normal"> 2</span>
+<span class="normal"> 3</span>
+<span class="normal"> 4</span>
+<span class="normal"> 5</span>
+<span class="normal"> 6</span>
+<span class="normal"> 7</span>
+<span class="normal"> 8</span>
+<span class="normal"> 9</span>
+<span class="normal">10</span>
+<span class="normal">11</span>
+<span class="normal">12</span>
+<span class="normal">13</span>
+<span class="normal">14</span>
+<span class="normal">15</span>
+<span class="normal">16</span>
+<span class="normal">17</span>
+<span class="normal">18</span>
+<span class="normal">19</span>
+<span class="normal">20</span>
+<span class="normal">21</span>
+<span class="normal">22</span>
+<span class="normal">23</span>
+<span class="normal">24</span>
+<span class="normal">25</span>
+<span class="normal">26</span>
+<span class="normal">27</span>
+<span class="normal">28</span>
+<span class="normal">29</span>
+<span class="normal">30</span>
+<span class="normal">31</span>
+<span class="normal">32</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="kd">import</span> <span class="nc">DeclarativeUI</span>
+<span class="kd">import</span> <span class="nc">Unidirectional</span>
+
+<span class="kr">final</span> <span class="kd">class</span> <span class="nc">QuestionView</span><span class="p">:</span> <span class="n">DeclarativeUI</span><span class="p">.</span><span class="n">View</span> <span class="p">{</span>
+    <span class="kd">private</span> <span class="kd">let</span> <span class="nv">viewStore</span><span class="p">:</span> <span class="n">Store</span><span class="p">&lt;</span><span class="n">QuestionState</span><span class="p">&gt;</span>
+
+    <span class="kd">init</span><span class="p">(</span><span class="n">store</span><span class="p">:</span> <span class="n">Store</span><span class="p">&lt;</span><span class="n">QuestionState</span><span class="p">&gt;)</span> <span class="p">{</span>
+        <span class="kc">self</span><span class="p">.</span><span class="n">viewStore</span> <span class="p">=</span> <span class="n">store</span>
+    <span class="p">}</span>
+
+    <span class="kd">var</span> <span class="nv">body</span><span class="p">:</span> <span class="n">DeclarativeUI</span><span class="p">.</span><span class="n">View</span> <span class="p">{</span>
+        <span class="k">return</span> <span class="n">VStackView</span><span class="p">(</span><span class="n">spacing</span><span class="p">:</span> <span class="p">.</span><span class="n">three</span><span class="p">)</span> <span class="p">{</span>
+            <span class="n">HeaderView</span><span class="p">(</span><span class="n">store</span><span class="p">:</span> <span class="kc">self</span><span class="p">.</span><span class="n">store</span><span class="p">)</span>
+            <span class="n">Label</span><span class="p">(</span><span class="n">text</span><span class="p">:</span> <span class="n">viewStore</span><span class="p">.</span><span class="n">bind</span><span class="p">(</span><span class="err">\</span><span class="p">.</span><span class="n">header</span><span class="p">))</span>
+                <span class="p">.</span><span class="n">textStyle</span><span class="p">(.</span><span class="n">titleF1</span><span class="p">)</span>
+                <span class="p">.</span><span class="n">textAlignment</span><span class="p">(.</span><span class="n">center</span><span class="p">)</span>
+                <span class="p">.</span><span class="n">lineLimit</span><span class="p">(</span><span class="kc">nil</span><span class="p">)</span>
+                <span class="p">.</span><span class="n">accessibility</span><span class="p">(</span><span class="n">postScreenChanged</span><span class="p">:</span> <span class="n">viewStore</span><span class="p">.</span><span class="n">bind</span><span class="p">(</span><span class="err">\</span><span class="p">.</span><span class="n">header</span><span class="p">))</span>
+            <span class="n">VStackView</span><span class="p">(</span><span class="n">viewStore</span><span class="p">.</span><span class="n">bind</span><span class="p">(</span><span class="err">\</span><span class="p">.</span><span class="n">choices</span><span class="p">),</span> <span class="n">spacing</span><span class="p">:</span> <span class="p">.</span><span class="n">two</span><span class="p">)</span> <span class="p">{</span> <span class="n">choice</span> <span class="k">in</span>
+                <span class="n">TwoChoiceButton</span><span class="p">(</span><span class="n">choice</span><span class="p">:</span> <span class="n">choice</span><span class="p">).</span><span class="n">onEvent</span><span class="p">(</span>
+                    <span class="p">.</span><span class="n">touchUpInside</span><span class="p">,</span>
+                    <span class="n">action</span><span class="p">:</span> <span class="n">viewStore</span><span class="p">.</span><span class="n">send</span><span class="p">(.</span><span class="n">choiseSelected</span><span class="p">(</span><span class="n">index</span><span class="p">:</span> <span class="n">choice</span><span class="p">.</span><span class="n">index</span><span class="p">)))</span>
+            <span class="p">}</span>
+            <span class="p">.</span><span class="n">hidden</span><span class="p">(</span><span class="n">viewStore</span><span class="p">.</span><span class="n">bind</span><span class="p">(</span><span class="err">\</span><span class="p">.</span><span class="n">choices</span><span class="p">.</span><span class="bp">isEmpty</span><span class="p">))</span>
+
+            <span class="k">if</span> <span class="n">viewStore</span><span class="p">.</span><span class="n">currentState</span><span class="p">.</span><span class="n">model</span><span class="p">.</span><span class="n">usesButtonToIncrementQuestion</span> <span class="p">{</span>
+                <span class="n">NextQuestionButton</span><span class="p">(</span><span class="n">store</span><span class="p">:</span> <span class="kc">self</span><span class="p">.</span><span class="n">store</span><span class="p">)</span>
+                    <span class="p">.</span><span class="n">hidden</span><span class="p">(</span><span class="n">viewStore</span><span class="p">.</span><span class="n">bind</span><span class="p">(</span><span class="err">\</span><span class="p">.</span><span class="n">choices</span><span class="p">.</span><span class="bp">isEmpty</span><span class="p">))</span>
+            <span class="p">}</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></td></tr></table></div>
+
+<h2 id="putting-it-all-together">Putting it all together</h2>
+<p>All these technologies combined make for a completely different developer
+experience now than five years ago. Doing the right thing is easy, doing the
+wrong thing is difficult. Features are isolated from each other, and even
+feature components are separated from each other in different modules.</p>
+<p>Testing was never easier: unit tests for modules with pure business logic,
+snapshot tests for UI modules, and for integration tests it takes little effort
+to sping up a standalone app with just the flow you're interested in.</p>
+<p>State is easy to track with debug conveniences built into the architectures,
+building UI is more enjoyable than it was with plain UIKit, and adding a feature
+from 1 app into another is often just a matter of attaching the plugin to a
+second flow without detangling it from all other features on that screen.</p>
+<p>It's amazing to look back at where the codebase started some 6 years ago, and
+where it is now. Who knows where it will be in another 6 years!</p>
+<p><em>Note: If you're interested in hearing more, I also talked about many of these
+technologies on the <a href="https://podcasts.apple.com/us/podcast/mobile-architecture-pt-1-with-scott-berrevoets/id1453587931?i=1000512549072">Lyft Mobile Podcast</a>!</em></p>
+  </div><!-- /.entry-content -->
+</section>
+
+  <script data-goatcounter="https://sberrevoets.goatcounter.com/count"
+          async src="//gc.zgo.at/count.js"></script>
+</body>
+</html>

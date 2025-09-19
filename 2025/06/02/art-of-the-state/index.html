@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+          <title>Art of the state - Scott Berrevoets</title>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <link rel="icon" type="image/png" href="https://scottberrevoets.com/theme/images/favicon.png">
+        <link rel="apple-touch-icon" type="image/png" sizes="any" href="https://scottberrevoets.com/theme/images/favicon.png">
+        <link href="https://scottberrevoets.com/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="Scott Berrevoets Full Atom Feed" />
+        <link href="https://scottberrevoets.com/feeds/all.rss.xml" type="application/rss+xml" rel="alternate" title="Scott Berrevoets Full RSS Feed" />
+        <link href="https://scottberrevoets.com/feeds/atom.xml" type="application/atom+xml" rel="alternate" title="Scott Berrevoets Atom Feed" />
+        <link href="https://scottberrevoets.com/feeds/rss.xml" type="application/rss+xml" rel="alternate" title="Scott Berrevoets RSS Feed" />
+
+    <meta name="description" content="Best practices in defining better state and data models" />
+
+
+        <link rel="stylesheet" type="text/css" href="https://scottberrevoets.com/theme/css/style.css" />
+</head>
+
+<body id="index" class="home">
+<svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
+  <symbol id="github" viewBox="0 0 24 24">
+    <path stroke="none" d="M0 0h24v24H0z" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+    <path d="M9 19c-4.3 1.4 -4.3 -2.5 -6 -3m12 5v-3.5c0 -1 .1 -1.4 -.5 -2c2.8 -.3 5.5 -1.4 5.5 -6a4.6 4.6 0 0 0 -1.3 -3.2a4.2 4.2 0 0 0 -.1 -3.2s-1.1 -.3 -3.5 1.3a12.3 12.3 0 0 0 -6.2 0c-2.4 -1.6 -3.5 -1.3 -3.5 -1.3a4.2 4.2 0 0 0 -.1 3.2a4.6 4.6 0 0 0 -1.3 3.2c0 4.6 2.7 5.7 5.5 6c-.6 .6 -.6 1.2 -.5 2v3.5" stroke="currentColor" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+  </symbol>
+  <symbol id="mastodon" viewBox="0 0 24 24">
+    <path stroke="none" d="M0 0h24v24H0z" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+    <path d="M18.648 15.254c-1.816 1.763 -6.648 1.626 -6.648 1.626a18.262 18.262 0 0 1 -3.288 -.256c1.127 1.985 4.12 2.81 8.982 2.475c-1.945 2.013 -13.598 5.257 -13.668 -7.636l-.026 -1.154c0 -3.036 .023 -4.115 1.352 -5.633c1.671 -1.91 6.648 -1.666 6.648 -1.666s4.977 -.243 6.648 1.667c1.329 1.518 1.352 2.597 1.352 5.633s-.456 4.074 -1.352 4.944z" stroke="currentColor" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+    <path d="M12 11.204v-2.926c0 -1.258 -.895 -2.278 -2 -2.278s-2 1.02 -2 2.278v4.722m4 -4.722c0 -1.258 .895 -2.278 2 -2.278s2 1.02 2 2.278v4.722" stroke="currentColor" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+  </symbol>
+  <symbol id="mail" viewBox="0 0 24 24">
+    <path stroke="none" d="M0 0h24v24H0z" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+    <path d="M3 7a2 2 0 0 1 2 -2h14a2 2 0 0 1 2 2v10a2 2 0 0 1 -2 2h-14a2 2 0 0 1 -2 -2v-10z" stroke="currentColor" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+    <path d="M3 7l9 6l9 -6" stroke="currentColor" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+  </symbol>
+  <symbol id="rss" viewBox="0 0 24 24">
+    <path stroke="none" d="M0 0h24v24H0z" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+    <path d="M5 19m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0" stroke="currentColor" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+    <path d="M4 4a16 16 0 0 1 16 16" stroke="currentColor" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+    <path d="M4 11a9 9 0 0 1 9 9" stroke="currentColor" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+  </symbol>
+  <symbol id="linkedin" viewBox="0 0 24 24">
+    <path stroke="none" d="M0 0h24v24H0z" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+    <path d="M4 4m0 2a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v12a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2z" stroke="currentColor" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+    <path d="M8 11l0 5" stroke="currentColor" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+    <path d="M8 8l0 .01" stroke="currentColor" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+    <path d="M12 16l0 -5" stroke="currentColor" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+    <path d="M16 16v-3a2 2 0 0 0 -4 0" stroke="currentColor" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+  </symbol>
+</svg>        <header id="banner" class="body">
+            <div class="header-top">
+                <h1><a href="https://scottberrevoets.com/">Scott Berrevoets</a></h1>
+
+                <ul id="social">
+                    <li><a href="https://github.com/sberrevoets">
+                        <svg class="icon"><use href="#github" /></svg>
+                    </a></li>
+                    <li><a href="https://linkedin.com/in/sberrevoets">
+                        <svg class="icon"><use href="#linkedin" /></svg>
+                    </a></li>
+                    <li><a href="https://hachyderm.io/@ScottBerrevoets">
+                        <svg class="icon"><use href="#mastodon" /></svg>
+                    </a></li>
+                    <li><a href="mailto:hi@scottberrevoets.com">
+                        <svg class="icon"><use href="#mail" /></svg>
+                    </a></li>
+                    <li><a href="/feeds/all.atom.xml">
+                        <svg class="icon"><use href="#rss" /></svg>
+                    </a></li>
+                </ul>
+            </div>
+
+            <nav id="menu"><ul>
+                <li><a href="https://scottberrevoets.com/">About</a></li>
+                <li><a href="https://scottberrevoets.com/blog.html">Blog</a></li>
+            </ul></nav><!-- /#menu -->
+        </header><!-- /#banner -->
+<section id="content" class="body">
+  <header>
+      <h2 class="article-title">Art of the state</h2>
+ 
+    <time class="published subheader" datetime="2025-06-02T00:00:00-07:00">
+      June 02, 2025
+    </time>
+        <span class="subheader">&bullet; 10 min read</span>
+  </header>
+  <div class="article-content">
+    <p><code>@State</code> plays a prominent role in any SwiftUI app, and for good reason: app
+state is what ultimately drives the UI and how the user interacts with your app.
+This has always been true, but SwiftUI embraces this reality with specific APIs
+and a unidirectional data flow. UIKit-based apps or features were <em>also</em> driven
+by state, but this state would often live in the UI layer and was much more
+hidden as a result.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>This is actually true for frontend/web apps as well, as React works in a
+very similar way as SwiftUI and also uses a unidirectional data flow. In
+fact, I suspect SwiftUI drew some inspiration from React in terms of API
+design, but we probably won't ever get that confirmed :)</p>
+</div>
+<p>SwiftUI improves the data flow in applications, but there is much less
+discussion on best practices for defining what that data looks like. This is too
+bad, because thoughtful data and state modeling has cascading effects in API
+design and testability of code. Suboptimal definitions of state in the the model
+layer means that view models, view controllers, views, etc. all also suffer from
+that suboptimal design.</p>
+<p>No matter the app, state plays a critical role (even if that state largely comes
+from the server) and I wanted to write down best practices and common pitfalls
+I've seen when writing state models.</p>
+<h2 id="prefer-value-types">Prefer value types</h2>
+<p>State is often passed down or otherwise accessed by different parts of the app.
+In some cases you might want to mutate it or operate on a separate copy of that
+state, without immediately affecting every other part of the app that relies on
+that same state. Using value types provides the necessary guard rails to make
+sure those changes don't unintentionally also impact other parts of the app,
+while still making it possible, to also globally mutate state.</p>
+<p>Making the main state type a struct or an enum is a good start but not always
+sufficient: <em>all</em> state in a tree is ideally using value types. This avoids
+misusing a state type to be more than just the basic values that represent the
+current condition of the app.</p>
+<p>It also inherently means that almost all state should be a collection of
+"primitives" like <code>String</code>, <code>Int</code>, <code>Float</code>/<code>Double</code>, and <code>Bool</code> that are used
+either directly or wrapped in other types (e.g. <code>CGRect</code>,
+<code>NumberFormatter.Style</code>, a custom type, etc.).</p>
+<p>Basically any other type is out. No classes, closures, actors, or other more
+complex types as they typically aren't good candidates to represent state.
+Unfortunately, <a href="https://forums.swift.org/t/status-of-se-0283-tuples-conform-to-equatable-comparable-and-hashable/46942/3">tuples</a> are also not an option for now, but using a named
+struct is usually worth that hassle.</p>
+<p>I've found that a good way to validate this is by making all state types conform
+to <code>Equatable</code> (or possibly <code>Sendable</code>). Types whose implementation of those
+<code>Equatable</code> don't require a custom implementation of <code>==</code> are good to go, and if
+the compiler complains about non-conformance there's some critical thinking to
+do.</p>
+<h2 id="avoid-singletons">Avoid singletons</h2>
+<p>If you needed more reasons to dislike singletons, here is another one: it makes
+data modeling more difficult. Take this <code>UserManager</code> example:</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span class="normal"> 1</span>
+<span class="normal"> 2</span>
+<span class="normal"> 3</span>
+<span class="normal"> 4</span>
+<span class="normal"> 5</span>
+<span class="normal"> 6</span>
+<span class="normal"> 7</span>
+<span class="normal"> 8</span>
+<span class="normal"> 9</span>
+<span class="normal">10</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="kd">struct</span> <span class="nc">User</span> <span class="p">{</span>
+    <span class="kd">let</span> <span class="nv">id</span><span class="p">:</span> <span class="n">UUID</span>
+    <span class="kd">let</span> <span class="nv">name</span><span class="p">:</span> <span class="nb">String</span>
+<span class="p">}</span>
+
+<span class="kr">final</span> <span class="kd">class</span> <span class="nc">UserManager</span> <span class="p">{</span>
+    <span class="kd">static</span> <span class="kd">let</span> <span class="nv">shared</span> <span class="p">=</span> <span class="n">UserManager</span><span class="p">()</span>
+
+    <span class="kd">var</span> <span class="nv">user</span><span class="p">:</span> <span class="n">User</span><span class="p">?</span>
+<span class="p">}</span>
+</code></pre></div></td></tr></table></div>
+
+<p>Ignoring all other singleton-related issues, the problem here is that since
+<code>UserManager</code> can be accessed even if the user isn't logged in, it gets hard to
+model the <code>user</code> property:</p>
+<ul>
+<li>Make it optional and you're dealing with optionality everywhere, which is also
+  not ideal (more on that below)</li>
+<li>Make it "empty" (e.g. <code>var user = User(id: UUID(), name: "")</code>, and it doesn't
+  properly reflect the state the app could actually be in since a <code>user</code> isn't
+  required for the app to function</li>
+</ul>
+<p>It's better to architect this in a different way such that you can guarantee the
+<code>user</code> and its properties are valid (i.e. non-nil and not just some default
+value) when asking for it.</p>
+<h2 id="separate-dtos-from-domain-models">Separate DTOs from domain models</h2>
+<p><strong>Data Transfer Objects</strong> are the objects you get back directly from, typically,
+an API. DTOs are directly bound to the data the API sends, which could have all
+kinds of problems: missing or unused fields, wrong data types, optionality in
+some cases but not in others, unexpected or inconsistent formats, different
+versions, etc.</p>
+<p>It's tempting to use these DTOs directly, especially when using mechanisms like
+Codable to create them easily and to cover some of those flaws. However, it
+might also be tempting to <em>not</em> optimize the domain model for your app because
+Codable isn't always the easiest to work it. This could handicap your data
+models as they now have to follow the API design and all its flaws everywhere in
+your app.</p>
+<p>Admittedly, it is a bit annoying to write the data model "twice", but the work
+often pays off and the decoupling is worth it. Perhaps AI or other tools can
+help with this as well.</p>
+<h2 id="avoid-state-impossibilities">Avoid state impossibilities</h2>
+<p>Imagine a <code>User</code> object that captures the user's email and its verification
+status:</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span class="normal">1</span>
+<span class="normal">2</span>
+<span class="normal">3</span>
+<span class="normal">4</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="kd">struct</span> <span class="nc">User</span> <span class="p">{</span>
+    <span class="kd">let</span> <span class="nv">email</span><span class="p">:</span> <span class="nb">String</span><span class="p">?</span>
+    <span class="kd">let</span> <span class="nv">emailVerified</span><span class="p">:</span> <span class="nb">Bool</span>
+<span class="p">}</span>
+</code></pre></div></td></tr></table></div>
+
+<p>The <code>verified</code> status is required regardless of whether there is an email
+address. But the combination <code>email = nil</code> and <code>emailVerified = true</code> means
+nothing, so the state is modeling an impossible scenario. It's better to model
+this as a tuple or a struct:</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span class="normal"> 1</span>
+<span class="normal"> 2</span>
+<span class="normal"> 3</span>
+<span class="normal"> 4</span>
+<span class="normal"> 5</span>
+<span class="normal"> 6</span>
+<span class="normal"> 7</span>
+<span class="normal"> 8</span>
+<span class="normal"> 9</span>
+<span class="normal">10</span>
+<span class="normal">11</span>
+<span class="normal">12</span>
+<span class="normal">13</span>
+<span class="normal">14</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="kd">struct</span> <span class="nc">User</span> <span class="p">{</span>
+    <span class="kd">struct</span> <span class="nc">Email</span> <span class="p">{</span>
+        <span class="kd">let</span> <span class="nv">value</span><span class="p">:</span> <span class="nb">String</span>
+        <span class="kd">let</span> <span class="nv">verified</span><span class="p">:</span> <span class="nb">Bool</span>
+    <span class="p">}</span>
+
+    <span class="kd">let</span> <span class="nv">email</span><span class="p">:</span> <span class="n">Email</span><span class="p">?</span>
+    <span class="c1">// or</span>
+    <span class="kd">let</span> <span class="nv">email</span><span class="p">:</span> <span class="p">(</span><span class="n">value</span><span class="p">:</span> <span class="nb">String</span><span class="p">,</span> <span class="n">verified</span><span class="p">:</span> <span class="nb">Bool</span><span class="p">)?</span>
+
+    <span class="c1">// with optional conveniences:</span>
+    <span class="kd">var</span> <span class="nv">emailAddress</span><span class="p">:</span> <span class="nb">String</span><span class="p">?</span> <span class="p">{</span> <span class="n">email</span><span class="p">?.</span><span class="n">address</span> <span class="p">}</span>
+    <span class="kd">var</span> <span class="nv">emailVerified</span><span class="p">:</span> <span class="nb">Bool</span> <span class="p">{</span> <span class="n">email</span><span class="p">?.</span><span class="n">verified</span> <span class="p">==</span> <span class="kc">true</span> <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></td></tr></table></div>
+
+<p>Now either both fields are set, or neither are and the app doesn't have to
+handle that "impossible" state.</p>
+<h2 id="minimize-redundant-state">Minimize redundant state</h2>
+<p>Try to use the minimum amount of state possible to represent a scenario. For
+example, you might start out with a simple flag to choose whether an account has
+been selected, but the app's requirements later change to also capture <em>which</em>
+account:</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span class="normal">1</span>
+<span class="normal">2</span>
+<span class="normal">3</span>
+<span class="normal">4</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="kd">struct</span> <span class="nc">AccountSelection</span> <span class="p">{</span>
+    <span class="kd">let</span> <span class="nv">hasSelectedAccount</span><span class="p">:</span> <span class="nb">Bool</span>
+    <span class="kd">let</span> <span class="nv">selectedAccount</span><span class="p">:</span> <span class="n">Account</span><span class="p">?</span>
+<span class="p">}</span>
+</code></pre></div></td></tr></table></div>
+
+<p>Not only does this lead to another impossible state (<code>hasSelectedAccount =
+true</code> and <code>selectedAccount = nil</code>), but <code>hasSelectedAccount</code> can also be
+inferred from <code>selectedAccount</code>: if it's <code>nil</code>, no account has been selected.</p>
+<p>Don't be lazy and let these redundancies build up in your app because the core
+business logic and UI layers (and tests!) will have to deal with this
+unnecessary complexity.</p>
+<h2 id="reduce-optionals-when-possible">Reduce optionals when possible</h2>
+<blockquote>
+<p>The power of optionals is not using them</p>
+<p>- Someone, at some point</p>
+</blockquote>
+<p>In languages that have an <code>Optional</code> type, use them as little as possible. An
+optional immediately forks a type into two possible values (<code>some</code> or <code>none</code>),
+which incurs an additional code branch to test.</p>
+<p>Note that "as little as possible" doesn't mean "never", so here are a few common
+pitfalls I've encountered when an optional is the best tool available:</p>
+<h3 id="handle-optionality-as-early-as-possible">Handle optionality as early as possible</h3>
+<p>If you're calling an API that returns an optional value that you expect to
+always be there anyway, try to eliminate it as early as possible instead of
+letting that optional permeate your entire tech stack. Define your model with
+the value as a non-optional and assert on its existence in your model (or even
+networking) layer.</p>
+<p>In line with the DTO use above, that could look like this:</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span class="normal"> 1</span>
+<span class="normal"> 2</span>
+<span class="normal"> 3</span>
+<span class="normal"> 4</span>
+<span class="normal"> 5</span>
+<span class="normal"> 6</span>
+<span class="normal"> 7</span>
+<span class="normal"> 8</span>
+<span class="normal"> 9</span>
+<span class="normal">10</span>
+<span class="normal">11</span>
+<span class="normal">12</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="kd">struct</span> <span class="nc">User</span> <span class="p">{</span>
+    <span class="kd">let</span> <span class="nv">name</span><span class="p">:</span> <span class="nb">String</span>
+
+    <span class="kd">init</span><span class="p">(</span><span class="n">dto</span><span class="p">:</span> <span class="n">UserDTO</span><span class="p">)</span> <span class="kr">throws</span> <span class="p">{</span>
+        <span class="c1">// UserDTO might not have a user&#39;s name for some reason</span>
+        <span class="k">guard</span> <span class="kd">let</span> <span class="nv">name</span> <span class="p">=</span> <span class="n">dto</span><span class="p">.</span><span class="n">name</span> <span class="k">else</span> <span class="p">{</span>
+            <span class="k">throw</span> <span class="n">ParsingError</span><span class="p">.</span><span class="n">missingField</span><span class="p">(</span><span class="s">&quot;name&quot;</span><span class="p">)</span>
+        <span class="p">}</span>
+
+        <span class="kc">self</span><span class="p">.</span><span class="n">name</span> <span class="p">=</span> <span class="n">dto</span><span class="p">.</span><span class="n">name</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></td></tr></table></div>
+
+<p>This eliminates the need to test for what happens at every other layer (UI,
+business logic, etc.) if that value were to be nil.</p>
+<h3 id="optional-vs-empty-arrays">Optional vs. empty arrays</h3>
+<p>A pattern I see a lot, unfortunately also in Apple's code, is an array defined
+like this:</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span class="normal">1</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="kd">let</span> <span class="nv">myStrings</span><span class="p">:</span> <span class="p">[</span><span class="nb">String</span><span class="p">]?</span>
+</code></pre></div></td></tr></table></div>
+
+<p>The optional here makes the code more difficult to deal with, since now you have
+to account for the <code>nil</code> case everywhere, in addition to the array being empty.</p>
+<p>Hot take: in the vast majority of cases, code doesn't handle a <code>nil</code> array
+differently from an empty array (search your codebase for <code>?? []</code> and you'll see
+what I mean), so you might as well model it like that too.</p>
+<p>In the situations where that difference <em>is</em> meaningful, making the property
+optional is fine:</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span class="normal">1</span>
+<span class="normal">2</span>
+<span class="normal">3</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="kd">struct</span> <span class="nc">User</span> <span class="p">{</span>
+    <span class="kd">let</span> <span class="nv">friends</span><span class="p">:</span> <span class="p">[</span><span class="n">User</span><span class="p">]?</span>
+<span class="p">}</span>
+</code></pre></div></td></tr></table></div>
+
+<p>In this case, <code>nil</code> could mean we don't know who the user's friends are, and
+an empty array could mean the user has no friends ☹️</p>
+<h3 id="consider-enums-instead-of-optionals">Consider enums instead of optionals</h3>
+<p>The <code>Result</code> type was introduced in Swift's standard library to eliminate the
+awkward situation where both the value and the error are optional types yet one
+of them will always be set. (Another example of state impossibility: what does
+it mean if both the value <em>and</em> the error are set? Or neither?)</p>
+<p>I've often seen this awkwardness in state as well, and similar to <code>Result</code>, the
+solution is often to model that state as an enum with associated values. As a
+simplified example, instead of a bunch of optionals in an onboarding flow where
+data is collected step by step, that state could be modeled as:</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span class="normal">1</span>
+<span class="normal">2</span>
+<span class="normal">3</span>
+<span class="normal">4</span>
+<span class="normal">5</span>
+<span class="normal">6</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="kd">struct</span> <span class="nc">OnboardingState</span> <span class="p">{</span>
+    <span class="k">case</span> <span class="n">askForName</span>
+    <span class="k">case</span> <span class="n">askForBirthday</span><span class="p">(</span><span class="n">name</span><span class="p">:</span> <span class="nb">String</span><span class="p">)</span>
+    <span class="k">case</span> <span class="n">askForEmail</span><span class="p">(</span><span class="n">name</span><span class="p">:</span> <span class="nb">String</span><span class="p">,</span> <span class="n">birthday</span><span class="p">:</span> <span class="n">Date</span><span class="p">)</span>
+    <span class="k">case</span> <span class="n">askForPhone</span><span class="p">(</span><span class="n">name</span><span class="p">:</span> <span class="nb">String</span><span class="p">,</span> <span class="n">birthday</span><span class="p">:</span> <span class="n">Date</span><span class="p">,</span> <span class="n">email</span><span class="p">:</span> <span class="nb">String</span><span class="p">)</span>
+<span class="p">}</span>
+</code></pre></div></td></tr></table></div>
+
+<h2 id="closing">Closing</h2>
+<p>Not all of the techniques above will be useful all the time, but I've often
+found myself adjusting the data model when something was annoying to deal with
+in layers that consumed it, and over time realized the importance of getting the
+details there right to make the rest of the application easier to deal with too.</p>
+  </div><!-- /.entry-content -->
+</section>
+
+  <script data-goatcounter="https://sberrevoets.goatcounter.com/count"
+          async src="//gc.zgo.at/count.js"></script>
+</body>
+</html>

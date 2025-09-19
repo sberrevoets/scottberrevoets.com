@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+          <title>Incremental complexity in iOS development - Scott Berrevoets</title>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <link rel="icon" type="image/png" href="https://scottberrevoets.com/theme/images/favicon.png">
+        <link rel="apple-touch-icon" type="image/png" sizes="any" href="https://scottberrevoets.com/theme/images/favicon.png">
+        <link href="https://scottberrevoets.com/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="Scott Berrevoets Full Atom Feed" />
+        <link href="https://scottberrevoets.com/feeds/all.rss.xml" type="application/rss+xml" rel="alternate" title="Scott Berrevoets Full RSS Feed" />
+        <link href="https://scottberrevoets.com/feeds/atom.xml" type="application/atom+xml" rel="alternate" title="Scott Berrevoets Atom Feed" />
+        <link href="https://scottberrevoets.com/feeds/rss.xml" type="application/rss+xml" rel="alternate" title="Scott Berrevoets RSS Feed" />
+
+
+
+        <link rel="stylesheet" type="text/css" href="https://scottberrevoets.com/theme/css/style.css" />
+</head>
+
+<body id="index" class="home">
+<svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
+  <symbol id="github" viewBox="0 0 24 24">
+    <path stroke="none" d="M0 0h24v24H0z" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+    <path d="M9 19c-4.3 1.4 -4.3 -2.5 -6 -3m12 5v-3.5c0 -1 .1 -1.4 -.5 -2c2.8 -.3 5.5 -1.4 5.5 -6a4.6 4.6 0 0 0 -1.3 -3.2a4.2 4.2 0 0 0 -.1 -3.2s-1.1 -.3 -3.5 1.3a12.3 12.3 0 0 0 -6.2 0c-2.4 -1.6 -3.5 -1.3 -3.5 -1.3a4.2 4.2 0 0 0 -.1 3.2a4.6 4.6 0 0 0 -1.3 3.2c0 4.6 2.7 5.7 5.5 6c-.6 .6 -.6 1.2 -.5 2v3.5" stroke="currentColor" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+  </symbol>
+  <symbol id="mastodon" viewBox="0 0 24 24">
+    <path stroke="none" d="M0 0h24v24H0z" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+    <path d="M18.648 15.254c-1.816 1.763 -6.648 1.626 -6.648 1.626a18.262 18.262 0 0 1 -3.288 -.256c1.127 1.985 4.12 2.81 8.982 2.475c-1.945 2.013 -13.598 5.257 -13.668 -7.636l-.026 -1.154c0 -3.036 .023 -4.115 1.352 -5.633c1.671 -1.91 6.648 -1.666 6.648 -1.666s4.977 -.243 6.648 1.667c1.329 1.518 1.352 2.597 1.352 5.633s-.456 4.074 -1.352 4.944z" stroke="currentColor" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+    <path d="M12 11.204v-2.926c0 -1.258 -.895 -2.278 -2 -2.278s-2 1.02 -2 2.278v4.722m4 -4.722c0 -1.258 .895 -2.278 2 -2.278s2 1.02 2 2.278v4.722" stroke="currentColor" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+  </symbol>
+  <symbol id="mail" viewBox="0 0 24 24">
+    <path stroke="none" d="M0 0h24v24H0z" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+    <path d="M3 7a2 2 0 0 1 2 -2h14a2 2 0 0 1 2 2v10a2 2 0 0 1 -2 2h-14a2 2 0 0 1 -2 -2v-10z" stroke="currentColor" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+    <path d="M3 7l9 6l9 -6" stroke="currentColor" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+  </symbol>
+  <symbol id="rss" viewBox="0 0 24 24">
+    <path stroke="none" d="M0 0h24v24H0z" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+    <path d="M5 19m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0" stroke="currentColor" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+    <path d="M4 4a16 16 0 0 1 16 16" stroke="currentColor" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+    <path d="M4 11a9 9 0 0 1 9 9" stroke="currentColor" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+  </symbol>
+  <symbol id="linkedin" viewBox="0 0 24 24">
+    <path stroke="none" d="M0 0h24v24H0z" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+    <path d="M4 4m0 2a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v12a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2z" stroke="currentColor" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+    <path d="M8 11l0 5" stroke="currentColor" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+    <path d="M8 8l0 .01" stroke="currentColor" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+    <path d="M12 16l0 -5" stroke="currentColor" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+    <path d="M16 16v-3a2 2 0 0 0 -4 0" stroke="currentColor" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+  </symbol>
+</svg>        <header id="banner" class="body">
+            <div class="header-top">
+                <h1><a href="https://scottberrevoets.com/">Scott Berrevoets</a></h1>
+
+                <ul id="social">
+                    <li><a href="https://github.com/sberrevoets">
+                        <svg class="icon"><use href="#github" /></svg>
+                    </a></li>
+                    <li><a href="https://linkedin.com/in/sberrevoets">
+                        <svg class="icon"><use href="#linkedin" /></svg>
+                    </a></li>
+                    <li><a href="https://hachyderm.io/@ScottBerrevoets">
+                        <svg class="icon"><use href="#mastodon" /></svg>
+                    </a></li>
+                    <li><a href="mailto:hi@scottberrevoets.com">
+                        <svg class="icon"><use href="#mail" /></svg>
+                    </a></li>
+                    <li><a href="/feeds/all.atom.xml">
+                        <svg class="icon"><use href="#rss" /></svg>
+                    </a></li>
+                </ul>
+            </div>
+
+            <nav id="menu"><ul>
+                <li><a href="https://scottberrevoets.com/">About</a></li>
+                <li><a href="https://scottberrevoets.com/blog.html">Blog</a></li>
+            </ul></nav><!-- /#menu -->
+        </header><!-- /#banner -->
+<section id="content" class="body">
+  <header>
+      <h2 class="article-title">Incremental complexity in iOS development</h2>
+ 
+    <time class="published subheader" datetime="2025-02-03T00:00:00-08:00">
+      February 03, 2025
+    </time>
+        <span class="subheader">&bullet; 5 min read</span>
+  </header>
+  <div class="article-content">
+    <p>I wrote my first app, a map to navigate my college campus, in the winter of
+2011, on iOS 4.x and with Xcode 4.x. There were 25 frameworks, iOS 7 hadn't been
+invented yet, there was only 1 phone size, and we wrote apps with Objective-C.</p>
+<p>But things have gotten much more complex over the years: within iOS you can
+specialize in build engineering, architecture, performance &amp; observability,
+UIKit or SwiftUI, game development, security and privacy, Core Data or
+SwiftData, iCloud, cross-platform apps with Catalyst, machine learning... The
+list goes on and on, and that's on top of the already powerful frameworks from
+the early days.</p>
+<p>There are frameworks that enable entire categories of apps that weren't possible
+in the early days, or if they were with much less OS integration than today.
+HealthKit, WalletKit, StoreKit, RealityKit, ARKit all enable apps that were
+pretty much unimaginable 15 years ago. And that's just iOS without even thinking
+about watchOS, visionOS, or Apple's other platforms.</p>
+<p>Swift went through a similar evolution. It started with a more functional
+programming language compared to Objective-C, but quickly added new features:
+protocol-oriented programming, property wrappers, function builders,
+concurrency, macros, and a billion new keywords.</p>
+<p>In my first few years, I was eager to learn everything there was to learn about
+iOS. This was in the days when there was still an NDA anything related to iOS
+APIs and the developer forums required a paid membership, so only anything
+published by Apple was readily available. One of the first things I checked with
+new platform versions was the API changes in UIKit and Foundation, and the iOS
+and Xcode release notes were next. WWDC keynote days were overwhelming because a
+year's worth of changes just shipped and I felt like I needed to learn all of it
+in a few hours' time.</p>
+<p>There are so many more sources to learn some part of the platform now that's
+impossible to keep up with it all. You can easily be an iOS developer without
+knowing 90% of its technologies. A "generalist" iOS developer will know many of
+the UIKit/SwiftUI and Foundation APIs, as well as commonly used Swift features.
+But if you're building an iOS app for an audio company that requires deep
+knowledge of AVFoundation, you won't care or be able to keep up with
+advancements in Core Location simply because they're irrelevant.</p>
+<p>This feels like a pretty big difference from the first few years of the App
+Store, when experienced developers went "broad" because "deep" didn't really
+exist yet. There were no UI experts, iOS game developers, Swift enthusiasts, or
+multiplatform lobbyists, so it was fun to learn more about all the frameworks
+even if you weren't going to use them.</p>
+<p>For beginning developers that increase in complexity isn't super obvious, as
+everyone is "expected" to know basic UI and Swift knowledge and it takes some
+time to learn that. But more senior developers looking for a new job where
+experience with specific frameworks (sometimes not even Apple's own, like React
+Native, RxSwift, or The Composable Architecture) is desired may feel like they
+are not experienced enough. In reality they have plenty of great experience,
+just in other parts of iOS.</p>
+<p>Most companies that hire for a niche iOS specialty realize this and are
+generally OK with someone who's willing to learn the technologies that specific
+job requires. But how do those companies interview for that? For hands-on coding
+exercises, there are a few options:</p>
+<ul>
+<li><strong>Ask more basic questions</strong> that all people should know at least to some
+  extent. This works OK but doesn't really distinguish senior from junior
+  engineers.</li>
+<li><strong>Ask deeper questions</strong> but run the risk the candidate happens to not have
+  deep knowledge on the topic they're being asked about.</li>
+<li><strong>Let candidates choose the topic</strong> they have deep knowledge of and talk about
+  that, but run the risk of the interviewer knowing nothing about topic.</li>
+</ul>
+<p>Having been deeply involved in designing an interview process, I'm growing more
+convinced that evaluating candidates based on 60 minutes of hands-on coding
+isn't going to get you the best developers and will primarily weed out the below
+average ones. What I find more interesting for these positions is if candidates
+have enough transferable knowledge in one framework to quickly ramp up with
+another. You can learn a ton about someone's experience through questions like:</p>
+<ul>
+<li>How does Apple approach privacy and how is that reflected in its APIs? What is
+  generally involved in requiring user permission to use sensitive user data and
+  what is the best way to handle that data?</li>
+<li>What hardware and environmental constraints do iPhones have? How does the
+  system deal with those limitations and in what ways are developers affected by
+  that? What precautions can you take and how can you know if your app performs
+  well?</li>
+<li>How would you do the research for a lightning talk about an iOS technology you
+  currently know nothing about (e.g. data persistence)? What sources of
+  information are there, how reliable are they, and which do you prefer?</li>
+<li>Think of an API, language feature, or pattern you've used recently that can be
+  improved. What did you not like about it, how would you improve it, and why do
+  you think Apple might have designed it this way?</li>
+<li>Apple introduces a new technology at WWDC and your boss hears about it and
+  wants you to implement it in the company's app. What problems do you foresee?</li>
+<li>What App Store Review guideline would you get rid of and why? Which one would
+  you introduce?</li>
+</ul>
+<p>These questions feel decidedly more involved than typical questions like "how
+does memory management work" and "what's the difference between a class and a
+struct", and they give a lot more insight into someone's (lack of) experience
+with the platform.</p>
+<p>Being a senior iOS developer went from breadth of knowledge to depth of
+knowledge, and I expect more defined specialties, perhaps iOS Security Engineer
+or iOS Camera Engineer, to crystallize in the future. It's no longer about
+watching every WWDC video and learning the latest UIKit tricks, knowing exactly
+what APIs became available in what iOS version, and finding ways to use the
+latest Swift features in your own code.</p>
+<p>Instead, more experienced developers understand how Apple designs their
+platforms and technologies, have surface-level knowledge of what is available to
+them, and are able to take their existing knowledge and apply it to something
+new to ramp up quickly and effectively. The rest they know they can learn on the
+fly. Hopefully companies realize this too in their interviewing and onboarding
+processes, because you might be onboarding an iOS developer who doesn't know a
+single thing about the tech stack your app is running on.</p>
+  </div><!-- /.entry-content -->
+</section>
+
+  <script data-goatcounter="https://sberrevoets.goatcounter.com/count"
+          async src="//gc.zgo.at/count.js"></script>
+</body>
+</html>

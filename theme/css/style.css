@@ -1,0 +1,371 @@
+@import url("pygments.css");
+
+:root {
+    --accent-color: rgb(10, 57, 102);
+    --background-color: rgb(255, 255, 255);
+    --text-color: rgb(50, 50, 50);
+    --link-color: rgb(10, 57, 102);
+    --social-icon-color: rgb(0, 0, 0);
+    --menu-separator-color: rgb(204, 204, 204);
+    --menu-text-color: rgb(180, 180, 180);
+    --subtitle-color: rgb(170, 170, 170);
+    --quote-color: rgb(221, 221, 221);
+    --admonition-color: rgb(76, 175, 80);
+    --admonition-bg-color: rgb(249, 249, 249);
+    --admonition-shadow-color: rgba(0, 0, 0, 0.1);
+}
+
+@media (prefers-color-scheme: dark) {
+    :root {
+        --accent-color: rgb(95, 146, 200);
+        --background-color: rgb(30, 30, 46);
+        --text-color: rgb(230, 230, 230);
+        --link-color: rgb(130, 180, 240);
+        --social-icon-color: rgb(230, 230, 230);
+        --menu-separator-color: rgb(60, 60, 60);
+        --menu-text-color: rgb(150, 150, 150);
+        --subtitle-color: rgb(140, 140, 140);
+        --quote-color: rgb(60, 60, 60);
+        --admonition-color: rgb(144, 238, 144);
+        --admonition-bg-color: rgb(30, 30, 30);
+        --admonition-shadow-color: rgba(0, 0, 0, 0.4);
+    }
+}
+
+body {
+    color: var(--text-color);
+    background-color: var(--background-color);
+    margin: 0 auto;
+    width: 100%;
+    max-width: 900px;
+    padding: 0;
+    font-size: 1.15em;
+    line-height: 1.5em;
+}
+
+body > header {
+    margin: 0;
+    border-top: 5px solid var(--accent-color);
+}
+
+.header-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.header-top h1 {
+    margin: 40px 0 0 0;
+    text-align: left;
+    flex: 1;
+}
+
+.header-top #social {
+    margin: 0;
+    width: auto;
+}
+
+a {
+    color: inherit;
+}
+
+a:hover {
+   color: var(--link-color);
+}
+
+ul#social {
+    display: table;
+    margin: 10px auto;
+    width: 200px;
+    -webkit-padding-start: 0;
+}
+
+ul#social li {
+    list-style-type: none;
+    display: table-cell;
+    text-align: center;
+    padding: 0 8px;
+}
+
+ul#social li a .icon {
+    width: 24px;
+    height: 24px;
+    color: var(--social-icon-color);
+}
+
+h1, h2 {
+    font-family: -apple-system-headline, 'SFProDisplay-Bold', -apple-system, system-ui, BlinkMacSystemFont;
+}
+
+h1 {
+    text-align: center;
+    margin-top: 40px;
+}
+
+h1 a {
+   color: var(--link-color);
+   text-decoration: none;
+   font-size: 2em;
+}
+
+@media only screen and (max-width: 500px) {
+    h1 a {
+        font-size: 1.2em;
+    }
+
+    .header-top {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .header-top h1 {
+        text-align: center;
+        margin-bottom: 10px;
+    }
+
+    /* Fix code block font sizes */
+    /* https://stackoverflow.com/a/34284777 */
+    body {
+        -webkit-text-size-adjust: 100%;
+    }
+}
+
+nav#menu {
+    font-family: 'SFProText-Bold', -apple-system, system-ui, BlinkMacSystemFont;
+    width: 70%;
+    min-width: 300px;
+    margin: 30px auto 0;
+}
+
+nav#menu:after {
+    content: "";
+    clear: both;
+    display: table;
+}
+
+nav#menu ul {
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+    width: 100%;
+    -webkit-padding-start: 0;
+    margin: 0;
+    padding-bottom: 8px;
+}
+
+nav#menu ul li {
+    list-style-type: none;
+    text-align: center;
+}
+
+nav#menu ul li a {
+    text-transform: uppercase;
+    text-decoration: none;
+    font-weight: bold;
+    color: var(--menu-text-color);
+    font-size: 0.9em;
+    letter-spacing: 0.5px;
+}
+
+nav#menu ul li a:hover {
+    color: var(--text-color);
+}
+
+nav#menu ul li.active a {
+    color: var(--text-color);
+    border-bottom: 2px solid var(--accent-color);
+    padding-bottom: 6px;
+}
+
+#content {
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+div.article-content, div.page-content {
+    line-height: 1.6em;
+    font-family: -apple-system-body, -apple-system, system-ui, BlinkMacSystemFont;
+    padding: 10px;
+}
+
+/*** About ***/
+
+.column-container {
+    display: flex;
+    gap: 2rem;
+}
+
+.left-column {
+    flex: 0 0 30%;
+    padding: 1rem;
+}
+
+.right-column {
+    flex: 0 0 70%
+    padding: 1rem;
+}
+
+img#me {
+    display: inline-block;
+    margin-right: 1.2em;
+    border-radius: 18px;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    border: 0;
+    width: 200px;
+}
+
+@media (max-width: 500px) {
+    .column-container {
+        flex-direction: column;
+    }
+
+    .left-column, .right-column {
+        flex: 0 0 100%;
+        padding: 0 1rem;
+    }
+
+    img#me {
+        display: block;
+        margin: 0 auto;
+    }
+}
+
+ul#personal-info {
+    list-style-type: none;
+    padding: 0;
+}
+
+ul#personal-info li {
+    line-height: 2em;
+}
+
+/*** Blog Archive ***/
+.year-section {
+    margin-bottom: 2rem;
+}
+
+.year-header {
+    color: var(--accent-color);
+    font-size: 1.3rem;
+    line-height: 1.3rem;
+    font-weight: bold;
+}
+
+.articles-list {
+    display: flex;
+    flex-direction: column;
+}
+
+.archive-item {
+    display: flex;
+    gap: 1rem;
+    padding: 0.3rem 0;
+    align-items: baseline;
+}
+
+.archive-item:hover .archive-title a {
+    color: var(--link-color);
+}
+
+.archive-date {
+    flex: 0 0 auto;
+    min-width: 80px;
+}
+
+.archive-date time {
+    font-family: monospace;
+    font-size: 0.9rem;
+    color: var(--menu-text-color);
+    font-weight: normal;
+}
+
+.archive-content {
+    flex: 1;
+    min-width: 0;
+}
+
+.archive-title {
+    margin: 0 0 0.5rem 0;
+    font-size: 1.3rem;
+    line-height: 1.3rem;
+    font-weight: 400;
+}
+
+.archive-title a {
+    color: var(--text-color);
+    text-decoration: none;
+    display: block;
+    word-wrap: break-word;
+    hyphens: auto;
+}
+
+.archive-title a:hover {
+    color: var(--link-color);
+}
+
+@media (max-width: 500px) {
+    .archive-item {
+        flex-direction: column;
+        gap: 0.3rem;
+        align-items: flex-start;
+    }
+
+    .archive-date {
+        min-width: auto;
+    }
+}
+
+/*** Article ***/
+
+h2.article-title {
+    font-size: 2.5em;
+    padding: 10px 0 15px 10px;
+    margin: 0;
+    line-height: 1em;
+}
+
+header time.published {
+    padding-left: 10px;
+}
+
+header .subheader {
+    font-family: monospace,-apple-system-subheadline, 'SFProDisplay-Bold', -apple-system, system-ui, BlinkMacSystemFont;
+    color: var(--subtitle-color);
+}
+
+blockquote {
+    width: 85%;
+    margin: 30px auto;
+    padding-left: 1.5em;
+    border-left: 4px solid var(--quote-color);
+    color: #777;
+}
+
+.admonition {
+  border-left: 5px solid var(--admonition-color);
+  background-color: var(--admonition-bg-color);
+  padding: 15px;
+  margin: 20px 0;
+  margin-bottom: 50px;
+  border-radius: 8px;
+  box-shadow: 0 2px 5px var(--admonition-shadow-color);
+}
+
+.admonition-title {
+  font-weight: bold;
+  font-size: 1.1em;
+  margin-bottom: 10px;
+  color: var(--text-color);
+}
+
+.admonition p {
+  margin: 0;
+}
+
+img {
+    max-width: 100%;
+    height: auto;
+}

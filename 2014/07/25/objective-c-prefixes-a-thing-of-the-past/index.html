@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+          <title>Objective-C prefixes: a thing of the past? - Scott Berrevoets</title>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <link rel="icon" type="image/png" href="https://scottberrevoets.com/theme/images/favicon.png">
+        <link rel="apple-touch-icon" type="image/png" sizes="any" href="https://scottberrevoets.com/theme/images/favicon.png">
+        <link href="https://scottberrevoets.com/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="Scott Berrevoets Full Atom Feed" />
+        <link href="https://scottberrevoets.com/feeds/all.rss.xml" type="application/rss+xml" rel="alternate" title="Scott Berrevoets Full RSS Feed" />
+        <link href="https://scottberrevoets.com/feeds/atom.xml" type="application/atom+xml" rel="alternate" title="Scott Berrevoets Atom Feed" />
+        <link href="https://scottberrevoets.com/feeds/rss.xml" type="application/rss+xml" rel="alternate" title="Scott Berrevoets RSS Feed" />
+
+    <meta name="description" content="Some insights about whether Objective-C prefixes are still necessary" />
+
+
+        <link rel="stylesheet" type="text/css" href="https://scottberrevoets.com/theme/css/style.css" />
+</head>
+
+<body id="index" class="home">
+<svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
+  <symbol id="github" viewBox="0 0 24 24">
+    <path stroke="none" d="M0 0h24v24H0z" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+    <path d="M9 19c-4.3 1.4 -4.3 -2.5 -6 -3m12 5v-3.5c0 -1 .1 -1.4 -.5 -2c2.8 -.3 5.5 -1.4 5.5 -6a4.6 4.6 0 0 0 -1.3 -3.2a4.2 4.2 0 0 0 -.1 -3.2s-1.1 -.3 -3.5 1.3a12.3 12.3 0 0 0 -6.2 0c-2.4 -1.6 -3.5 -1.3 -3.5 -1.3a4.2 4.2 0 0 0 -.1 3.2a4.6 4.6 0 0 0 -1.3 3.2c0 4.6 2.7 5.7 5.5 6c-.6 .6 -.6 1.2 -.5 2v3.5" stroke="currentColor" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+  </symbol>
+  <symbol id="mastodon" viewBox="0 0 24 24">
+    <path stroke="none" d="M0 0h24v24H0z" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+    <path d="M18.648 15.254c-1.816 1.763 -6.648 1.626 -6.648 1.626a18.262 18.262 0 0 1 -3.288 -.256c1.127 1.985 4.12 2.81 8.982 2.475c-1.945 2.013 -13.598 5.257 -13.668 -7.636l-.026 -1.154c0 -3.036 .023 -4.115 1.352 -5.633c1.671 -1.91 6.648 -1.666 6.648 -1.666s4.977 -.243 6.648 1.667c1.329 1.518 1.352 2.597 1.352 5.633s-.456 4.074 -1.352 4.944z" stroke="currentColor" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+    <path d="M12 11.204v-2.926c0 -1.258 -.895 -2.278 -2 -2.278s-2 1.02 -2 2.278v4.722m4 -4.722c0 -1.258 .895 -2.278 2 -2.278s2 1.02 2 2.278v4.722" stroke="currentColor" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+  </symbol>
+  <symbol id="mail" viewBox="0 0 24 24">
+    <path stroke="none" d="M0 0h24v24H0z" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+    <path d="M3 7a2 2 0 0 1 2 -2h14a2 2 0 0 1 2 2v10a2 2 0 0 1 -2 2h-14a2 2 0 0 1 -2 -2v-10z" stroke="currentColor" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+    <path d="M3 7l9 6l9 -6" stroke="currentColor" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+  </symbol>
+  <symbol id="rss" viewBox="0 0 24 24">
+    <path stroke="none" d="M0 0h24v24H0z" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+    <path d="M5 19m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0" stroke="currentColor" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+    <path d="M4 4a16 16 0 0 1 16 16" stroke="currentColor" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+    <path d="M4 11a9 9 0 0 1 9 9" stroke="currentColor" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+  </symbol>
+  <symbol id="linkedin" viewBox="0 0 24 24">
+    <path stroke="none" d="M0 0h24v24H0z" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+    <path d="M4 4m0 2a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v12a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2z" stroke="currentColor" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+    <path d="M8 11l0 5" stroke="currentColor" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+    <path d="M8 8l0 .01" stroke="currentColor" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+    <path d="M12 16l0 -5" stroke="currentColor" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+    <path d="M16 16v-3a2 2 0 0 0 -4 0" stroke="currentColor" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+  </symbol>
+</svg>        <header id="banner" class="body">
+            <div class="header-top">
+                <h1><a href="https://scottberrevoets.com/">Scott Berrevoets</a></h1>
+
+                <ul id="social">
+                    <li><a href="https://github.com/sberrevoets">
+                        <svg class="icon"><use href="#github" /></svg>
+                    </a></li>
+                    <li><a href="https://linkedin.com/in/sberrevoets">
+                        <svg class="icon"><use href="#linkedin" /></svg>
+                    </a></li>
+                    <li><a href="https://hachyderm.io/@ScottBerrevoets">
+                        <svg class="icon"><use href="#mastodon" /></svg>
+                    </a></li>
+                    <li><a href="mailto:hi@scottberrevoets.com">
+                        <svg class="icon"><use href="#mail" /></svg>
+                    </a></li>
+                    <li><a href="/feeds/all.atom.xml">
+                        <svg class="icon"><use href="#rss" /></svg>
+                    </a></li>
+                </ul>
+            </div>
+
+            <nav id="menu"><ul>
+                <li><a href="https://scottberrevoets.com/">About</a></li>
+                <li><a href="https://scottberrevoets.com/blog.html">Blog</a></li>
+            </ul></nav><!-- /#menu -->
+        </header><!-- /#banner -->
+<section id="content" class="body">
+  <header>
+      <h2 class="article-title">Objective-C prefixes: a thing of the past?</h2>
+ 
+    <time class="published subheader" datetime="2014-07-25T00:00:00-07:00">
+      July 25, 2014
+    </time>
+        <span class="subheader">&bullet; 3 min read</span>
+  </header>
+  <div class="article-content">
+    <p>This past week, there was, again, a lot to do about Objective-C and prefixing. To most iOS developers, the story sounds familiar: one camp is strongly in favor, another camps is strongly against, and a third camp couldn't really care less.</p>
+<p>Unless I'm unaware of any other platforms where the discussion was also a hot topic, this time I was at least a little responsible for instigating a debate that will never see a clear winner, with the following tweet:</p>
+<blockquote class="twitter-tweet" lang="en" align="center"><p><a href="https://twitter.com/bobmccune">@bobmccune</a> <a href="https://twitter.com/invalidname">@invalidname</a> Also no option to enter class prefix anymore, even for Objective-C projects</p>&mdash; Scott Berrevoets (@ScottBerrevoets) <a href="https://twitter.com/ScottBerrevoets/statuses/492012762940588033">July 23, 2014</a></blockquote>
+<script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script>
+
+<p>Let's first clear up that Swift doesn't <strong>need</strong> to have class prefixes, because it has built-in support for namespacing through modules. From what I read, earlier Xcode 6/Swift betas did not have module support, but at least we know it's coming before 1.0 hits.</p>
+<p>However, this doesn't solve any of the problems Objective-C has, and so it was surprising to see this field was removed when creating a new Objective-C project. You can still set this prefix per project <strong>after</strong> you create it, but since most Xcode templates create source files for you, those files will be created without a prefix.</p>
+<p>I noticed the lack of this option, as well as the lack of a file template for Objective-C categories, back in beta 2 and immediately filed two bugs. The missing file template is as of this writing still open, but the class prefix got closed a few days later. Normally, radars aren't known for their wealth of information related to the issue the radar was filed for, but Apple Engineering made an exception this time.</p>
+<blockquote>
+<p>After much deliberation, engineering has removed this feature.</p>
+<p>This was removed intentionally. We are no longer encouraging the use of prefixes for app code, and for frameworks, you can create a prefix in the Project Inspector after creating the project.</p>
+</blockquote>
+<p>Okay, so no more prefixes for app code. Didn't see that coming. Does Apple now encourage developers to start making extensive use of frameworks?</p>
+<blockquote>
+<p>No. If you want to use a prefix, you can set one in the project inspector. Especially for frameworks, this is easy since the template creates no source files that should be prefixed. If you really want to prefix the classes in your main app binary, you might need to rename the few that are created initially, but the recommendation is generally that frameworks should use prefixes (in Obj-C, not in Swift) to avoid namespace issues, and apps generally don't need to.</p>
+</blockquote>
+<p>The key part here is in the last few words: "don't need to".</p>
+<p>Third-party libraries, especially frameworks that don't ship with the source code, need a prefix, because the chances of naming collisions with other code or, even worse, other libraries is significant. Users of the libraries can't (and even if they can, are likely not willing to) change the name of your classes because they collide with some other library's code.</p>
+<p>"App code" on the other hand, is very unique to one particular app. It contains the UI and some of the business logic that puts your app together. Most view controllers, for example, are app code. App code is not likely to be reused, because it's very specific in what it does and is therefore unlikely to collide with other classes (assuming you name your classes well). If you think "well, this functionality may be reused in some other project", it's a great candidate for a framework!</p>
+<p>I was always a big fan of the class prefixes, and while it was sometimes hard to come up with what prefix to use, I've come to actually <strong>like</strong> how they look, too. Classes that don't have a prefix feel like they're missing something. However, the guideline of "prefix frameworks, not app code" does make sense, so I will start using that from now on as well.</p>
+  </div><!-- /.entry-content -->
+</section>
+
+  <script data-goatcounter="https://sberrevoets.goatcounter.com/count"
+          async src="//gc.zgo.at/count.js"></script>
+</body>
+</html>

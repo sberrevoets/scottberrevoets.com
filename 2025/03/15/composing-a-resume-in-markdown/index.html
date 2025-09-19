@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+          <title>Composing a resume in markdown - Scott Berrevoets</title>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <link rel="icon" type="image/png" href="https://scottberrevoets.com/theme/images/favicon.png">
+        <link rel="apple-touch-icon" type="image/png" sizes="any" href="https://scottberrevoets.com/theme/images/favicon.png">
+        <link href="https://scottberrevoets.com/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="Scott Berrevoets Full Atom Feed" />
+        <link href="https://scottberrevoets.com/feeds/all.rss.xml" type="application/rss+xml" rel="alternate" title="Scott Berrevoets Full RSS Feed" />
+        <link href="https://scottberrevoets.com/feeds/atom.xml" type="application/atom+xml" rel="alternate" title="Scott Berrevoets Atom Feed" />
+        <link href="https://scottberrevoets.com/feeds/rss.xml" type="application/rss+xml" rel="alternate" title="Scott Berrevoets RSS Feed" />
+
+
+
+        <link rel="stylesheet" type="text/css" href="https://scottberrevoets.com/theme/css/style.css" />
+</head>
+
+<body id="index" class="home">
+<svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
+  <symbol id="github" viewBox="0 0 24 24">
+    <path stroke="none" d="M0 0h24v24H0z" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+    <path d="M9 19c-4.3 1.4 -4.3 -2.5 -6 -3m12 5v-3.5c0 -1 .1 -1.4 -.5 -2c2.8 -.3 5.5 -1.4 5.5 -6a4.6 4.6 0 0 0 -1.3 -3.2a4.2 4.2 0 0 0 -.1 -3.2s-1.1 -.3 -3.5 1.3a12.3 12.3 0 0 0 -6.2 0c-2.4 -1.6 -3.5 -1.3 -3.5 -1.3a4.2 4.2 0 0 0 -.1 3.2a4.6 4.6 0 0 0 -1.3 3.2c0 4.6 2.7 5.7 5.5 6c-.6 .6 -.6 1.2 -.5 2v3.5" stroke="currentColor" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+  </symbol>
+  <symbol id="mastodon" viewBox="0 0 24 24">
+    <path stroke="none" d="M0 0h24v24H0z" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+    <path d="M18.648 15.254c-1.816 1.763 -6.648 1.626 -6.648 1.626a18.262 18.262 0 0 1 -3.288 -.256c1.127 1.985 4.12 2.81 8.982 2.475c-1.945 2.013 -13.598 5.257 -13.668 -7.636l-.026 -1.154c0 -3.036 .023 -4.115 1.352 -5.633c1.671 -1.91 6.648 -1.666 6.648 -1.666s4.977 -.243 6.648 1.667c1.329 1.518 1.352 2.597 1.352 5.633s-.456 4.074 -1.352 4.944z" stroke="currentColor" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+    <path d="M12 11.204v-2.926c0 -1.258 -.895 -2.278 -2 -2.278s-2 1.02 -2 2.278v4.722m4 -4.722c0 -1.258 .895 -2.278 2 -2.278s2 1.02 2 2.278v4.722" stroke="currentColor" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+  </symbol>
+  <symbol id="mail" viewBox="0 0 24 24">
+    <path stroke="none" d="M0 0h24v24H0z" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+    <path d="M3 7a2 2 0 0 1 2 -2h14a2 2 0 0 1 2 2v10a2 2 0 0 1 -2 2h-14a2 2 0 0 1 -2 -2v-10z" stroke="currentColor" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+    <path d="M3 7l9 6l9 -6" stroke="currentColor" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+  </symbol>
+  <symbol id="rss" viewBox="0 0 24 24">
+    <path stroke="none" d="M0 0h24v24H0z" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+    <path d="M5 19m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0" stroke="currentColor" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+    <path d="M4 4a16 16 0 0 1 16 16" stroke="currentColor" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+    <path d="M4 11a9 9 0 0 1 9 9" stroke="currentColor" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+  </symbol>
+  <symbol id="linkedin" viewBox="0 0 24 24">
+    <path stroke="none" d="M0 0h24v24H0z" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+    <path d="M4 4m0 2a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v12a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2z" stroke="currentColor" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+    <path d="M8 11l0 5" stroke="currentColor" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+    <path d="M8 8l0 .01" stroke="currentColor" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+    <path d="M12 16l0 -5" stroke="currentColor" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+    <path d="M16 16v-3a2 2 0 0 0 -4 0" stroke="currentColor" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+  </symbol>
+</svg>        <header id="banner" class="body">
+            <div class="header-top">
+                <h1><a href="https://scottberrevoets.com/">Scott Berrevoets</a></h1>
+
+                <ul id="social">
+                    <li><a href="https://github.com/sberrevoets">
+                        <svg class="icon"><use href="#github" /></svg>
+                    </a></li>
+                    <li><a href="https://linkedin.com/in/sberrevoets">
+                        <svg class="icon"><use href="#linkedin" /></svg>
+                    </a></li>
+                    <li><a href="https://hachyderm.io/@ScottBerrevoets">
+                        <svg class="icon"><use href="#mastodon" /></svg>
+                    </a></li>
+                    <li><a href="mailto:hi@scottberrevoets.com">
+                        <svg class="icon"><use href="#mail" /></svg>
+                    </a></li>
+                    <li><a href="/feeds/all.atom.xml">
+                        <svg class="icon"><use href="#rss" /></svg>
+                    </a></li>
+                </ul>
+            </div>
+
+            <nav id="menu"><ul>
+                <li><a href="https://scottberrevoets.com/">About</a></li>
+                <li><a href="https://scottberrevoets.com/blog.html">Blog</a></li>
+            </ul></nav><!-- /#menu -->
+        </header><!-- /#banner -->
+<section id="content" class="body">
+  <header>
+      <h2 class="article-title">Composing a resume in markdown</h2>
+ 
+    <time class="published subheader" datetime="2025-03-15T00:00:00-07:00">
+      March 15, 2025
+    </time>
+        <span class="subheader">&bullet; 4 min read</span>
+  </header>
+  <div class="article-content">
+    <p>I recently updated my resume, and after a few iterations of tweaking the same
+Pages file I started more than a decade ago, I decided that I really wanted
+source control to make it easier to keep track of changes and to have different
+versions of the same resume. Additionally, the very consistent structure and
+simplicity of a resume makes it a perfect candidate to be written in markdown,
+which is a text-based format and easy to have in source control.</p>
+<p>Some quick searching confirmed my suspicion that many people were already doing
+this and that there are various tools available to make this easier. The
+primary tool is <a href="http://pandoc.org/">pandoc</a>, which is a universal document
+converter. It can convert between many different formats, including markdown and
+PDF.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The other tool that makes for a very structured resume is <a href="https://jsonresume.org">JSON
+Resume</a>. It's a JSON schema with standard fields for
+common resume sections like 'experience' and 'education' that can then
+easily be themed. I found this a little too limiting and not as readable in
+plain text as markdown.</p>
+</div>
+<p>In my case, I'm converting from markdown to HTML, injecting some CSS to make it
+look the way I want it to, and then converting that to PDF. LaTeX was another
+option but I wasn't familiar with either LaTeX or ConTeXt and didn't want to
+bother learning it just for this exercise.</p>
+<p>Converting to HTML was generally easy.</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span class="normal">1</span></pre></div></td><td class="code"><div><pre><span></span><code>pandoc<span class="w"> </span>--standalone<span class="w"> </span>--include-in-header<span class="w"> </span>resume.css<span class="w"> </span>--output<span class="w"> </span>resume.html<span class="w"> </span>resume.md
+</code></pre></div></td></tr></table></div>
+
+<p>This gives a pretty good starting point even with no CSS at all. <code>pandoc</code> uses a
+custom markdown dialect with some extensions and other features, which makes it
+easy to add ids and classes to <code>&lt;h1&gt;</code>-<code>&lt;h6&gt;</code> elements. This is useful as it
+makes applying the right style to the right element easy. The resume itself is
+simple and so is the resulting HTML. <code>pandoc</code> does inject its own CSS as well,
+which is easy to override in the custom CSS file.</p>
+<p>After tweaking the CSS to my liking, the next step was to convert the HTML to
+PDF format. This was a bit more complicated as there were multiple ways to do
+that:</p>
+<ul>
+<li><strong>Safari</strong> (or another browser): There is an export as PDF option or the
+  option to print and then save as PDF. This worked but required manual steps I
+  wanted to automate.</li>
+<li><strong>wkhtmltopdf</strong>: a command line tool that converts HTML to PDF using a WebKit
+  engine</li>
+<li><strong>pandoc</strong>: can convert to PDF directly with some options that, supposedly,
+  affect the final PDF output. I tried using it with <code>wkhtmltopdf</code> as its
+  engine, and it can also use LaTeX or ConTeXt as an intermediate format that
+  bypasses HTML generation altogether.</li>
+</ul>
+<p>I struggled a bit with which to choose, as the format for all of them wasn't
+quite right except for the print to PDF option in Safari. I ultimately settled
+on using <code>wkhtmltopdf</code> directly (without using <code>pandoc</code> for this step), after
+experimenting with these options and seeing which output I liked best.
+Converting the HTML to PDF was as simple as:</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span class="normal">1</span></pre></div></td><td class="code"><div><pre><span></span><code>wkhtmltopdf<span class="w"> </span>-s<span class="w"> </span>letter<span class="w"> </span>resume.html<span class="w"> </span>resume.pdf
+</code></pre></div></td></tr></table></div>
+
+<p>The <code>-s letter</code> option sets the paper size to US Letter since the default is A4.
+Nowadays it doesn't really matter as resumes are only ever used in digital
+format so the size of the PDF doesn't really matter anyway.</p>
+<p>I then wrapped both commands in a simple shell script to make it easier to run:</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span class="normal">1</span>
+<span class="normal">2</span>
+<span class="normal">3</span>
+<span class="normal">4</span>
+<span class="normal">5</span>
+<span class="normal">6</span>
+<span class="normal">7</span>
+<span class="normal">8</span>
+<span class="normal">9</span></pre></div></td><td class="code"><div><pre><span></span><code>pandoc<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--standalone<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--include-in-header<span class="w"> </span>resume.css<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--output<span class="w"> </span>resume.html<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>resume.md
+
+wkhtmltopdf<span class="w"> </span>-s<span class="w"> </span>letter<span class="w"> </span>resume.html<span class="w"> </span>resume.pdf
+
+open<span class="w"> </span>resume.pdf<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span>open<span class="w"> </span>resume.html
+</code></pre></div></td></tr></table></div>
+
+<p>After some modifications to the markdown, running this script will quickly
+generate the HTML and PDF files and open them both so I can validate the result.</p>
+<p>This setup ends up working pretty well for me for 3 reasons:</p>
+<ol>
+<li>With everything in a git repo I can make changes as I like, undo them easily,
+   and use all of git's features on my resume. I push the markdown, HTML, and
+   PDF versions to GitHub so I always have the latest version handy in a few
+   different formats.</li>
+<li>The format and the content are for the most part separate, making it easier
+   to focus on one or the other.</li>
+<li>Since everything is now text-based and not in proprietary binary formats,
+   it's also easy to overengineer this in the future by including certain
+   sections when applying to different jobs, including certain information only
+   when certain flags are set, differentiating between a CV and a resume, etc.</li>
+</ol>
+  </div><!-- /.entry-content -->
+</section>
+
+  <script data-goatcounter="https://sberrevoets.goatcounter.com/count"
+          async src="//gc.zgo.at/count.js"></script>
+</body>
+</html>

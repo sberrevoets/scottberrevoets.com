@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+          <title>Keeping the Lyft iOS App Accessible - Scott Berrevoets</title>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <link rel="icon" type="image/png" href="https://scottberrevoets.com/theme/images/favicon.png">
+        <link rel="apple-touch-icon" type="image/png" sizes="any" href="https://scottberrevoets.com/theme/images/favicon.png">
+        <link href="https://scottberrevoets.com/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="Scott Berrevoets Full Atom Feed" />
+        <link href="https://scottberrevoets.com/feeds/all.rss.xml" type="application/rss+xml" rel="alternate" title="Scott Berrevoets Full RSS Feed" />
+        <link href="https://scottberrevoets.com/feeds/atom.xml" type="application/atom+xml" rel="alternate" title="Scott Berrevoets Atom Feed" />
+        <link href="https://scottberrevoets.com/feeds/rss.xml" type="application/rss+xml" rel="alternate" title="Scott Berrevoets RSS Feed" />
+
+
+
+        <link rel="stylesheet" type="text/css" href="https://scottberrevoets.com/theme/css/style.css" />
+</head>
+
+<body id="index" class="home">
+<svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
+  <symbol id="github" viewBox="0 0 24 24">
+    <path stroke="none" d="M0 0h24v24H0z" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+    <path d="M9 19c-4.3 1.4 -4.3 -2.5 -6 -3m12 5v-3.5c0 -1 .1 -1.4 -.5 -2c2.8 -.3 5.5 -1.4 5.5 -6a4.6 4.6 0 0 0 -1.3 -3.2a4.2 4.2 0 0 0 -.1 -3.2s-1.1 -.3 -3.5 1.3a12.3 12.3 0 0 0 -6.2 0c-2.4 -1.6 -3.5 -1.3 -3.5 -1.3a4.2 4.2 0 0 0 -.1 3.2a4.6 4.6 0 0 0 -1.3 3.2c0 4.6 2.7 5.7 5.5 6c-.6 .6 -.6 1.2 -.5 2v3.5" stroke="currentColor" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+  </symbol>
+  <symbol id="mastodon" viewBox="0 0 24 24">
+    <path stroke="none" d="M0 0h24v24H0z" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+    <path d="M18.648 15.254c-1.816 1.763 -6.648 1.626 -6.648 1.626a18.262 18.262 0 0 1 -3.288 -.256c1.127 1.985 4.12 2.81 8.982 2.475c-1.945 2.013 -13.598 5.257 -13.668 -7.636l-.026 -1.154c0 -3.036 .023 -4.115 1.352 -5.633c1.671 -1.91 6.648 -1.666 6.648 -1.666s4.977 -.243 6.648 1.667c1.329 1.518 1.352 2.597 1.352 5.633s-.456 4.074 -1.352 4.944z" stroke="currentColor" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+    <path d="M12 11.204v-2.926c0 -1.258 -.895 -2.278 -2 -2.278s-2 1.02 -2 2.278v4.722m4 -4.722c0 -1.258 .895 -2.278 2 -2.278s2 1.02 2 2.278v4.722" stroke="currentColor" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+  </symbol>
+  <symbol id="mail" viewBox="0 0 24 24">
+    <path stroke="none" d="M0 0h24v24H0z" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+    <path d="M3 7a2 2 0 0 1 2 -2h14a2 2 0 0 1 2 2v10a2 2 0 0 1 -2 2h-14a2 2 0 0 1 -2 -2v-10z" stroke="currentColor" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+    <path d="M3 7l9 6l9 -6" stroke="currentColor" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+  </symbol>
+  <symbol id="rss" viewBox="0 0 24 24">
+    <path stroke="none" d="M0 0h24v24H0z" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+    <path d="M5 19m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0" stroke="currentColor" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+    <path d="M4 4a16 16 0 0 1 16 16" stroke="currentColor" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+    <path d="M4 11a9 9 0 0 1 9 9" stroke="currentColor" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+  </symbol>
+  <symbol id="linkedin" viewBox="0 0 24 24">
+    <path stroke="none" d="M0 0h24v24H0z" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+    <path d="M4 4m0 2a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v12a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2z" stroke="currentColor" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+    <path d="M8 11l0 5" stroke="currentColor" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+    <path d="M8 8l0 .01" stroke="currentColor" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+    <path d="M12 16l0 -5" stroke="currentColor" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+    <path d="M16 16v-3a2 2 0 0 0 -4 0" stroke="currentColor" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+  </symbol>
+</svg>        <header id="banner" class="body">
+            <div class="header-top">
+                <h1><a href="https://scottberrevoets.com/">Scott Berrevoets</a></h1>
+
+                <ul id="social">
+                    <li><a href="https://github.com/sberrevoets">
+                        <svg class="icon"><use href="#github" /></svg>
+                    </a></li>
+                    <li><a href="https://linkedin.com/in/sberrevoets">
+                        <svg class="icon"><use href="#linkedin" /></svg>
+                    </a></li>
+                    <li><a href="https://hachyderm.io/@ScottBerrevoets">
+                        <svg class="icon"><use href="#mastodon" /></svg>
+                    </a></li>
+                    <li><a href="mailto:hi@scottberrevoets.com">
+                        <svg class="icon"><use href="#mail" /></svg>
+                    </a></li>
+                    <li><a href="/feeds/all.atom.xml">
+                        <svg class="icon"><use href="#rss" /></svg>
+                    </a></li>
+                </ul>
+            </div>
+
+            <nav id="menu"><ul>
+                <li><a href="https://scottberrevoets.com/">About</a></li>
+                <li><a href="https://scottberrevoets.com/blog.html">Blog</a></li>
+            </ul></nav><!-- /#menu -->
+        </header><!-- /#banner -->
+<section id="content" class="body">
+  <header>
+      <h2 class="article-title">Keeping the Lyft iOS App Accessible</h2>
+ 
+    <time class="published subheader" datetime="2017-01-18T00:00:00-08:00">
+      January 18, 2017
+    </time>
+        <span class="subheader">&bullet; 3 min read</span>
+  </header>
+  <div class="article-content">
+    <div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>This article was written by me but originally published on the <a href="https://eng.lyft.com/keeping-lyft-accessible-53155f0098b9">Lyft
+Engineering Blog</a>.</p>
+</div>
+<p>At Lyft we’re in a unique position: every day we work on an app that affects
+people in the real, physical world — not just the digital one. This has an
+especially large impact on visually impaired users, because our app is
+easier to use than the real world alternatives — navigating a train station
+or queueing up at a taxi stand. Lyft aims to make a product that is
+accessible and easy to use for all of our users.</p>
+<h2 id="accessibility-at-lyft">Accessibility at Lyft</h2>
+<p>If an app uses Apple’s standard controls and UI elements, it will likely already
+work well with VoiceOver; however, Lyft’s UI deviates enough from standard
+controls such that we don’t get that benefit out of the box. Another
+complication is that many portions of the app are controlled by the server,
+including a lot of the text for buttons and labels. Making these UI elements
+compatible with VoiceOver often requires tweaking them manually, even if we use
+native controls.</p>
+<p>Since we try to keep all of our UI-related code in Interface Builder, and
+VoiceOver is just another form of UI, we have written a simple <code>UIView</code>
+extension that allows us to enable accessibility on most of our UI directly from
+Interface Builder. In this extension, we add 2 properties to <code>UIView</code>:</p>
+<ul>
+<li><code>accessibilitySources</code>: An <code>IBOutletCollection</code> of <code>UIView</code>s</li>
+<li><code>accessibilityFormat</code>: a simple string that represents the format of the
+  accessibility label, which is subsequently passed to <code>String(format:)</code>. Every
+  occurrence of <code>%@</code> in this string will be replaced with the next element of
+  the <code>accessibilitySources</code>, and <code>[self]</code> will automatically be replaced with
+  the current view’s accessibilityLabel.</li>
+</ul>
+<p>We can ctrl + drag UI elements into the <code>accessibilitySources</code>, and by marking
+<code>accessibilityFormat</code> with <code>@IBInspectable</code> we can specify the string and the
+sources all from Interface Builder, keeping the code clean and to the point.</p>
+<p>For example, we have an accessibility format on the UILabel that displays the
+selected ride mode:</p>
+<p><img alt="Setting the accessibility format" src="/images/AccessibilityFormat.png"></p>
+<p><code>[self]</code> is replaced by the accessibility label, which for <code>UILabel</code>s is the
+text of the label itself. <code>%@</code> is replaced by an accessibility source, which we
+can set up like this:</p>
+<p><img alt="Setting the accessibility sources" src="/images/AccessibilitySource.png"></p>
+<p>By disabling the accessibility label for the subtitle, the top label’s
+accessibility label will read “Selected ride mode: Line. Carpool, 2 people
+maximum.” without touching any code at all.</p>
+<h2 id="changing-the-process">Changing the process</h2>
+<p>As we ramped up our VoiceOver efforts, we wanted to assess whether the changes
+we made had a meaningful impact to end-users. As developers, we’re too familiar
+with our own apps to make an honest call about their usability, and when it
+comes to visual impairment, even a standard usability review could brush over
+things that would be challenging to a blind or a visually impaired user.</p>
+<p>This is why we’re working with a dedicated accessibility expert, himself a
+native VoiceOver user, to constantly validate our work. All the feedback we’ve
+been getting from VoiceOver users have further motivated our investment in
+accessibility. We have optimized VoiceOver in the main flows of our app, and we
+run weekly regression tests to ensure consistency and stability. Our VoiceOver
+user also works directly with QA engineers, to let them know what he is looking
+for and what is missing.</p>
+<p>Over the last few months, we have made many improvements in various parts of our
+app, but also in how seriously we take VoiceOver-related bugs: we block new
+releases if VoiceOver users experience bugs when going through a ride. All new
+features are expected to be optimized for VoiceOver from the start, and we are
+working hard to optimize existing features as well.</p>
+<p>We think of accessibility as part of the user interface, just like labels,
+buttons, and text fields. By having our developers implement support for
+VoiceOver as part of the initial feature, our visually impaired users will be
+able to use these features as easily as our regular users.</p>
+  </div><!-- /.entry-content -->
+</section>
+
+  <script data-goatcounter="https://sberrevoets.goatcounter.com/count"
+          async src="//gc.zgo.at/count.js"></script>
+</body>
+</html>
