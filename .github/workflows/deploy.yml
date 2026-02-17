@@ -7,15 +7,39 @@ on:
   schedule:
     - cron: '0 15 * * *'
 
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
 jobs:
-  build:
+  build-and-deploy:
     runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
     steps:
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@v4
       with:
         submodules: 'true'
-    - uses: nelsonjchen/gh-pages-pelican-action@0.1.10
-      env:
-        GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
-        GH_PAGES_CNAME: www.scottberrevoets.com
-        PELICAN_CONFIG_FILE: publishconf.py
+
+    - uses: actions/setup-python@v5
+      with:
+        python-version: '3.12'
+
+    - name: Install dependencies
+      run: pip install -r requirements.txt
+
+    - name: Build site
+      run: TZ=America/Los_Angeles pelican content -o output -s publishconf.py
+
+    - name: Add CNAME
+      run: echo "www.scottberrevoets.com" > output/CNAME
+
+    - uses: actions/upload-pages-artifact@v3
+      with:
+        path: output
+
+    - name: Deploy to GitHub Pages
+      id: deployment
+      uses: actions/deploy-pages@v4
