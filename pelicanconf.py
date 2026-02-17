@@ -36,6 +36,7 @@ PAGE_SAVE_AS = "{slug}.html"
 # Don't generate the about page as a separate page since it's now the index
 DISPLAY_PAGES_ON_MENU = False
 DISPLAY_CATEGORIES_ON_MENU = False
+WITH_FUTURE_DATES = False
 
 # Pagination
 DEFAULT_PAGINATION = 5
