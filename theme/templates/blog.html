@@ -20,8 +20,9 @@
                 </time>
             </div>
             <div class="archive-content">
+                {% set article_blurb = article.description or article.summary %}
                 <h3 class="archive-title">
-                    <a href="{{ SITEURL }}/{{ article.url }}" title="{{ article.description|striptags|escape }}">
+                    <a href="{{ SITEURL }}/{{ article.url }}"{% if article_blurb %} title="{{ article_blurb|striptags|escape }}"{% endif %}>
                         {{ article.title }}
                     </a>
                 </h3>
