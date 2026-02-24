@@ -1,6 +1,11 @@
 {% extends "base.html" %}
 {% block head %}
   {{ super() }}
+  {% if RELATIVE_URLS %}
+    <link rel="alternate" type="text/markdown" href="/{{ article.save_as|replace('/index.html', '.md') }}" />
+  {% else %}
+    <link rel="alternate" type="text/markdown" href="{{ SITEURL }}/{{ article.save_as|replace('/index.html', '.md') }}" />
+  {% endif %}
   {% if article.description %}
     <meta name="description" content="{{article.description}}" />
   {% endif %}

@@ -1,0 +1,9 @@
+# Scott Berrevoets: Full Content Index
+# Canonical site: {{ SITEURL }}
+#
+# Format:
+# Title | HTML URL | Markdown URL | Date
+
+{% for article in articles %}
+{{ article.title }} | {{ SITEURL }}/{{ article.url }} | {{ SITEURL }}/{{ article.save_as|replace('/index.html', '.md') }} | {{ article.date.strftime("%Y-%m-%d") }}
+{% endfor %}

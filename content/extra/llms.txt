@@ -1,0 +1,14 @@
+# Scott Berrevoets
+
+This site contains writing by Scott Berrevoets about iOS development, architecture, testing, and software engineering.
+
+Canonical site: https://scottberrevoets.com
+
+Primary entrypoints:
+- https://scottberrevoets.com/sitemap.xml
+- https://scottberrevoets.com/feeds/all.atom.xml
+- https://scottberrevoets.com/blog.html
+- https://scottberrevoets.com/llms-full.txt
+
+Machine-readable content:
+- Blog posts are available in Markdown at each post's canonical path with a `.md` suffix.

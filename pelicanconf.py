@@ -30,6 +30,7 @@ THEME = "./theme"
 STATIC_PATHS = ["images", "resume.pdf", "resume.html", "extra"]
 EXTRA_PATH_METADATA = {
     "extra/robots.txt": {"path": "robots.txt"},
+    "extra/llms.txt": {"path": "llms.txt"},
 }
 
 ARTICLE_URL = "{date:%Y}/{date:%m}/{date:%d}/{slug}/"
@@ -77,8 +78,10 @@ SOCIALMEDIAITEMS = [
     ("rss", "/feeds/all.atom.xml"),
 ]
 
+PLUGIN_PATHS = ["plugins"]
 PLUGINS = [
     "readtime",
+    "markdown_output",
 ]
 READTIME_WPM = 200
 

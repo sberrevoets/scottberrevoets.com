@@ -25,6 +25,7 @@ FEED_ALL_RSS = "feeds/all.rss.xml"
 
 TEMPLATE_PAGES = {
     "sitemap.xml": "sitemap.xml",
+    "llms-full.txt": "llms-full.txt",
 }
 
 GOATCOUNTER_ID = "sberrevoets"
