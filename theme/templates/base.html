@@ -2,9 +2,56 @@
 <html lang="{{ DEFAULT_LANG }}">
 <head>
         {% block head %}
+        {% set page_title = SITENAME %}
+        {% if article %}
+            {% set page_title = article.title ~ " - " ~ SITENAME %}
+        {% elif page %}
+            {% set page_title = page.title ~ " - " ~ SITENAME %}
+        {% endif %}
+
+        {% set meta_description = SITE_DESCRIPTION %}
+        {% if article %}
+            {% set article_blurb = article.description or article.summary %}
+            {% if article_blurb %}
+                {% set meta_description = article_blurb %}
+            {% endif %}
+        {% elif page %}
+            {% if page.description %}
+                {% set meta_description = page.description %}
+            {% endif %}
+        {% endif %}
+
+        {% set canonical_path = "" %}
+        {% if article %}
+            {% set canonical_path = article.url %}
+        {% elif page and page.url %}
+            {% set canonical_path = page.url %}
+        {% elif output_file != "index.html" %}
+            {% set canonical_path = output_file %}
+        {% endif %}
+
+        {% if not RELATIVE_URLS %}
+            {% set canonical_url = SITEURL ~ "/" ~ canonical_path if canonical_path else SITEURL ~ "/" %}
+        {% endif %}
+
         <title>{% block title %}{{ SITENAME }}{% endblock title %}</title>
         <meta charset="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta name="description" content="{{ meta_description|striptags|escape }}" />
+        <meta name="robots" content="index,follow" />
+        {% if canonical_url is defined %}
+        <link rel="canonical" href="{{ canonical_url }}" />
+        {% endif %}
+        <meta property="og:site_name" content="{{ SITENAME }}" />
+        <meta property="og:title" content="{{ page_title|striptags|escape }}" />
+        <meta property="og:description" content="{{ meta_description|striptags|escape }}" />
+        {% if canonical_url is defined %}
+        <meta property="og:url" content="{{ canonical_url }}" />
+        {% endif %}
+        <meta property="og:type" content="{% if article %}article{% else %}website{% endif %}" />
+        <meta name="twitter:card" content="summary" />
+        <meta name="twitter:title" content="{{ page_title|striptags|escape }}" />
+        <meta name="twitter:description" content="{{ meta_description|striptags|escape }}" />
         <link rel="icon" type="image/png" href="{{ SITEURL }}/theme/images/favicon.png">
         <link rel="apple-touch-icon" type="image/png" sizes="any" href="{{ SITEURL }}/theme/images/favicon.png">
         {% if FEED_ALL_ATOM %}

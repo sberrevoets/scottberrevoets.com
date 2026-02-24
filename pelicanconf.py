@@ -6,6 +6,7 @@ from __future__ import unicode_literals
 AUTHOR = "Scott Berrevoets"
 SITENAME = "Scott Berrevoets"
 SITEURL = "https://scottberrevoets.com"
+SITE_DESCRIPTION = "Writing about iOS development, architecture, testing, and software engineering."
 
 # Show line numbers in code snippets
 MARKDOWN = {
