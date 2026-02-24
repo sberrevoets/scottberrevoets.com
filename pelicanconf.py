@@ -27,6 +27,10 @@ MARKDOWN = {
 RELATIVE_URLS = True
 PATH = "content"
 THEME = "./theme"
+STATIC_PATHS = ["images", "resume.pdf", "resume.html", "extra"]
+EXTRA_PATH_METADATA = {
+    "extra/robots.txt": {"path": "robots.txt"},
+}
 
 ARTICLE_URL = "{date:%Y}/{date:%m}/{date:%d}/{slug}/"
 ARTICLE_SAVE_AS = "{date:%Y}/{date:%m}/{date:%d}/{slug}/index.html"

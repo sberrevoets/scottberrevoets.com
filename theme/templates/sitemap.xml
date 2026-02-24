@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <url>
+    <loc>{{ SITEURL }}/</loc>
+  </url>
+{% for page in pages %}
+{% if page.url %}
+  <url>
+    <loc>{{ SITEURL }}/{{ page.url }}</loc>
+  </url>
+{% endif %}
+{% endfor %}
+{% for article in articles %}
+  <url>
+    <loc>{{ SITEURL }}/{{ article.url }}</loc>
+{% if article.modified %}
+    <lastmod>{{ article.modified.strftime("%Y-%m-%d") }}</lastmod>
+{% else %}
+    <lastmod>{{ article.date.strftime("%Y-%m-%d") }}</lastmod>
+{% endif %}
+  </url>
+{% endfor %}
+</urlset>
