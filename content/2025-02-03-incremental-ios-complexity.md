@@ -112,3 +112,17 @@ new to ramp up quickly and effectively. The rest they know they can learn on the
 fly. Hopefully companies realize this too in their interviewing and onboarding
 processes, because you might be onboarding an iOS developer who doesn't know a
 single thing about the tech stack your app is running on.
+
+!!! update "Update (February 2026)"
+
+    This post is only a year old but many shifts have already happened. AI
+    impacts the profession in a profound way and I no longer think more
+    specialized jobs will exist. Instead, companies will have their engineers
+    leverage AI to ramp up on new technologies quickly instead of trying to find
+    their unicorn engineer that happens to be an expert on Bluetooth audio.
+
+    Senior engineers with a baseline knowledge will need to upskill to learn how
+    to use AI tools but will be fine in the end. Junior engineers will have a
+    harder time as companies seem to be unwilling to train them, a bad trend in
+    my opinion because the junior engineers are the senior engineers of the
+    future.
