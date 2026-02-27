@@ -13,6 +13,8 @@
     --admonition-color: rgb(76, 175, 80);
     --admonition-bg-color: rgb(249, 249, 249);
     --admonition-shadow-color: rgba(0, 0, 0, 0.1);
+    --update-color: rgb(180, 130, 50);
+    --update-bg-color: rgb(253, 249, 240);
 }
 
 @media (prefers-color-scheme: dark) {
@@ -29,6 +31,8 @@
         --admonition-color: rgb(144, 238, 144);
         --admonition-bg-color: rgb(30, 30, 30);
         --admonition-shadow-color: rgba(0, 0, 0, 0.4);
+        --update-color: rgb(210, 170, 90);
+        --update-bg-color: rgb(40, 36, 28);
     }
 }
 
@@ -363,6 +367,19 @@ blockquote {
 
 .admonition p {
   margin: 0;
+}
+
+.admonition p + p {
+  margin-top: 0.8em;
+}
+
+.admonition.update {
+  border-left: 5px solid var(--update-color);
+  background-color: var(--update-bg-color);
+}
+
+.admonition.update .admonition-title {
+  color: var(--update-color);
 }
 
 img {

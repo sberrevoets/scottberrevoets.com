@@ -187,5 +187,28 @@ the library's APIs and never call their APIs directly. This makes it much easier
 to swap (or remove) underlying libraries in the future, again mitigating some
 risk associated with long-term development.
 
+!!! update "Update (February 2026)"
+
+    The industry has changed a ton over the years but this topic is still very
+    much relevant. Many vendors have decided to write their own SDKs which are
+    difficult to avoid, and I don't think writing an in-house SDK for a
+    third-party vendor really caught on. The growth of Apple's platforms
+    (hardware capabilities, OSes, Swift and Xcode versions, etc.) and associated
+    complexity make some of these SDKs also inherently more complex and buggier.
+    
+
+    Fortunately, LLMs have shifted the buy vs build decision more in the
+    direction of build, and Apple's investment in modern/capable APIs and
+    privacy manifests made it easier to opt for them than introducing another
+    dependency. More tooling is available to monitor dependencies and keeping
+    them up to date.
+
+
+    I don't think companies have become more thoughtful about the risks they
+    take on with third-party dependencies, but platform, tooling, and workflow
+    improvements at least make it a little bit easier to choose which vendor (be
+    it first, second, or third-party) suits them best.
+    
+
 [1]: https://www.theverge.com/2020/5/7/21250689/facebook-sdk-bug-ios-app-crash-apple-spotify-venmo-tiktok-tinder
 [2]: https://github.com/facebook/facebook-ios-sdk/issues/1427
