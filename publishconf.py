@@ -17,6 +17,9 @@ DELETE_OUTPUT_DIRECTORY = True
 # Disable relative URLs
 RELATIVE_URLS = False
 
+# Don't publish future-dated posts
+WITH_FUTURE_DATES = False
+
 # Generate feeds
 FEED_ATOM = "feeds/atom.xml"
 FEED_RSS = "feeds/rss.xml"
