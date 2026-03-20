@@ -1,3 +1,3 @@
-Markdown==3.4.1
+Markdown==3.10.2
 pelican-readtime==0.2.1
-pelican==4.8.0
+pelican==4.11.0
