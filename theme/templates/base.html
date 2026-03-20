@@ -78,6 +78,8 @@
         {% if TAG_FEED_RSS and tag %}
         <link href="{{ FEED_DOMAIN }}/{{ TAG_FEED_RSS|format(tag.slug) }}" type="application/rss+xml" rel="alternate" title="{{ SITENAME }} Tags RSS Feed" />
         {% endif %}
+        <link rel="me" href="https://hachyderm.io/@ScottBerrevoets" />
+        <meta name="fediverse:creator" content="@ScottBerrevoets@hachyderm.io" />
         {% endblock head %}
         <link rel="stylesheet" type="text/css" href="{{ SITEURL }}/theme/css/style.css" />
 </head>
