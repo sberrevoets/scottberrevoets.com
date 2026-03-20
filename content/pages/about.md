@@ -11,33 +11,31 @@ Save_as: index.html
         <li>📍&nbsp;&nbsp;San Francisco</li>
         <li>💼&nbsp;&nbsp;Software Engineer @ Speak</li>
         <li>🗣️&nbsp;&nbsp;English, Dutch</li>
-        <li>✈️&nbsp;&nbsp;VFR SF Bay Tour</li>
-        <li>🏃&nbsp;&nbsp;Golden Gate Park</li>
-        <li>⛷️&nbsp;&nbsp;IKON mountains</li>
     </ul>
 </div>
 
-<div class="right-column" markdown>
-👋 I'm Scott, a software engineer specialized in iOS development since 2011,
-currently over at [Speak] on the Platform team. Before that I was the first
-iOS hire at Lyft, where I spent 11 years building its apps and leading the mobile
-teams and community as the tech lead for Mobile Infrastructure.
+<div class="right-column" markdown> 👋 I'm Scott, a software engineer with deep
+mobile and platform engineering experience since 2011, currently at [Speak] on
+the Platform team. Before that I spent 11 years at Lyft, growing from one of
+the earliest product engineers to tech lead for its 150-person Mobile
+organization.
 
-I live in San Francisco and am always happy to chat&mdash;feel free to reach
-out! For an overview of my work, check out my resume in
+For an overview of my work, check out my resume in
 [PDF]({static}/resume.pdf) or [HTML]({static}/resume.html).
 
 ### Speak (current)
-I recently took on a software engineering role at language-learning unicorn
-[Speak] to build its mobile platform.
+I joined language-learning unicorn [Speak] to build its mobile platform,
+tackling the platform engineering problems that come with scaling a fast-growing
+app: architecture, CI/CD, the release process, and more recently optimizations
+for agentic AI workflows.
 
 ### Lyft (2014 &ndash; 2025)
-As one of Lyft's first iOS hires, I started out as a product engineer building
+As one of Lyft's earliest mobile engineers, I started out as a product engineer building
 out some of the fundamental features and technologies that today define the
-rideshare industry. Over time I switched gears to iOS infrastructure
+rideshare industry. Over time I switched gears to platform infrastructure
 (specifically architecture) and transitioned into a tech lead role for Lyft's
-150-engineer Mobile team while focusing on the quality and scalability of the
-iOS and Android codebases.
+150-engineer Mobile team while focusing on the quality and scalability of its
+engineering systems.
 
 ### Community Contributions
 
