@@ -8,6 +8,7 @@ Primary entrypoints:
 - https://scottberrevoets.com/sitemap.xml
 - https://scottberrevoets.com/feeds/all.atom.xml
 - https://scottberrevoets.com/blog.html
+- https://scottberrevoets.com/til.html
 - https://scottberrevoets.com/llms-full.txt
 
 Machine-readable content:

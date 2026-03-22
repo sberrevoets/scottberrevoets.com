@@ -25,6 +25,8 @@ FEED_ATOM = "feeds/atom.xml"
 FEED_RSS = "feeds/rss.xml"
 FEED_ALL_ATOM = "feeds/all.atom.xml"
 FEED_ALL_RSS = "feeds/all.rss.xml"
+CATEGORY_FEED_ATOM = "feeds/{slug}.atom.xml"
+CATEGORY_FEED_RSS = "feeds/{slug}.rss.xml"
 
 TEMPLATE_PAGES = {
     "sitemap.xml": "sitemap.xml",

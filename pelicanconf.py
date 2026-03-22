@@ -33,6 +33,8 @@ EXTRA_PATH_METADATA = {
     "extra/llms.txt": {"path": "llms.txt"},
 }
 
+USE_FOLDER_AS_CATEGORY = True
+
 ARTICLE_URL = "{date:%Y}/{date:%m}/{date:%d}/{slug}/"
 ARTICLE_SAVE_AS = "{date:%Y}/{date:%m}/{date:%d}/{slug}/index.html"
 
@@ -53,7 +55,7 @@ PAGINATION_PATTERNS = (
 
 # Create and link to index and archive
 DIRECT_TEMPLATES = ["index"]
-MENUITEMS = [("About", ""), ("Blog", "blog.html")]
+MENUITEMS = [("About", ""), ("Blog", "blog.html"), ("TIL", "til.html")]
 
 # Disable parsing HTML files
 READERS = {"html": None}
@@ -81,6 +83,7 @@ SOCIALMEDIAITEMS = [
 PLUGIN_PATHS = ["plugins"]
 PLUGINS = [
     "readtime",
+    "til_urls",
     "markdown_output",
 ]
 READTIME_WPM = 200

@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+{% block head %}
+  {{ super() }}
+  {% if RELATIVE_URLS %}
+    <link rel="alternate" type="text/markdown" href="/{{ article.save_as|replace('/index.html', '.md') }}" />
+  {% else %}
+    <link rel="alternate" type="text/markdown" href="{{ SITEURL }}/{{ article.save_as|replace('/index.html', '.md') }}" />
+  {% endif %}
+{% endblock %}
+
+{% block title %}{{ article.title }} - {{ SITENAME }}{% endblock %}
+
+{% block content %}
+<section id="content" class="body">
+  <header>
+      <h2 class="article-title til-article-title">{{ article.title }}</h2>
+  </header>
+  <div class="article-content">
+    {{ article.content }}
+  </div>
+  <time class="til-article-date" datetime="{{ article.date.isoformat() }}">
+    {{ article.date.strftime("%b %d, %Y") }}
+  </time>
+</section>
+{% endblock %}

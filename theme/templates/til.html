@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{% block title %}{{ page.title }} - {{ SITENAME }}{% endblock %}
+{% block content %}
+
+<div class="page-content">
+    <h2 class="til-header"><span class="til-highlight">T</span>oday <span class="til-highlight">I</span> <span class="til-highlight">L</span>earned...</h2>
+    {% set til_articles = dates|selectattr("category.name", "equalto", "til")|list %}
+    {% for article in til_articles %}
+        <article class="til-item">
+            <time class="til-date" datetime="{{ article.date.isoformat() }}">
+                {{ article.date.strftime("%b %d, %Y") }}
+            </time>
+            {% set article_blurb = article.description or article.summary %}
+            <h3 class="til-title">
+                <a href="{{ SITEURL }}/{{ article.url }}"{% if article_blurb %} title="{{ article_blurb|striptags|escape }}"{% endif %}>
+                    {{ article.title }}
+                </a>
+            </h3>
+        </article>
+    {% endfor %}
+</div>
+{% endblock %}

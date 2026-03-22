@@ -3,8 +3,9 @@
 {% block content %}
 
 <div class="page-content">
-    {% for article in dates %}
-        {% if loop.index == 1 or article.date.year != dates[loop.index0 - 1].date.year %}
+    {% set blog_articles = dates|selectattr("category.name", "equalto", "blog")|list %}
+    {% for article in blog_articles %}
+        {% if loop.index == 1 or article.date.year != blog_articles[loop.index0 - 1].date.year %}
             {% if loop.index != 1 %}
                 </div>
             </div>
@@ -29,7 +30,7 @@
             </div>
         </article>
     {% endfor %}
-    {% if dates %}
+    {% if blog_articles %}
         </div>
     </div>
     {% endif %}

@@ -286,6 +286,60 @@ ul#personal-info li {
     font-weight: normal;
 }
 
+/*** TIL ***/
+
+.til-header {
+    font-family: monospace;
+    font-size: 2rem;
+    font-weight: 300;
+    color: var(--subtitle-color);
+    margin-bottom: 2rem;
+    padding-bottom: 1rem;
+    border-bottom: 2px solid var(--accent-color);
+}
+
+.til-highlight {
+    font-weight: 700;
+    color: var(--accent-color);
+}
+
+.til-item {
+    margin-bottom: 1rem;
+}
+
+.til-date {
+    display: block;
+    font-family: monospace;
+    font-size: 0.8rem;
+    color: var(--subtitle-color);
+    margin-bottom: 0.1rem;
+}
+
+.til-title {
+    margin: 0;
+    font-size: 1.3rem;
+    line-height: 1.3rem;
+    font-weight: 400;
+}
+
+.til-title a {
+    color: var(--text-color);
+    text-decoration: none;
+}
+
+.til-title a:hover {
+    color: var(--link-color);
+}
+
+.til-article-date {
+    display: block;
+    font-family: monospace;
+    font-size: 0.85rem;
+    color: var(--subtitle-color);
+    margin-top: 2rem;
+    padding-left: 10px;
+}
+
 .archive-content {
     flex: 1;
     min-width: 0;
@@ -329,6 +383,11 @@ h2.article-title {
     padding: 10px 0 15px 10px;
     margin: 0;
     line-height: 1em;
+}
+
+h2.til-article-title {
+    font-size: 1.7em;
+    padding-top: 50px;
 }
 
 header time.published {
