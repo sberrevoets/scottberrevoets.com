@@ -2,7 +2,7 @@
 
 :root {
     --accent-color: rgb(10, 57, 102);
-    --background-color: rgb(255, 255, 255);
+    --background-color: rgb(250, 250, 248);
     --text-color: rgb(50, 50, 50);
     --link-color: rgb(10, 57, 102);
     --social-icon-color: rgb(0, 0, 0);
@@ -20,8 +20,8 @@
 @media (prefers-color-scheme: dark) {
     :root {
         --accent-color: rgb(95, 146, 200);
-        --background-color: rgb(30, 30, 46);
-        --text-color: rgb(230, 230, 230);
+        --background-color: rgb(36, 36, 36);
+        --text-color: rgb(210, 207, 202);
         --link-color: rgb(130, 180, 240);
         --social-icon-color: rgb(230, 230, 230);
         --menu-separator-color: rgb(60, 60, 60);
@@ -43,8 +43,8 @@ body {
     width: 100%;
     max-width: 900px;
     padding: 0;
-    font-size: 1.15em;
-    line-height: 1.5em;
+    font-size: 1.2em;
+    line-height: 1.6em;
 }
 
 body > header {
@@ -191,6 +191,16 @@ div.article-content, div.page-content {
     line-height: 1.6em;
     font-family: -apple-system-body, -apple-system, system-ui, BlinkMacSystemFont;
     padding: 10px;
+}
+
+@media (prefers-color-scheme: dark) {
+    div.article-content, div.page-content {
+        line-height: 1.75em;
+    }
+
+    div.article-content strong, div.page-content strong {
+        color: rgb(240, 238, 235);
+    }
 }
 
 /*** About ***/
@@ -404,7 +414,7 @@ blockquote {
     margin: 30px auto;
     padding-left: 1.5em;
     border-left: 4px solid var(--quote-color);
-    color: #777;
+    color: rgb(119, 119, 119);
 }
 
 .admonition {
