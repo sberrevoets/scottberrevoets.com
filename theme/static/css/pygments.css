@@ -10,8 +10,25 @@ pre, code {
 }
 
 .highlight {
+    background: #343642;
+    border-radius: 5px;
     max-width: 100%;
     overflow-x: auto;
+    line-height: 1.3em;
+}
+
+.highlight > pre {
+    background: transparent;
+    box-sizing: border-box;
+    color: #C1C2C3;
+    display: inline-block;
+    margin: 0;
+    min-width: 100%;
+    padding: 1em 10px;
+}
+
+.highlight > pre > code {
+    color: inherit;
 }
 
 .highlighttable {

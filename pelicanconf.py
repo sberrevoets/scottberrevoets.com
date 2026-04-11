@@ -8,12 +8,12 @@ SITENAME = "Scott Berrevoets"
 SITEURL = "https://scottberrevoets.com"
 SITE_DESCRIPTION = "Writing about iOS development, architecture, testing, and software engineering."
 
-# Show line numbers in code snippets
+# Don't show line numbers in code snippets by default
 MARKDOWN = {
     "extension_configs": {
         "markdown.extensions.codehilite": {
             "css_class": "highlight",
-            "linenums": True,
+            "linenums": False,
         },
         "markdown.extensions.extra": {},
         "markdown.extensions.meta": {},

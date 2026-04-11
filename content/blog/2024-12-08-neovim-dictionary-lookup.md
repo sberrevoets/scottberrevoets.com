@@ -170,8 +170,9 @@ This creates 2 functions, `DictionaryLookup()` and `ClosePopup()` that show and
 dismiss the popup, stripping the ANSI codes from the output as they were
 rendered raw in the popup.
 
-However, note the call to `apply_ansi_highlighting` (line 9),
-which replaces the ANSI codes with neovim specific highlight groups. This turned
+However, note the call to `apply_ansi_highlighting(buf, i - 1, line)` near the
+end of `create_buf()`, which replaces the ANSI codes with neovim specific
+highlight groups. This turned
 out to be quite involved but I wanted the formatted output and used this as an
 opportunity to learn lua a bit more. 
 
