@@ -55,7 +55,11 @@ PAGINATION_PATTERNS = (
 
 # Create and link to index and archive
 DIRECT_TEMPLATES = ["index"]
-MENUITEMS = [("About", ""), ("Blog", "blog.html"), ("TIL", "til.html")]
+MENUITEMS = [
+    ("About", ""),
+    ("Blog", "blog.html"),
+    ("TIL", "til.html"),
+]
 
 # Disable parsing HTML files
 READERS = {"html": None}
