@@ -1,6 +1,6 @@
 # Scott Berrevoets
 
-This site contains writing by Scott Berrevoets about iOS development, architecture, testing, and software engineering.
+This site contains writing by Scott Berrevoets about engineering judgment in long-lived systems: architecture, migrations, testing culture, technical debt, and engineering leadership.
 
 Canonical site: https://scottberrevoets.com
 

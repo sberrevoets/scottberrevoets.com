@@ -1,43 +1,59 @@
 Title: About
 URL:
 Save_as: index.html
+Description: About Scott Berrevoets, a software engineer focused on systems, architecture, and engineering culture in long-lived software.
 
 <div class="column-container" markdown>
 
 <div class="left-column">
     <p><img src="/images/me.jpg" id="me"></p>
-    <ul id="personal-info" style="font-family: monospace">
+    <ul id="personal-info" style="font-family: monospace;">
         <li>🏠&nbsp;&nbsp;The Netherlands</li>
         <li>📍&nbsp;&nbsp;San Francisco</li>
-        <li>💼&nbsp;&nbsp;Software Engineer @ Speak</li>
+        <li>💼&nbsp;&nbsp;Engineering @ Speak</li>
         <li>🗣️&nbsp;&nbsp;English, Dutch</li>
     </ul>
 </div>
 
-<div class="right-column" markdown> 👋 I'm Scott, a software engineer with deep
-mobile and platform engineering experience since 2011, currently at [Speak] on
-the Platform team. Before that I spent 11 years at Lyft, growing from one of
-the earliest product engineers to tech lead for its 150-person Mobile
-organization.
+<div class="right-column" markdown> 👋 I'm Scott, a software engineer based in
+San Francisco. Since 2011, I've worked in mobile and platform engineering,
+focusing on the systems and engineering culture that help teams build, ship,
+and maintain software over time. I'm currently on the Platform team at [Speak].
 
-For an overview of my work, check out my resume in
+Over the course of my career, I've moved from product engineering toward shaping
+the systems and engineering culture through architecture, testing
+infrastructure, release engineering, observability, code quality, and
+large-scale migrations.
+
+The blog posts here are a reflection of that experience.
+
+### Highlights
+* Tech lead for Lyft's 150-engineer Mobile organization after joining as
+  the first dedicated iOS engineer
+* Founded Lyft's iOS Architecture team and scaled its architecture and
+  modularization approach across an 80+ engineer iOS organization
+* Currently on Speak's Platform team working on CI/CD, release automation,
+  observability, reusable voice infrastructure, and AI workflows
+
+For a more complete overview of my work, see my resume in
 [PDF]({static}/resume.pdf) or [HTML]({static}/resume.html).
 
-### Speak (current)
-I joined language-learning unicorn [Speak] to build its mobile platform,
-tackling the platform engineering problems that come with scaling a fast-growing
-app: architecture, CI/CD, the release process, and more recently optimizations
-for agentic AI workflows.
+### Experience
 
-### Lyft (2014 &ndash; 2025)
-As one of Lyft's earliest mobile engineers, I started out as a product engineer building
-out some of the fundamental features and technologies that today define the
-rideshare industry. Over time I switched gears to platform infrastructure
-(specifically architecture) and transitioned into a tech lead role for Lyft's
-150-engineer Mobile team while focusing on the quality and scalability of its
-engineering systems.
+#### Speak (current)
+At [Speak], I focus on the systems that make a fast-moving mobile product easier
+to build, ship, and operate reliably as the team and codebase grow. The work
+focuses on the platform capabilities and engineering practices that support
+scaling that growth.
 
-### Community Contributions
+#### Lyft (2014 &ndash; 2025)
+At Lyft, I started in product engineering and moved into platform and
+architecture work as the mobile organization grew. That shift took me from
+building rider and driver features to defining the systems, standards, and
+technical direction that let the broader organization scale without losing
+quality.
+
+### Community work
 
 #### [Kodeco] (formerly raywenderlich.com)
 * Tech editor for 20 tutorials and articles (2014 &ndash; 2019)
