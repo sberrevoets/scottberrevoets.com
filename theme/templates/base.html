@@ -89,9 +89,9 @@
         <header id="banner" class="body">
             <div class="header-top">
                 {% if SITESUBTITLE %}
-                <h1><a href="{{ SITEURL }}/">{{ SITENAME }} <strong>{{ SITESUBTITLE }}</strong></a></h1>
+                <h1 class="site-title"><a href="{{ SITEURL }}/">{{ SITENAME }} <strong>{{ SITESUBTITLE }}</strong></a></h1>
                 {% else %}
-                <h1><a href="{{ SITEURL }}/">{{ SITENAME }}</a></h1>
+                <h1 class="site-title"><a href="{{ SITEURL }}/">{{ SITENAME }}</a></h1>
                 {% endif %}
 
                 {% if DISPLAY_SOCIAL_MEDIA %}

@@ -63,10 +63,20 @@ body > header {
     flex-wrap: wrap;
 }
 
-.header-top h1 {
-    margin: 40px 0 0 0;
+.header-top .site-title {
+    display: flex;
+    align-items: center;
+    margin: 0;
+    padding-top: 8px;
     text-align: left;
     flex: 1;
+    font-size: 2.8em;
+}
+
+.header-top .site-title a {
+    display: block;
+    font-size: inherit;
+    line-height: 1;
 }
 
 .header-top #social {
@@ -83,20 +93,31 @@ a:hover {
 }
 
 ul#social {
-    display: table;
-    margin: 10px auto;
-    width: 200px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin: 0;
+    width: auto;
+    padding: 0;
+    padding-top: 8px;
     -webkit-padding-start: 0;
 }
 
 ul#social li {
     list-style-type: none;
-    display: table-cell;
+    display: block;
     text-align: center;
-    padding: 0 8px;
+    padding: 0;
+}
+
+ul#social li a {
+    display: flex;
+    align-items: center;
+    line-height: 1;
 }
 
 ul#social li a .icon {
+    display: block;
     width: 24px;
     height: 24px;
     color: var(--social-icon-color);
@@ -117,9 +138,19 @@ h1 a {
    font-size: 2em;
 }
 
+@supports (text-box: trim-both cap alphabetic) {
+    .header-top .site-title a {
+        text-box: trim-both cap alphabetic;
+    }
+}
+
 @media only screen and (max-width: 500px) {
     h1 a {
         font-size: 1.2em;
+    }
+
+    .header-top .site-title {
+        font-size: 2.4em;
     }
 
     .header-top {
@@ -127,9 +158,9 @@ h1 a {
         text-align: center;
     }
 
-    .header-top h1 {
+    .header-top .site-title {
         text-align: center;
-        margin-bottom: 10px;
+        margin: 0 0 10px 0;
     }
 
     /* Fix code block font sizes */
