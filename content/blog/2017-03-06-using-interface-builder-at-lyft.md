@@ -1,6 +1,6 @@
 Title: Using Interface Builder at Lyft
 Date: 2017-03-06
-Summary: An overview of how we use Interface Builder to build the Lyft app
+Description: An overview of how we use Interface Builder to build the Lyft app
 
 
 Last week people realized that Xcode 8.3 by default uses storyboards in new

@@ -1,6 +1,6 @@
 Title: Shifting the testing culture: Code coverage
 Date: 2024-11-20
-Summary: How we collect, track, and use code coverage data to improve our testing culture
+Description: How we collect, track, and use code coverage data to improve our testing culture
 
 !!! note
     This is the third post in a series on shifting our testing culture.

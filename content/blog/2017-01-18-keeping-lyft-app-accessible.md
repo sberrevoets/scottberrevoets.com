@@ -1,6 +1,6 @@
 Title: Keeping the Lyft iOS App Accessible
 Date: 2017-01-18
-Summary: Explanation on some strategies in how Lyft keeps its iOS app accessible
+Description: Explanation on some strategies in how Lyft keeps its iOS app accessible
 
 !!! note
     This article was written by me but originally published on the [Lyft

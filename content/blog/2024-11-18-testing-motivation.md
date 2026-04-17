@@ -1,7 +1,6 @@
 Title: Shifting the testing culture: Motivation
 Date: 2024-11-18
-Summary: Motivation for investing in automated testing and the benefits and drawbacks we've experienced at Lyft
-
+Description: Motivation for investing in automated testing and the benefits and drawbacks we've experienced at Lyft
 Five years ago I began promoting automated testing heavily within Lyft even
 though I didn't have any real experience in writing big test suites myself. Many
 hands make light work, so I found a few people who shared this thinking and we

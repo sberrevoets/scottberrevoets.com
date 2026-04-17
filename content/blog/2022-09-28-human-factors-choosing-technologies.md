@@ -1,7 +1,6 @@
 Title: Human factors in choosing technologies
 Date: 2022-09-28
-Summary: Discussion on what human factors to consider when choosing to adopt a new technology
-
+Description: Discussion on what human factors to consider when choosing to adopt a new technology
 I recently saw a thread where someone wanted to introduce a more capable
 architecture pattern than what most apps start out with in a small team, but
 received some pushback from teammates and was looking for help in countering

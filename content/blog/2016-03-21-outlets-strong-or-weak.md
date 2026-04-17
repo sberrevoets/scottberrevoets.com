@@ -1,6 +1,6 @@
 Title: Outlets: strong! or weak?
 Date: 2016-03-21
-Summary: A quick overview of some best practices when creating IBOutlets
+Description: A quick overview of some best practices when creating IBOutlets
 
 
 There are a lot of styles out there when it comes to using Interface Builder

@@ -1,6 +1,6 @@
 Title: Composing a resume in markdown
 Date: 2025-03-15
-Summary: Building a resume in markdown for improved maintainability and portability
+Description: Building a resume in markdown for improved maintainability and portability
 
 I recently updated my resume, and after a few iterations of tweaking the same
 Pages file I started more than a decade ago, I decided that I really wanted

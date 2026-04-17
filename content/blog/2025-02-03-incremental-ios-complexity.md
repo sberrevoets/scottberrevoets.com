@@ -1,6 +1,6 @@
 Title: Incremental complexity in iOS development
 Date: 2025-02-03
-Summary: A suggestion for redefining what it means to be a senior iOS developer
+Description: A suggestion for redefining what it means to be a senior iOS developer
 
 I wrote my first app, a map to navigate my college campus, in the winter of
 2011, on iOS 4.x and with Xcode 4.x. There were 25 frameworks, iOS 7 hadn't been

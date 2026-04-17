@@ -1,6 +1,6 @@
 Title: Silencing NSLog
 Date: 2016-08-01
-Summary: Details a way to clean up a noisy Xcode console
+Description: Details a way to clean up a noisy Xcode console
 
 
 When your app has a lot of third-party dependencies, what often happens is that

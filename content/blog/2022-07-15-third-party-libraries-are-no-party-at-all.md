@@ -1,7 +1,6 @@
 Title: Third-party libraries are no party at all
 Date: 2022-07-15
-Summary: Details on how we evaluate whether to add new third-party libraries
-
+Description: Details on how we evaluate whether to add new third-party libraries
 _What better way to end the week than with a hot take?_
 
 In my 8 years at Lyft, product managers or engineers have often wanted to add

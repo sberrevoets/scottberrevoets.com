@@ -1,6 +1,6 @@
 Title: Shifting the testing culture: Infrastructure
 Date: 2024-11-19
-Summary: Infrastructure changes we made to optimize the ergonomics and developer experience of writing tests.
+Description: Infrastructure changes we made to optimize the ergonomics and developer experience of writing tests.
 
 !!! note
     This is the second post in a series on shifting our testing culture.

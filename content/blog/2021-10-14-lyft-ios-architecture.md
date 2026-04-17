@@ -1,6 +1,6 @@
 Title: iOS Architecture at Lyft
 Date: 2021-10-14
-Summary: Discussion on the different architectural components of Lyft's iOS apps
+Description: Discussion on the different architectural components of Lyft's iOS apps
 
 
 June 30, 2014 was my first day at Lyft as the first iOS hire on the ~3 person

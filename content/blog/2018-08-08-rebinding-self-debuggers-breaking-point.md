@@ -1,6 +1,6 @@
 Title: Re-binding self: the debugger's break(ing) point
 Date: 2018-08-08
-Summary: Explanation of how nice syntax for re-binding self breaks the debugger
+Description: Explanation of how nice syntax for re-binding self breaks the debugger
 
 
 **Update 07-29-2019: The bug described below is fixed in Xcode 11 so this blog
