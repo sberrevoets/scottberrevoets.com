@@ -1,6 +1,7 @@
 Title: Migration strategies in large codebases
 Date: 2022-11-15
 Description: Strategies we employ in completing migrations in our mobile codebases
+FeaturedDescription: How to move a large codebase forward without stopping feature development
 Code migrations are a fact of life for large codebases. New technologies pop up,
 platforms see improvements, and programming languages get new features you might
 want to adopt. Not performing these migrations and keeping up with the times is

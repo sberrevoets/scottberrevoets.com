@@ -7,6 +7,15 @@ AUTHOR = "Scott Berrevoets"
 SITENAME = "Scott Berrevoets"
 SITEURL = "https://scottberrevoets.com"
 SITE_DESCRIPTION = "Writing about engineering judgment in long-lived systems: architecture, migrations, testing culture, technical debt, and engineering leadership."
+FEATURED_POST_ORDER = [
+    "review-your-own-ai-generated-code",
+    "migration-strategies-in-large-codebases",
+    "human-factors-in-choosing-technologies",
+    "third-party-libraries-are-no-party-at-all",
+    "shifting-the-testing-culture-motivation",
+    "flywheel-of-tech-debt",
+]
+JINJA_GLOBALS = {"FEATURED_POST_ORDER": FEATURED_POST_ORDER}
 
 # Don't show line numbers in code snippets by default
 MARKDOWN = {

@@ -1,6 +1,7 @@
 Title: Review your own AI-generated code
 Date: 2026-03-20
 Description: Code review was designed for a world where humans wrote all the code. In a world where agents do, the value of peer review shifts from code to plans and specs.
+FeaturedDescription: Why AI changes the value of code review and shifts attention toward plans and specs
 
 Years ago, when we started to have 5+ contributors to our codebase at Lyft, we
 had to establish a code review process with high enough value to justify the

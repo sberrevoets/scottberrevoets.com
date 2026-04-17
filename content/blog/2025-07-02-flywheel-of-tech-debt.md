@@ -1,6 +1,7 @@
 Title: Flywheel of tech debt
 Date: 2025-07-02
 Description: Explanation of why tech debt in infrastructure is much more risky than further downstream
+FeaturedDescription: Why tech debt in shared infrastructure compounds faster than most teams expect
 
 Tech debt is often compared to financial debt, in that you're borrowing
 development time now to pay it off with more development time later. When

@@ -1,40 +1,79 @@
 {% extends "base.html" %}
+{% macro render_featured_post(post, siteurl) -%}
+    {% set post_blurb = post.featureddescription or post.description or post.summary %}
+    {% set post_blurb_text = post_blurb|replace('<p>', '')|replace('</p>', '')|replace('\n', ' ')|trim %}
+    <article class="featured-item">
+        <a class="featured-card" href="{{ siteurl }}/{{ post.url }}"{% if post_blurb_text %} title="{{ post_blurb_text|escape }}"{% endif %}>
+            <time class="featured-date" datetime="{{ post.date.isoformat() }}">
+                {{ post.date.strftime("%Y") }}
+            </time>
+            <h3 class="featured-title">
+                {{ post.title }}
+            </h3>
+            {% if post_blurb_text %}
+                <p class="featured-blurb">{{ post_blurb_text|escape }}</p>
+            {% endif %}
+        </a>
+    </article>
+{%- endmacro %}
 {% block title %}{{ page.title }} - {{ SITENAME }}{% endblock %}
 {% block content %}
 
 <div class="page-content">
-    {% set blog_articles = dates|selectattr("category.name", "equalto", "blog")|list %}
-    {% for article in blog_articles %}
-        {% if loop.index == 1 or article.date.year != blog_articles[loop.index0 - 1].date.year %}
+    {% set blog_posts = dates|selectattr("category.name", "equalto", "blog")|list %}
+    {% set featured_posts = blog_posts|selectattr("featureddescription")|list %}
+    <div class="blog-intro">
+        {{ page.content }}
+    </div>
+
+    <section class="featured-section">
+        <div class="featured-list">
+            {% for slug in FEATURED_POST_ORDER %}
+                {% for post in featured_posts %}
+                    {% set post_slug = post.url.rstrip('/').split('/')[-1] %}
+                    {% if post_slug == slug %}
+                        {{ render_featured_post(post, SITEURL) }}
+                    {% endif %}
+                {% endfor %}
+            {% endfor %}
+            {% for post in featured_posts %}
+                {% set post_slug = post.url.rstrip('/').split('/')[-1] %}
+                {% if post_slug not in FEATURED_POST_ORDER %}
+                    {{ render_featured_post(post, SITEURL) }}
+                {% endif %}
+            {% endfor %}
+        </div>
+    </section>
+
+    {% for post in blog_posts %}
+        {% if loop.index == 1 or post.date.year != blog_posts[loop.index0 - 1].date.year %}
             {% if loop.index != 1 %}
                 </div>
             </div>
             {% endif %}
             <div class="year-section">
-                <h2 class="year-header">{{ article.date.year }}</h2>
+                <h2 class="year-header">{{ post.date.year }}</h2>
                 <div class="articles-list">
         {% endif %}
         <article class="archive-item">
             <div class="archive-date">
-                <time datetime="{{ article.date.isoformat() }}">
-                    {{ article.date.strftime("%b %d") }}
+                <time datetime="{{ post.date.isoformat() }}">
+                    {{ post.date.strftime("%b %d") }}
                 </time>
             </div>
             <div class="archive-content">
-                {% set article_blurb = article.description or article.summary %}
+                {% set post_blurb = post.description or post.summary %}
                 <h3 class="archive-title">
-                    <a href="{{ SITEURL }}/{{ article.url }}"{% if article_blurb %} title="{{ article_blurb|striptags|escape }}"{% endif %}>
-                        {{ article.title }}
+                    <a href="{{ SITEURL }}/{{ post.url }}"{% if post_blurb %} title="{{ post_blurb|striptags|escape }}"{% endif %}>
+                        {{ post.title }}
                     </a>
                 </h3>
             </div>
         </article>
     {% endfor %}
-    {% if blog_articles %}
+    {% if blog_posts %}
         </div>
     </div>
     {% endif %}
-
-    <p>{{ page.content }}</p>
 </div>
 {% endblock %}
