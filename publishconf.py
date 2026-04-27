@@ -34,7 +34,3 @@ TEMPLATE_PAGES = {
 }
 
 GOATCOUNTER_ID = "sberrevoets"
-
-### Temporarily ignore TIL section
-IGNORE_FILES = ["**/.*", "til", "til.md"]
-MENUITEMS = [("About", ""), ("Blog", "blog.html")]
