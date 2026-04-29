@@ -1,4 +1,5 @@
 Title: Swift's Optional has a take() function
+Slug: optional-has-a-take-function
 Date: 2026-04-05
 
 After the introduction of `Optional.toggle()` back in 2018, I thought I had
