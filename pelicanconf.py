@@ -6,7 +6,7 @@ from __future__ import unicode_literals
 AUTHOR = "Scott Berrevoets"
 SITENAME = "Scott Berrevoets"
 SITEURL = "https://scottberrevoets.com"
-SITE_DESCRIPTION = "Writing about engineering judgment in long-lived systems: architecture, migrations, testing culture, technical debt, and engineering leadership."
+SITE_DESCRIPTION = "Scott Berrevoets is a software engineer working on long-lived software systems, especially around architecture, developer experience, and platform engineering."
 FEATURED_POST_ORDER = [
     "review-your-own-ai-generated-code",
     "migration-strategies-in-large-codebases",
@@ -50,7 +50,7 @@ ARTICLE_SAVE_AS = "{date:%Y}/{date:%m}/{date:%d}/{slug}/index.html"
 PAGE_URL = "{slug}.html"
 PAGE_SAVE_AS = "{slug}.html"
 
-# Don't generate the about page as a separate page since it's now the index
+# Pages are linked manually in the menu
 DISPLAY_PAGES_ON_MENU = False
 DISPLAY_CATEGORIES_ON_MENU = False
 WITH_FUTURE_DATES = True
@@ -62,12 +62,12 @@ PAGINATION_PATTERNS = (
     (2, "{base_name}/page/{number}/", "{base_name}/page/{number}/index.html"),
 )
 
-# Create and link to index and archive
-DIRECT_TEMPLATES = ["index"]
+# The homepage is generated from content/pages/home.md
+DIRECT_TEMPLATES = []
 MENUITEMS = [
-    ("About", ""),
+    ("Home", ""),
+    ("About", "about.html"),
     ("Blog", "blog.html"),
-    ("TIL", "til.html"),
 ]
 
 # Disable parsing HTML files

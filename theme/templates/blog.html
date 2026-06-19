@@ -3,7 +3,7 @@
     {% set post_blurb = post.featureddescription or post.description or post.summary %}
     {% set post_blurb_text = post_blurb|replace('<p>', '')|replace('</p>', '')|replace('\n', ' ')|trim %}
     <article class="featured-item">
-        <a class="featured-card" href="{{ siteurl }}/{{ post.url }}"{% if post_blurb_text %} title="{{ post_blurb_text|escape }}"{% endif %}>
+        <a class="card link-card featured-card" href="{{ siteurl }}/{{ post.url }}"{% if post_blurb_text %} title="{{ post_blurb_text|escape }}"{% endif %}>
             <time class="featured-date" datetime="{{ post.date.isoformat() }}">
                 {{ post.date.strftime("%Y") }}
             </time>
@@ -27,7 +27,7 @@
     </div>
 
     <section class="featured-section">
-        <div class="featured-list">
+        <div class="card-grid featured-list">
             {% for slug in FEATURED_POST_ORDER %}
                 {% for post in featured_posts %}
                     {% set post_slug = post.url.rstrip('/').split('/')[-1] %}

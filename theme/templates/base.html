@@ -6,7 +6,11 @@
         {% if article %}
             {% set page_title = article.title ~ " - " ~ SITENAME %}
         {% elif page %}
-            {% set page_title = page.title ~ " - " ~ SITENAME %}
+            {% if page.url == "" %}
+                {% set page_title = SITENAME %}
+            {% else %}
+                {% set page_title = page.title ~ " - " ~ SITENAME %}
+            {% endif %}
         {% endif %}
 
         {% set meta_description = SITE_DESCRIPTION %}
