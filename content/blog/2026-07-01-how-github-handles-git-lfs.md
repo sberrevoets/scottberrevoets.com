@@ -55,8 +55,8 @@ our mental model around how to think about Git LFS when using GitHub:
 All of these details make it clear that Git LFS isn't a regular git repository
 that handles large files better; there's a sophisticated cloud storage layer
 behind it that needs the same considerations that more mainstream cloud storage
-does. Git is the version control layer, but doesn't touch the raw objects
-directly.
+does. Although git does the version control of those files, it doesn't touch the
+raw objects itself.
 
 [^1]: Checking in large binary files that change regularly causes repo
       bloat, and cloud storage solutions like S3 or GCS make for a more
