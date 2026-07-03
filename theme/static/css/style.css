@@ -6,7 +6,6 @@
     --text-color: rgb(50, 50, 50);
     --link-color: rgb(10, 57, 102);
     --social-icon-color: rgb(0, 0, 0);
-    --menu-separator-color: rgb(204, 204, 204);
     --menu-text-color: rgb(180, 180, 180);
     --subtitle-color: rgb(170, 170, 170);
     --quote-color: rgb(221, 221, 221);
@@ -26,7 +25,6 @@
         --text-color: rgb(210, 207, 202);
         --link-color: rgb(130, 180, 240);
         --social-icon-color: rgb(230, 230, 230);
-        --menu-separator-color: rgb(60, 60, 60);
         --menu-text-color: rgb(150, 150, 150);
         --subtitle-color: rgb(140, 140, 140);
         --quote-color: rgb(60, 60, 60);
@@ -289,10 +287,6 @@ div.article-content, div.page-content {
     margin: 2.3rem 0 1rem;
 }
 
-.writing-section {
-    margin-top: 3rem;
-}
-
 .home-section h2 {
     margin: 0;
     font-size: 1.35rem;
@@ -307,10 +301,6 @@ div.article-content, div.page-content {
 .focus-grid,
 .featured-list {
     grid-template-columns: repeat(3, minmax(0, 1fr));
-}
-
-.writing-grid {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
 }
 
 .card {
@@ -346,8 +336,7 @@ div.article-content, div.page-content {
     --card-accent: #3b6ea8;
 }
 
-.focus-card h3,
-.writing-card h3 {
+.focus-card h3 {
     margin-top: 0;
     margin-bottom: 0.45rem;
     font-size: 1.05rem;
@@ -358,7 +347,6 @@ div.article-content, div.page-content {
     border-color: var(--accent-color);
 }
 
-.writing-card:hover h3,
 .featured-card:hover .featured-title {
     color: var(--link-color);
 }
@@ -583,8 +571,7 @@ div.article-content, div.page-content {
     }
 
     .home-hero,
-    .focus-grid,
-    .writing-grid {
+    .focus-grid {
         grid-template-columns: 1fr;
     }
 
@@ -617,8 +604,7 @@ div.article-content, div.page-content {
         grid-template-columns: 180px minmax(0, 1fr);
     }
 
-    .focus-grid,
-    .writing-grid {
+    .focus-grid {
         grid-template-columns: 1fr;
     }
 }

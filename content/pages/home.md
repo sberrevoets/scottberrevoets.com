@@ -16,17 +16,20 @@ Description: Scott Berrevoets is a software engineer working on long-lived softw
 </div>
 
 <div class="home-intro">
-<p>👋 I'm Scott, a software engineer based in San Francisco. I work on long-lived
-software systems, especially where architecture, developer experience, and
+
+<p>👋 I'm <strong>Scott</strong>, a software engineer based in San Francisco. I primarily work on
+platform scalabilty, especially where architecture, developer experience, and
 platform engineering shape how teams build and maintain them.</p>
+
 <p>I'm currently the iOS Platform Lead at <a href="https://speak.com">Speak</a>,
-working on foundational systems for architecture, CI, and release workflows that
-keep the app maintainable as it grows. Previously, I was the tech lead for
-Mobile Infrastructure at Lyft, where I helped scale the mobile org from a
-handful of engineers to 150 people.</p>
-<p>For more background, see my <a href="resume.html">resume</a> or
-<a href="about.html">about page</a>. If something here resonates,
-<a href="mailto:hi@scottberrevoets.com">email me</a>.</p>
+working on core systems, architecture, CI, and release workflows. Previously, I
+was the tech lead for Mobile Infrastructure at Lyft, where I helped scale the
+mobile org from a handful of engineers to 150 people.</p>
+
+<p>For more background, see my <a href="resume.html">resume</a> or <a
+href="about.html">about page</a>. Feel free to reach out over <a
+href="mailto:hi@scottberrevoets.com">email</a>.</p>
+
 </div>
 </section>
 
@@ -55,33 +58,4 @@ observability and simplified release workflows at Speak.</p>
 rebuilding. At Speak, that includes CI, release automation, authentication
 infrastructure, and other foundations for a fast-moving mobile product.</p>
 </div>
-</div>
-
-<section class="home-section writing-section">
-<h2>Selected writing</h2>
-<p>A few posts that show how I think about technical direction and systems
-engineering.</p>
-</section>
-
-<div class="card-grid writing-grid">
-<a class="card link-card writing-card" href="{filename}../blog/2022-11-15-large-codebase-migrations.md">
-<h3>Migration strategies in large codebases</h3>
-<p>How to move a large codebase forward without stopping feature development.</p>
-</a>
-
-<a class="card link-card writing-card" href="{filename}../blog/2024-11-18-testing-motivation.md">
-<h3>Shifting the testing culture: Motivation</h3>
-<p>How testing becomes part of engineering culture instead of an optional extra.</p>
-</a>
-
-<a class="card link-card writing-card" href="{filename}../blog/2022-09-28-human-factors-choosing-technologies.md">
-<h3>Human factors in choosing technologies</h3>
-<p>Why adoption risk, onboarding cost, and team fit matter as much as technical
-merit.</p>
-</a>
-
-<a class="card link-card writing-card" href="{filename}../blog/2025-07-02-flywheel-of-tech-debt.md">
-<h3>Flywheel of tech debt</h3>
-<p>Why fragile infrastructure code compounds faster than most teams expect.</p>
-</a>
 </div>
