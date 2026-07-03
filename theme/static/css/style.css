@@ -84,6 +84,8 @@ body > header {
 
 a {
     color: inherit;
+    text-decoration-color: var(--link-color);
+    text-decoration-thickness: 2px;
 }
 
 a:hover {
