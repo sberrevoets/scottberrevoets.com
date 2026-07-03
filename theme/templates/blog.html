@@ -4,9 +4,6 @@
     {% set post_blurb_text = post_blurb|replace('<p>', '')|replace('</p>', '')|replace('\n', ' ')|trim %}
     <article class="featured-item">
         <a class="card link-card featured-card" href="{{ siteurl }}/{{ post.url }}"{% if post_blurb_text %} title="{{ post_blurb_text|escape }}"{% endif %}>
-            <time class="featured-date" datetime="{{ post.date.isoformat() }}">
-                {{ post.date.strftime("%Y") }}
-            </time>
             <h3 class="featured-title">
                 {{ post.title }}
             </h3>
@@ -22,11 +19,16 @@
 <div class="page-content">
     {% set blog_posts = dates|selectattr("category.name", "equalto", "blog")|list %}
     {% set featured_posts = blog_posts|selectattr("featureddescription")|list %}
-    <div class="blog-intro">
-        {{ page.content }}
-    </div>
+    {% set til_posts = dates|selectattr("category.name", "equalto", "til")|list %}
+    {% if til_posts %}
+    <nav class="section-nav" aria-label="Writing sections">
+        <span class="section-nav-current">Posts</span>
+        <a href="{{ SITEURL }}/til">TIL</a>
+    </nav>
+    {% endif %}
 
     <section class="featured-section">
+        <h2>Recommended Posts</h2>
         <div class="card-grid featured-list">
             {% for slug in FEATURED_POST_ORDER %}
                 {% for post in featured_posts %}
@@ -75,5 +77,7 @@
         </div>
     </div>
     {% endif %}
+
+    <p class="blog-meta">All posts were written without AI assistance.</p>
 </div>
 {% endblock %}
