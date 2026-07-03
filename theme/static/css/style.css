@@ -442,21 +442,9 @@ p.headline {
     font-size: 0.9rem;
 }
 
-.section-nav a,
-.section-nav-current {
-    color: var(--menu-text-color);
-    text-decoration: none;
-}
-
-.section-nav-current {
+.section-nav span {
     color: var(--text-color);
     font-weight: 600;
-}
-
-.section-nav a:before {
-    content: "\2022";
-    margin-right: 0.75rem;
-    color: var(--menu-text-color);
 }
 
 .section-nav a:hover {

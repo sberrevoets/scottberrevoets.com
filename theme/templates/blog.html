@@ -19,13 +19,11 @@
 <div class="page-content">
     {% set blog_posts = dates|selectattr("category.name", "equalto", "blog")|list %}
     {% set featured_posts = blog_posts|selectattr("featureddescription")|list %}
-    {% set til_posts = dates|selectattr("category.name", "equalto", "til")|list %}
-    {% if til_posts %}
     <nav class="section-nav" aria-label="Writing sections">
-        <span class="section-nav-current">Posts</span>
+        <span>Posts</span>
+        &bull;
         <a href="{{ SITEURL }}/til">TIL</a>
     </nav>
-    {% endif %}
 
     <section class="featured-section">
         <h2>Recommended Posts</h2>

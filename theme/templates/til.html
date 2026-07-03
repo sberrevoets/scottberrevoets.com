@@ -3,6 +3,13 @@
 {% block content %}
 
 <div class="page-content">
+    {% set blog_posts = dates|selectattr("category.name", "equalto", "blog")|list %}
+    <nav class="section-nav" aria-label="Writing sections">
+        <a href="{{ SITEURL }}/blog">Posts</a>
+        &bull;
+        <span>TIL</span>
+    </nav>
+
     <h2 class="til-header"><span class="til-highlight">T</span>oday <span class="til-highlight">I</span> <span class="til-highlight">L</span>earned...</h2>
     {% set til_articles = dates|selectattr("category.name", "equalto", "til")|list %}
     {% for article in til_articles %}
