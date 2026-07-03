@@ -37,8 +37,8 @@ well, unless they specifically understand (how) to avoid it.
 What's worse is that after some time passes and people are using these APIs,
 it's much more difficult to remove because it also requires removing it at all
 the call sites that API. For a large team/codebase, this requires a lot of
-coordination between teams and can take years of time and effort. One team that
-doesn't pull its weight impacts everyone else.
+[coordination between teams] and can take years of time and effort. One team
+that doesn't pull its weight impacts everyone else.
 
 This is ironic because in many situations that foundational layer with good
 abstractions and nice developer ergonomics is specifically created to _avoid_
@@ -63,3 +63,4 @@ architecture is a valuable lesson learned...
 [Taxonomy of Tech Debt]: https://technology.riotgames.com/news/taxonomy-tech-debt
 [Hyrum's Law]: https://xkcd.com/1172/
 [other xkcd]: https://xkcd.com/2347/
+[coordination between teams]: {filename}2022-11-15-large-codebase-migrations.md

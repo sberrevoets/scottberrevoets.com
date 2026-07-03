@@ -11,8 +11,8 @@ engineering culture that determine whether software stays easy to change as it
 grows.
 
 That path took me from product engineering into mobile infrastructure and
-platform work: architecture, developer experience, testing strategy, release
-engineering, observability, and large-scale migrations. I gravitate toward work
+platform work: architecture, developer experience, [testing strategy], release
+engineering, observability, and [large-scale migrations]. I gravitate toward work
 that makes complicated systems more understandable and easier for teams to
 maintain over time.
 
@@ -82,7 +82,9 @@ You can also find me on [LinkedIn], [GitHub], and [Mastodon].
 [video]: https://www.youtube.com/watch?v=iS97T_CbhTQ
 [part 1]: https://open.spotify.com/episode/6D5VBNzOylBTeTtHLbZVLH
 [part 2]: https://open.spotify.com/episode/6l6nLzzJD5bLHSftcEfgTZ
-[Keeping the Lyft iOS App Accessible]: https://eng.lyft.com/keeping-lyft-accessible-53155f0098b9?gi=6583179e42f4
+[testing strategy]: {filename}../blog/2024-11-18-testing-motivation.md
+[large-scale migrations]: {filename}../blog/2022-11-15-large-codebase-migrations.md
+[Keeping the Lyft iOS App Accessible]: {filename}../blog/2017-01-18-keeping-lyft-app-accessible.md
 [Mobile Native Foundation]: https://mobilenativefoundation.org
 [LinkedIn]: https://linkedin.com/in/sberrevoets
 [GitHub]: https://github.com/sberrevoets
