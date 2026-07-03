@@ -228,6 +228,19 @@ div.article-content, div.page-content {
     padding: 10px;
 }
 
+div.page-content hr {
+    border: 0;
+    border-top: 1px solid var(--separator-color, rgba(128, 128, 128, 0.2));
+    margin: 2.5em 0;
+}
+
+p.headline {
+    font-size: 1.35em;
+    line-height: 1.4;
+    font-weight: 500;
+    margin-bottom: 1em;
+}
+
 @media (prefers-color-scheme: dark) {
     div.article-content, div.page-content {
         line-height: 1.75em;

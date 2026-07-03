@@ -1,49 +1,57 @@
 Title: About
 Description: About Scott Berrevoets, including his background in mobile infrastructure, architecture, developer experience, and platform engineering.
 
-I'm a software engineer based in San Francisco, originally from the Netherlands.
-I started building iOS apps in 2011, and over time I found myself increasingly
-drawn to the systems behind the product work: the architecture, workflows,
-tools, and engineering habits that determine whether software stays easy to
-change as it grows.
+My name is Scott and I'm a software engineer, originally from the Netherlands
+but now living in San Francisco 🌁
+{: .headline }
 
-That path has taken me from product engineering into mobile infrastructure,
-architecture, developer experience, testing strategy, release engineering,
-observability, code quality, and large-scale migrations. I tend to gravitate
-toward work that makes complicated systems more understandable and easier for
-teams to maintain over time.
+I started building iOS apps in 2011. Over time I found myself increasingly drawn
+to the systems that drive the product: the architecture, workflows, tools, and
+engineering culture that determine whether software stays easy to change as it
+grows.
 
-For a more complete work history, see my resume in [PDF]({static}/resume.pdf) or
-[HTML]({static}/resume.html).
+That path took me from product engineering into mobile infrastructure and
+platform work: architecture, developer experience, testing strategy, release
+engineering, observability, and large-scale migrations. I gravitate toward work
+that makes complicated systems more understandable and easier for teams to
+maintain over time.
+
+---
 
 ### Experience
 
 #### Speak (current)
-At [Speak], I focus on the systems that make a fast-moving mobile product
-easier to build, ship, and operate reliably as the team and codebase grow. This
-continues the platform and architecture work I did at Lyft, but closer to the
-product and earlier in the company's growth curve: architecture, CI, release
-automation, observability, and authentication infrastructure.
+At [Speak], I focus on the systems that make a fast-moving mobile product easier
+to build, ship, and maintain as the team and codebase grow. This
+continues the platform work I did at Lyft, but closer to the product and in a
+smaller team setting:
+
+* Architecture and modularization
+* CI and release automation
+* Observability
+* Authentication & app launch infrastructure
 
 #### Lyft (2014 &ndash; 2025)
-At Lyft, I started in product engineering and moved into platform and
-architecture work as the mobile organization grew. That shift took me from
-building rider and driver features to defining the systems, standards, and
-technical direction that let the broader organization scale without losing
-quality.
+I joined as the first dedicated iOS engineer and over time became tech lead for
+a 150-engineer Mobile organization, moving from building rider and driver
+features to the systems, standards, and technical direction that let the org
+scale without sacrificing quality. Much of that work centered on making a
+fast-growing codebase safe for many teams to change:
 
-I joined as the first dedicated iOS engineer and later became tech lead for a
-150-engineer Mobile organization. Much of that work centered on making a
-fast-growing codebase easier for many teams to change safely: founding the iOS
-Architecture team, scaling modularization across an 80+ engineer iOS team,
-improving testing strategy, and leading long-running migrations across the
-mobile codebase. This also included providing mentorship and leadership to
-peers, which was some of the most rewarding and satisfying work I've done.
+* Tech lead for of the iOS Architecture team
+* Scaled modularization across the iOS engineering team (80+ engineers)
+* Defined testing strategy and led long-running migrations
+* Mentored and led peers; some of the most rewarding work I've done
+
+For a more complete work history, see my resume in [PDF]({static}/resume.pdf) or
+[HTML]({static}/resume.html) (last updated February 2025).
+
+---
 
 ### Community
 
-I've also really enjoyed teaching others along the way through mentorships at
-work, speaking engagements, and tutorial writing and editing.
+I've also really enjoyed teaching others in the community through speaking
+engagements and tutorial writing and editing.
 
 #### Kodeco (formerly raywenderlich.com)
 * Tech editor for 20 tutorials and articles (2014 &ndash; 2019)
@@ -56,9 +64,11 @@ work, speaking engagements, and tutorial writing and editing.
 * Founding member of the [Mobile Native Foundation] (2021)
 * [Keeping the Lyft iOS App Accessible] (2017)
 
+---
+
 ### Contact
 
-If something on the site resonated, or you just want to say hi, I'd be glad to
+If something here speaks to you, or you just want to say hi, I'd be glad to
 hear from you! Please reach out at
 [hi@scottberrevoets.com](mailto:hi@scottberrevoets.com).
 
