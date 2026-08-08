@@ -7,7 +7,7 @@ AUTHOR = "Scott Berrevoets"
 SITENAME = "Scott Berrevoets"
 SITEURL = "https://scottberrevoets.com"
 SITE_DESCRIPTION = "Scott Berrevoets is a software engineer working on long-lived software systems, especially around architecture, developer experience, and platform engineering."
-FEATURED_POST_ORDER = [
+FEATURED_POSTS = [
     "the-foundations-of-a-mobile-platform",
     "review-your-own-ai-generated-code",
     "migration-strategies-in-large-codebases",
@@ -15,7 +15,7 @@ FEATURED_POST_ORDER = [
     "shifting-the-testing-culture-motivation",
     "flywheel-of-tech-debt",
 ]
-JINJA_GLOBALS = {"FEATURED_POST_ORDER": FEATURED_POST_ORDER}
+JINJA_GLOBALS = {"FEATURED_POSTS": FEATURED_POSTS}
 
 # Don't show line numbers in code snippets by default
 MARKDOWN = {

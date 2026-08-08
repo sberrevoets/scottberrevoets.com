@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 {% macro render_featured_post(post, siteurl) -%}
-    {% set post_blurb = post.featureddescription or post.description or post.summary %}
+    {% set post_blurb = post.carddescription or post.description or post.summary %}
     {% set post_blurb_text = post_blurb|replace('<p>', '')|replace('</p>', '')|replace('\n', ' ')|trim %}
     <article class="featured-item">
         <a class="card link-card featured-card" href="{{ siteurl }}/{{ post.url }}"{% if post_blurb_text %} title="{{ post_blurb_text|escape }}"{% endif %}>
@@ -18,7 +18,6 @@
 
 <div class="page-content">
     {% set blog_posts = dates|selectattr("category.name", "equalto", "blog")|list %}
-    {% set featured_posts = blog_posts|selectattr("featureddescription")|list %}
     <nav class="section-nav" aria-label="Writing sections">
         <span>Posts</span>
         &bull;
@@ -28,19 +27,13 @@
     <section class="featured-section">
         <h2>Recommended Posts</h2>
         <div class="card-grid featured-list">
-            {% for slug in FEATURED_POST_ORDER %}
-                {% for post in featured_posts %}
+            {% for slug in FEATURED_POSTS %}
+                {% for post in blog_posts %}
                     {% set post_slug = post.url.rstrip('/').split('/')[-1] %}
                     {% if post_slug == slug %}
                         {{ render_featured_post(post, SITEURL) }}
                     {% endif %}
                 {% endfor %}
-            {% endfor %}
-            {% for post in featured_posts %}
-                {% set post_slug = post.url.rstrip('/').split('/')[-1] %}
-                {% if post_slug not in FEATURED_POST_ORDER %}
-                    {{ render_featured_post(post, SITEURL) }}
-                {% endif %}
             {% endfor %}
         </div>
     </section>

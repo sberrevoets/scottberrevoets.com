@@ -1,7 +1,7 @@
 Title: The foundations of a mobile platform
 Date: 2026-08-11
 Description: Why mobile platform foundations matter for engineering velocity, reliability, observability, and distribution
-FeaturedDescription: How strong mobile platform foundations help product teams build and ship
+CardDescription: How strong mobile platform foundations help product teams build and ship
 
 In larger teams or companies, most people agree that the mobile platform is the
 shared infrastructure an app and its features are built upon. In earlier stages,
