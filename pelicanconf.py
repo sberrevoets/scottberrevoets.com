@@ -8,10 +8,10 @@ SITENAME = "Scott Berrevoets"
 SITEURL = "https://scottberrevoets.com"
 SITE_DESCRIPTION = "Scott Berrevoets is a software engineer working on long-lived software systems, especially around architecture, developer experience, and platform engineering."
 FEATURED_POST_ORDER = [
+    "the-foundations-of-a-mobile-platform",
     "review-your-own-ai-generated-code",
     "migration-strategies-in-large-codebases",
     "human-factors-in-choosing-technologies",
-    "third-party-libraries-are-no-party-at-all",
     "shifting-the-testing-culture-motivation",
     "flywheel-of-tech-debt",
 ]
